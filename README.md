@@ -10,4 +10,5 @@ When the world’s best stories meet the best technology, you get **RX-Men**. Ou
 | :---------------- | :------------------------------------------ | :-------------------------------------------------------------------------------------------------- |
 | Boris Zashliapin  | [elrouss](https://github.com/elrouss)       | [🔗 DEVELOPMENT_DIARY](https://github.com/RX-Men/shop-front/tree/main/development-notes/elrouss)    |
 | Dmitrii Prokhorov | [prokhorovd](https://github.com/prokhorovd) | [🔗 DEVELOPMENT_DIARY](https://github.com/RX-Men/shop-front/tree/main/development-notes/prokhorovd) |
+| Denis Semenov     | [den987655](https://github.com/den987655)   | [🔗 DEVELOPMENT_DIARY](https://github.com/RX-Men/shop-front/tree/main/development-notes/den987655)  |
 | Dzmitry Mamaikin  | [mummick](https://github.com/mummick)       | N/A - mentor                                                                                        |
