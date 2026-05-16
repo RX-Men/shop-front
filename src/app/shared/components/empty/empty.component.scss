@@ -5,17 +5,8 @@
   justify-content: center;
   text-align: center;
   color: #b8b8b8;
-}
 
-.empty-image {
-  width: 24px;
-  height: 24px;
-  opacity: 0.55;
-}
-
-.empty-title {
-  margin: 0;
-  font-size: var(--text-sm);
-  font-weight: 400;
-  line-height: var(--text-sm-line-height);
+  &__image {
+    opacity: 0.55;
+  }
 }

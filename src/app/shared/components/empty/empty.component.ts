@@ -7,7 +7,6 @@ import { NgOptimizedImage } from '@angular/common';
   imports: [NgOptimizedImage],
   templateUrl: './empty.component.html',
   styleUrl: './empty.component.scss',
-  standalone: true,
 })
 export class EmptyComponent {
   readonly title = input<string>('Data Not Found');

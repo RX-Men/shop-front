@@ -1,7 +1,7 @@
 <div class="empty">
-  <img class="empty-image" alt="empty" width="24" height="24" [ngSrc]="imgUi()" />
-  <h3 class="empty-title" [title]="title()">{{ title() }}</h3>
+  <img class="empty__image" alt="empty" width="24" height="24" [ngSrc]="imgUi()" />
+  <h3 class="empty__title text-sm">{{ title() }}</h3>
   @if (description()) {
-    <p class="empty-description">{{ description() }}</p>
+    <p class="empty__description">{{ description() }}</p>
   }
 </div>
