@@ -14,10 +14,10 @@ describe('App', () => {
     expect(app).toBeTruthy();
   });
 
-  it('should render empty state', async () => {
+  it('should render title', async () => {
     const fixture = TestBed.createComponent(App);
     await fixture.whenStable();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('app-empty h3')?.textContent).toContain('Data Not Found');
+    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, shop-front');
   });
 });

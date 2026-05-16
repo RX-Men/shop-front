@@ -1,11 +1,9 @@
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { EmptyComponent } from './shared/components/empty/empty.component';
 
 @Component({
-  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-root',
-  imports: [RouterOutlet, EmptyComponent],
+  imports: [RouterOutlet],
   templateUrl: './app.html',
 })
 export class App {
