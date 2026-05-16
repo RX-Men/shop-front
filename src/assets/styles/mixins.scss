@@ -1,10 +1,10 @@
 @use 'sass:math';
 @use 'sass:list';
 @use 'sass:map';
-@use './variables' as vars;
+@use './breakpoints' as media;
 
 @mixin media($device-size) {
-  $breakpoint: map.get(vars.$grid-breakpoints, $device-size) - 1;
+  $breakpoint: map.get(media.$breakpoints, $device-size) - 1;
 
   @media (width <= #{$breakpoint}px) {
     @content;
