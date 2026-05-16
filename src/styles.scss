@@ -1,9 +1,10 @@
 @use './assets/styles/reset';
-@use './assets/styles/variables';
+@use './assets/styles/breakpoints';
 @use './assets/styles/placeholders';
 @use './assets/styles/mixins';
 @use './assets/styles/functions';
 @use './assets/styles/typography';
+@use './assets/styles/colors';
 @use './assets/styles/spacing';
 @use './assets/styles/border-radius';
 @use './assets/styles/transition';
