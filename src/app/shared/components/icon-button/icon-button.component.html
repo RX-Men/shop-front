@@ -1,0 +1,10 @@
+<button
+  class="icon-button"
+  [type]="type()"
+  [ariaLabel]="ariaLabel()"
+  [ariaPressed]="ariaPressed()"
+  [attr.data-testid]="_testIds.root"
+  [disabled]="disabled()"
+>
+  <app-icon [name]="icon()" [size]="size()" />
+</button>

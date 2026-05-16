@@ -1,3 +1,8 @@
-<svg class="icon icon_size_{{ size() }}" aria-hidden="true" focusable="false" data-testid="icon">
+<svg
+  class="icon icon_size_{{ size() }}"
+  aria-hidden="true"
+  focusable="false"
+  [attr.data-testid]="_testIds.root"
+>
   <use [attr.href]="href()" />
 </svg>

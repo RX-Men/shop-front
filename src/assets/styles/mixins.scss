@@ -13,7 +13,7 @@
 
 @mixin hover {
   @media (hover: hover) {
-    &:hover {
+    &:hover:not(:disabled) {
       @content;
     }
   }
@@ -46,5 +46,20 @@
 
   &::-webkit-scrollbar {
     display: none;
+  }
+}
+
+@mixin action-button {
+  display: inline-flex;
+
+  @include transition(color);
+
+  &:focus {
+    outline: none;
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--brand-500);
+    outline-offset: calc(var(--spacing-x1) / 2);
   }
 }
