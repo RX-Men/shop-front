@@ -1,0 +1,31 @@
+:host {
+  display: inline-flex;
+  height: fit-content;
+}
+
+.icon {
+  aspect-ratio: 1;
+  flex-shrink: 0;
+
+  &_size {
+    &_xl {
+      width: 40px;
+    }
+
+    &_l {
+      width: 32px;
+    }
+
+    &_m {
+      width: 24px;
+    }
+
+    &_s {
+      width: 16px;
+    }
+
+    &_auto {
+      width: auto;
+    }
+  }
+}
