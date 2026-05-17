@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { IconComponent } from '../icon';
-import type { IconName } from '../icon/icon.types';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -10,7 +9,7 @@ import type { IconName } from '../icon/icon.types';
   styleUrl: './empty.component.scss',
 })
 export class EmptyComponent {
-  readonly icon = input<IconName>('sentiment-excited');
+  readonly icon = input<ReturnType<IconComponent['name']>>('search-off');
   readonly title = input<string>('Data Not Found');
   readonly description = input<string>('');
 }
