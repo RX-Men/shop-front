@@ -25,9 +25,11 @@
 
   $vw-percent: math.div(math.round($variable-part * 100 * 100), 100px);
 
-  @return clamp(
-    $min-value-rem,
-    #{if($constant-rem != 0rem, $constant-rem + ' + ', '')}#{$vw-percent}vw,
-    $max-value-rem
-  );
+  $constant-part: '';
+
+  @if $constant-rem != 0 {
+    $constant-part: $constant-rem + ' + ';
+  }
+
+  @return clamp($min-value-rem, #{$constant-part}#{$vw-percent}vw, $max-value-rem);
 }
