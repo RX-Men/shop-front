@@ -1,5 +1,5 @@
 <div class="empty">
-  <app-icon class="empty__image" size="m" name="sentiment-excited" />
+  <app-icon class="empty__image" size="m" [name]="icon()" />
   <h3 class="empty__title text-sm">{{ title() }}</h3>
   @if (description()) {
     <p class="empty__description">{{ description() }}</p>

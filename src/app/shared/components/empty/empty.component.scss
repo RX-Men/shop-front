@@ -9,4 +9,12 @@
   &__image {
     opacity: 0.55;
   }
+
+  &__title {
+    margin-block-start: var(--spacing-x1);
+  }
+
+  &__description {
+    margin-block-start: var(--spacing-x1);
+  }
 }
