@@ -1,0 +1,18 @@
+@let computedIcon = icon();
+
+<a
+  class="text-sm external-link external-link_variant_{{ variant() }} external-link_size_{{
+    size()
+  }} external-link_color_{{ color() }}"
+  target="_blank"
+  rel="noopener noreferrer"
+  [class.external-link_icon-placement_start]="computedIcon && iconPlacement() === 'start'"
+  [href]="href()"
+  [attr.data-testid]="_testIds.root"
+>
+  <ng-content />
+
+  @if (computedIcon) {
+    <app-icon [name]="computedIcon" [size]="'s'" />
+  }
+</a>

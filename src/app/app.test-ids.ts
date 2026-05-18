@@ -4,6 +4,9 @@ export const APP_TEST_IDS = {
     content: 'content',
     loader: 'loader',
   },
+  externalLink: {
+    root: 'external-link',
+  },
   icon: {
     root: 'icon',
   },
@@ -15,5 +18,8 @@ export const APP_TEST_IDS = {
   },
   iconRouterLink: {
     root: 'icon-router-link',
+  },
+  routerLink: {
+    root: 'router-link',
   },
 } as const;

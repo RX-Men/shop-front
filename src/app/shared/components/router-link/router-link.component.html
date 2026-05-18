@@ -1,0 +1,16 @@
+@let computedIcon = icon();
+
+<a
+  class="text-sm router-link router-link_variant_{{ variant() }} router-link_size_{{
+    size()
+  }} router-link_color_{{ color() }}"
+  [class.router-link_icon-placement_start]="computedIcon && iconPlacement() === 'start'"
+  [routerLink]="routerLink()"
+  [attr.data-testid]="'router-link'"
+>
+  <ng-content />
+
+  @if (computedIcon) {
+    <app-icon [name]="computedIcon" [size]="'s'" />
+  }
+</a>
