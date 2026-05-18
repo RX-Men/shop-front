@@ -48,42 +48,46 @@
     }
   }
 
-  &_size_s {
-    height: var(--form-control-height-s);
-    padding-inline: var(--form-control-padding-x-s);
-    font-size: var(--text-sm);
-    line-height: var(--text-sm-line-height);
-  }
+  &_size {
+    &_s {
+      height: var(--form-control-height-s);
+      padding-inline: var(--form-control-padding-x-s);
+      font-size: var(--text-sm);
+      line-height: var(--text-sm-line-height);
+    }
 
-  &_size_m {
-    height: var(--form-control-height-m);
-    padding-inline: var(--form-control-padding-x-m);
-    font-size: var(--text-base);
-    line-height: var(--text-base-line-height);
-  }
+    &_m {
+      height: var(--form-control-height-m);
+      padding-inline: var(--form-control-padding-x-m);
+      font-size: var(--text-base);
+      line-height: var(--text-base-line-height);
+    }
 
-  &_size_l {
-    height: var(--form-control-height-l);
-    padding-inline: var(--form-control-padding-x-l);
-    font-size: var(--text-lg);
-    line-height: var(--text-lg-line-height);
-  }
-
-  &_status_error {
-    border-color: var(--color-border-error);
-
-    &:focus-within {
-      border-color: var(--color-border-error);
-      box-shadow: inset 0 0 0 1px var(--color-border-error);
+    &_l {
+      height: var(--form-control-height-l);
+      padding-inline: var(--form-control-padding-x-l);
+      font-size: var(--text-lg);
+      line-height: var(--text-lg-line-height);
     }
   }
 
-  &_status_warning {
-    border-color: var(--color-border-warning);
+  &_status {
+    &_error {
+      border-color: var(--color-border-error);
 
-    &:focus-within {
+      &:focus-within {
+        border-color: var(--color-border-error);
+        box-shadow: inset 0 0 0 1px var(--color-border-error);
+      }
+    }
+
+    &_warning {
       border-color: var(--color-border-warning);
-      box-shadow: inset 0 0 0 1px var(--color-border-warning);
+
+      &:focus-within {
+        border-color: var(--color-border-warning);
+        box-shadow: inset 0 0 0 1px var(--color-border-warning);
+      }
     }
   }
 
@@ -91,6 +95,10 @@
     background: var(--color-bg-disabled);
     color: var(--color-text-disabled);
     cursor: not-allowed;
+
+    @include mixins.hover {
+      border-color: var(--color-border);
+    }
   }
 
   &_readonly {
