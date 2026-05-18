@@ -51,10 +51,11 @@ export class InputComponent implements ControlValueAccessor {
   readonly focused = output<FocusEvent>();
   readonly blurred = output<FocusEvent>();
 
-  private static nextUid = 0;
-  private readonly autoId = `app-input-${++InputComponent.nextUid}`;
+  private readonly autoId = `app-input-${crypto.randomUUID()}`;
 
   private readonly cvaDisabled = signal(false);
+  private readonly onChange = signal<(v: string) => void>(() => undefined);
+  private readonly onTouched = signal<() => void>(() => undefined);
 
   protected readonly isDisabled = computed(() => this.disabled() || this.cvaDisabled());
 
@@ -70,20 +71,16 @@ export class InputComponent implements ControlValueAccessor {
     return ids.length ? ids.join(' ') : null;
   });
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  private onChange: (v: string) => void = (_: string) => undefined;
-  private onTouched: () => void = () => undefined;
-
   writeValue(v: string | null): void {
     this.value.set(v ?? '');
   }
 
   registerOnChange(fn: (v: string) => void): void {
-    this.onChange = fn;
+    this.onChange.set(fn);
   }
 
   registerOnTouched(fn: () => void): void {
-    this.onTouched = fn;
+    this.onTouched.set(fn);
   }
 
   setDisabledState(isDisabled: boolean): void {
@@ -91,13 +88,16 @@ export class InputComponent implements ControlValueAccessor {
   }
 
   protected handleInput(e: Event): void {
-    const v = (e.target as HTMLInputElement).value;
+    if (!(e.target instanceof HTMLInputElement)) {
+      return;
+    }
+    const v = e.target.value;
     this.value.set(v);
-    this.onChange(v);
+    this.onChange()(v);
   }
 
   protected handleBlur(e: FocusEvent): void {
-    this.onTouched();
+    this.onTouched()();
     this.blurred.emit(e);
   }
 }
