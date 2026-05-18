@@ -42,6 +42,7 @@ export class InputComponent implements ControlValueAccessor {
   readonly errorText = input<string>('');
 
   readonly maxlength = input<number | null>(null);
+  readonly minlength = input<number | null>(null);
   readonly autocomplete = input<string>('off');
   readonly name = input<string>('');
 
