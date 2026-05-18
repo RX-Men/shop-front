@@ -11,20 +11,20 @@
   display: inline-flex;
   align-items: center;
   width: 100%;
-  background: var(--color-bg-surface);
-  border: 1px solid var(--color-border);
+  background: var(--neutral-100);
+  border: 1px solid var(--neutral-300);
   border-radius: var(--radius-xs);
-  color: var(--color-text);
+  color: var(--neutral-900);
 
   @include mixins.transition((border-color, box-shadow));
 
   @include mixins.hover {
-    border-color: var(--color-border-hover);
+    border-color: var(--neutral-500);
   }
 
   &:focus-within {
-    border-color: var(--color-border-focus);
-    box-shadow: inset 0 0 0 1px var(--color-border-focus);
+    border-color: var(--neutral-900);
+    box-shadow: inset 0 0 0 1px var(--neutral-900);
     outline: none;
   }
 
@@ -40,7 +40,7 @@
     font: inherit;
 
     &::placeholder {
-      color: var(--color-text-placeholder);
+      color: var(--neutral-500);
     }
 
     &:disabled {
@@ -50,22 +50,22 @@
 
   &_size {
     &_s {
-      height: var(--form-control-height-s);
-      padding-inline: var(--form-control-padding-x-s);
+      height: 32px;
+      padding-inline: var(--spacing-x2);
       font-size: var(--text-sm);
       line-height: var(--text-sm-line-height);
     }
 
     &_m {
-      height: var(--form-control-height-m);
-      padding-inline: var(--form-control-padding-x-m);
+      height: 40px;
+      padding-inline: var(--spacing-x3);
       font-size: var(--text-base);
       line-height: var(--text-base-line-height);
     }
 
     &_l {
-      height: var(--form-control-height-l);
-      padding-inline: var(--form-control-padding-x-l);
+      height: 48px;
+      padding-inline: var(--spacing-x4);
       font-size: var(--text-lg);
       line-height: var(--text-lg-line-height);
     }
@@ -73,60 +73,60 @@
 
   &_status {
     &_error {
-      border-color: var(--color-border-error);
+      border-color: var(--error);
 
       &:focus-within {
-        border-color: var(--color-border-error);
-        box-shadow: inset 0 0 0 1px var(--color-border-error);
+        border-color: var(--error);
+        box-shadow: inset 0 0 0 1px var(--error);
       }
     }
 
     &_warning {
-      border-color: var(--color-border-warning);
+      border-color: var(--warning-500);
 
       &:focus-within {
-        border-color: var(--color-border-warning);
-        box-shadow: inset 0 0 0 1px var(--color-border-warning);
+        border-color: var(--warning-500);
+        box-shadow: inset 0 0 0 1px var(--warning-500);
       }
     }
   }
 
   &_disabled {
-    background: var(--color-bg-disabled);
-    color: var(--color-text-disabled);
+    background: var(--neutral-100);
+    color: var(--neutral-500);
     cursor: not-allowed;
 
     @include mixins.hover {
-      border-color: var(--color-border);
+      border-color: var(--neutral-300);
     }
   }
 
   &_readonly {
-    background: var(--color-bg-disabled);
+    background: var(--neutral-100);
 
     @include mixins.hover {
-      border-color: var(--color-border);
+      border-color: var(--neutral-300);
     }
   }
 
   &__label {
     font-size: var(--text-sm);
     line-height: var(--text-sm-line-height);
-    color: var(--color-text);
+    color: var(--neutral-900);
   }
 
   &__required {
     margin-inline-start: 2px;
-    color: var(--color-border-error);
+    color: var(--error);
   }
 
   &__hint {
     font-size: var(--text-xs);
-    color: var(--color-text-muted);
+    color: var(--neutral-700);
   }
 
   &__error {
     font-size: var(--text-xs);
-    color: var(--color-border-error);
+    color: var(--error);
   }
 }
