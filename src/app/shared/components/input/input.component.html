@@ -1,0 +1,43 @@
+@if (label()) {
+  <label class="input__label" [attr.for]="resolvedId()">
+    {{ label() }}
+    @if (required()) {
+      <span class="input__required" aria-hidden="true">*</span>
+    }
+  </label>
+}
+
+<div
+  class="input input_size_{{ size() }} input_status_{{ status() }}"
+  data-testid="input"
+  [class.input_disabled]="isDisabled()"
+  [class.input_readonly]="readonlyMode()"
+>
+  <input
+    data-testid="input-native"
+    class="input__native"
+    [id]="resolvedId()"
+    [type]="type()"
+    [value]="value()"
+    [placeholder]="placeholder()"
+    [disabled]="isDisabled()"
+    [readOnly]="readonlyMode()"
+    [required]="required()"
+    [attr.name]="name() || null"
+    [attr.maxlength]="maxlength()"
+    [attr.autocomplete]="autocomplete()"
+    [attr.aria-invalid]="status() === 'error' || null"
+    [attr.aria-describedby]="describedBy()"
+    (input)="handleInput($event)"
+    (focus)="focused.emit($event)"
+    (blur)="handleBlur($event)"
+  />
+</div>
+
+@if (status() === 'error' && errorText()) {
+  <span class="input__error" data-testid="input-error" role="alert" [id]="resolvedId() + '-error'">
+    {{ errorText() }}
+  </span>
+} @else if (hint()) {
+  <span class="input__hint" [id]="resolvedId() + '-hint'">{{ hint() }}</span>
+}
