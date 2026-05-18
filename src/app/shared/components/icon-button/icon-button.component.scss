@@ -1,0 +1,14 @@
+@use 'assets/styles/mixins' as mix;
+
+:host {
+  display: inline-flex;
+}
+
+.icon-button {
+  @include mix.action-button;
+
+  &:disabled {
+    color: var(--neutral-500);
+    cursor: not-allowed;
+  }
+}

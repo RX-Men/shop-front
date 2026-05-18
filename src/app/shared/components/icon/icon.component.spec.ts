@@ -3,6 +3,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { IconComponent } from './icon.component';
 
+import { APP_TEST_IDS } from '../../../app.test-ids';
+
 describe('IconComponent', () => {
   let component: IconComponent;
   let componentRef: ComponentRef<IconComponent>;
@@ -22,7 +24,7 @@ describe('IconComponent', () => {
 
   it('should create and have a specified icon', () => {
     const iconElement = (fixture.nativeElement as HTMLElement).querySelector(
-      '[data-testid="icon"]',
+      `[data-testid="${APP_TEST_IDS.icon.root}"]`,
     );
     const useElement = iconElement?.querySelector('use');
 
@@ -34,7 +36,7 @@ describe('IconComponent', () => {
 
   it('should update symbol when name changes', () => {
     const iconElement = (fixture.nativeElement as HTMLElement).querySelector(
-      '[data-testid="icon"]',
+      `[data-testid="${APP_TEST_IDS.icon.root}"]`,
     );
     const useElement = iconElement?.querySelector('use');
 
