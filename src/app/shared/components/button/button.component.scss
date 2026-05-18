@@ -1,0 +1,156 @@
+@use 'assets/styles/placeholders';
+@use 'assets/styles/mixins' as mix;
+
+:host {
+  display: inline-flex;
+}
+
+.button {
+  $this: &;
+
+  position: relative;
+  display: inline-flex;
+  border: 2px solid transparent;
+  text-transform: uppercase;
+
+  @include mix.transition((border-color, color, background-color));
+
+  &_color {
+    &_brand {
+      --primary-color: var(--brand-500);
+      --primary-color-hover: var(--brand-600);
+      --secondary-color: var(--brand-100);
+      --text-color: var(--neutral-100);
+    }
+
+    &_light {
+      --primary-color: var(--neutral-100);
+      --primary-color-hover: var(--neutral-300);
+      --secondary-color: var(--neutral-700);
+      --text-color: var(--neutral-900);
+
+      &:disabled {
+        color: var(--neutral-100);
+      }
+    }
+
+    &_dark {
+      --primary-color: var(--neutral-900);
+      --primary-color-hover: var(--neutral-700);
+      --secondary-color: var(--neutral-300);
+      --text-color: var(--neutral-100);
+    }
+  }
+
+  &_loading {
+    cursor: not-allowed;
+
+    #{$this}__content {
+      @extend %hidden;
+    }
+  }
+
+  &:focus {
+    outline: none;
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--primary-color);
+    outline-offset: calc(var(--spacing-x1) / 2);
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+  }
+
+  &_variant {
+    &_contained {
+      color: var(--text-color);
+      background-color: var(--primary-color);
+
+      @include mix.hover {
+        background-color: var(--primary-color-hover);
+      }
+
+      &:disabled {
+        background-color: var(--neutral-500);
+      }
+
+      &#{&} {
+        &:has(#{$this}__loader) {
+          background-color: var(--primary-color);
+        }
+      }
+    }
+
+    &_outlined {
+      border-color: var(--primary-color);
+      color: var(--primary-color);
+
+      @include mix.hover {
+        border-color: var(--primary-color-hover);
+        color: var(--primary-color-hover);
+        background-color: var(--secondary-color);
+      }
+
+      &:disabled {
+        border-color: var(--neutral-500);
+        color: var(--neutral-500);
+      }
+
+      &#{&} {
+        &:has(#{$this}__loader) {
+          background-color: transparent;
+        }
+      }
+    }
+
+    &_text {
+      color: var(--primary-color);
+
+      @include mix.hover {
+        background-color: var(--secondary-color);
+      }
+
+      &:disabled {
+        color: var(--neutral-500);
+      }
+
+      &#{&} {
+        &:has(#{$this}__loader) {
+          background-color: transparent;
+        }
+      }
+    }
+  }
+
+  &_size {
+    &_l {
+      padding: var(--spacing-x3) var(--spacing-x4);
+    }
+
+    &_m {
+      padding: var(--spacing-x2) var(--spacing-x4);
+    }
+
+    &_s {
+      padding: var(--spacing-x1) var(--spacing-x3);
+    }
+  }
+
+  &__content {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-x2);
+
+    &_icon-placement {
+      &_start {
+        flex-direction: row-reverse;
+      }
+    }
+  }
+
+  &__loader {
+    @extend %position-center;
+  }
+}

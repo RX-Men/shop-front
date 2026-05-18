@@ -1,0 +1,31 @@
+@let computedIcon = icon();
+@let computedLoading = loading();
+
+<button
+  class="text-sm button button_variant_{{ variant() }} button_size_{{ size() }} button_color_{{
+    color()
+  }}"
+  [class.button_loading]="computedLoading"
+  [type]="type()"
+  [ariaBusy]="computedLoading"
+  [ariaDisabled]="computedLoading"
+  [attr.data-testid]="_testIds.root"
+  [disabled]="disabled()"
+>
+  <span
+    class="button__content"
+    [class.button__content_icon-placement_start]="computedIcon && iconPlacement() === 'start'"
+    [attr.data-testid]="_testIds.content"
+  >
+    <ng-content />
+
+    @if (computedIcon) {
+      <app-icon [name]="computedIcon" [size]="'s'" />
+    }
+  </span>
+
+  @if (computedLoading) {
+    <!-- TODO: Here will be a spin component -->
+    <span class="button__loader" [attr.data-testid]="_testIds.loader">...</span>
+  }
+</button>
