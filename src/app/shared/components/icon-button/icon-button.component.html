@@ -1,7 +1,11 @@
+@let computedLabel = label();
+
 <button
   class="icon-button"
+  appTooltip
   [type]="type()"
-  [ariaLabel]="ariaLabel()"
+  [tooltipText]="computedLabel"
+  [ariaLabel]="computedLabel"
   [ariaPressed]="ariaPressed()"
   [attr.data-testid]="_testIds.root"
   [disabled]="disabled()"

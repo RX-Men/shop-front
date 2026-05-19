@@ -1,9 +1,13 @@
+@let computedLabel = label();
+
 <a
   class="icon-external-link"
+  appTooltip
   target="_blank"
   rel="noopener noreferrer"
   [href]="href()"
-  [ariaLabel]="ariaLabel()"
+  [tooltipText]="computedLabel"
+  [ariaLabel]="computedLabel"
   [attr.data-testid]="_testIds.root"
   ><app-icon [name]="icon()" [size]="size()"
 /></a>

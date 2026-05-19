@@ -1,7 +1,11 @@
+@let computedLabel = label();
+
 <a
   class="icon-router-link"
+  appTooltip
   [routerLink]="routerLink()"
-  [ariaLabel]="ariaLabel()"
+  [tooltipText]="computedLabel"
+  [ariaLabel]="computedLabel"
   [attr.data-testid]="_testIds.root"
   ><app-icon [name]="icon()" [size]="size()"
 /></a>
