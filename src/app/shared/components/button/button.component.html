@@ -25,7 +25,6 @@
   </span>
 
   @if (computedLoading) {
-    <!-- TODO: Here will be a spin component -->
-    <span class="button__loader" [attr.data-testid]="_testIds.loader">...</span>
+    <app-spin class="button__loader" size="s" color="light" [attr.data-testid]="_testIds.loader" />
   }
 </button>
