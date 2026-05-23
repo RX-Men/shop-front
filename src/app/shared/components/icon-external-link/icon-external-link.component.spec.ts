@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { IconExternalLinkComponent } from './icon-external-link.component';
 
-import { APP_TEST_IDS } from '../../../app.test-ids';
+import { APP_TEST_IDS } from '@/app/app.test-ids';
 
 describe('IconExternalLinkComponent', () => {
   let component: IconExternalLinkComponent;

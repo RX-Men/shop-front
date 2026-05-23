@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, computed, input, model, output } from '@angular/core';
 
-import { APP_TEST_IDS } from '../../../app.test-ids';
+import { APP_TEST_IDS } from '@/app/app.test-ids';
 
 import type { InputSize, InputType } from './input.types';
 

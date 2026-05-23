@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 
-import { APP_TEST_IDS } from '../../../app.test-ids';
+import { APP_TEST_IDS } from '@/app/app.test-ids';
 
 import type { SpinColor, SpinSize } from './spin.types';
 

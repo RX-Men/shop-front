@@ -84,7 +84,14 @@ module.exports = tseslint.config(
       'no-new-wrappers': 'error',
       'no-useless-concat': 'error',
       'no-var': 'error',
-      'no-restricted-syntax': 'off',
+      'no-restricted-syntax': [
+        'warn',
+        {
+          selector:
+            "Decorator[expression.callee.name='Component'] Property[key.name='imports'] > ArrayExpression[elements.length=0]",
+          message: "Empty 'imports: []' array is unnecessary in @Component and can be removed",
+        },
+      ],
       'no-shadow': 'error',
       'one-var': ['error', 'never'],
       'prefer-arrow-callback': 'error',

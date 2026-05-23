@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 
 import { IconComponent } from '../icon';
 
-import { APP_TEST_IDS } from '../../../app.test-ids';
+import { APP_TEST_IDS } from '@/app/app.test-ids';
 
 import type {
   ActionColor,
