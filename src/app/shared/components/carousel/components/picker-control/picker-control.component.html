@@ -1,0 +1,10 @@
+@let computedActive = active();
+
+<button
+  class="picker-control"
+  type="button"
+  [class.picker-control_active]="computedActive"
+  [aria-label]="ariaLabel()"
+  [aria-disabled]="computedActive"
+  [attr.data-testid]="_testIds.root"
+></button>

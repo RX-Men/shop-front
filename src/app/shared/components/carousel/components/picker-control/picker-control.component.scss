@@ -1,0 +1,47 @@
+@use 'assets/styles/placeholders';
+@use 'assets/styles/mixins' as mix;
+
+:host {
+  display: inline-flex;
+}
+
+.picker-control {
+  position: relative;
+  width: 24px;
+  aspect-ratio: 1;
+
+  &::before {
+    content: '';
+
+    @extend %position-center;
+
+    width: 50%;
+    aspect-ratio: 1;
+    border-radius: 100%;
+    background-color: var(--neutral-900);
+
+    @include mix.transition(background-color);
+  }
+
+  @include mix.hover {
+    &::before {
+      background-color: var(--brand-500);
+    }
+  }
+
+  &:focus {
+    outline: none;
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--brand-500);
+  }
+
+  &_active {
+    pointer-events: none;
+
+    &::before {
+      background-color: var(--brand-500);
+    }
+  }
+}

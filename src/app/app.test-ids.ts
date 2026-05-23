@@ -3,6 +3,12 @@ export const APP_TEST_IDS = {
     root: 'button',
     content: 'content',
   },
+  carousel: {
+    root: 'carousel',
+    tracks: 'tracks',
+    track: 'track',
+    slide: 'slide',
+  },
   externalLink: {
     root: 'external-link',
   },
@@ -22,6 +28,9 @@ export const APP_TEST_IDS = {
     error: 'input-error',
     native: 'input-native',
     root: 'input',
+  },
+  pickerControl: {
+    root: 'picker-control',
   },
   routerLink: {
     root: 'router-link',

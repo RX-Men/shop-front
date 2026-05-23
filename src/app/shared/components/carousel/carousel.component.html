@@ -1,0 +1,56 @@
+@let tracks = _tracks();
+@let tracksCount = tracks.length;
+@let trackTransform = _trackTransform();
+@let computedPerView = perView();
+@let computedCurrentIndex = _currentIndex();
+
+<div class="carousel" [attr.data-testid]="_testIds.root">
+  <div
+    class="carousel__tracks"
+    aria-roledescription="carousel"
+    [attr.data-testid]="_testIds.tracks"
+    (touchstart)="_handleTouchStart($event)"
+    (touchend)="_handleTouchEnd($event)"
+  >
+    @for (track of tracks; track $index; let trackIndex = $index) {
+      @let isTrackHidden = trackIndex !== computedCurrentIndex;
+
+      <div
+        class="carousel__track"
+        role="group"
+        aria-roledescription="slide"
+        [aria-label]="`${$index + 1} of ${tracksCount}`"
+        [aria-hidden]="isTrackHidden"
+        [style.transform]="trackTransform"
+        [attr.data-testid]="_testIds.track"
+      >
+        <div
+          class="carousel__slides"
+          [style.grid-template-columns]="`repeat(${computedPerView}, 1fr)`"
+        >
+          @for (slide of track; track $index) {
+            <div class="carousel__slide" [attr.data-testid]="_testIds.slide">
+              <ng-container
+                [ngTemplateOutlet]="slideTemplate()"
+                [ngTemplateOutletContext]="{
+                  $implicit: slide,
+                  hidden: isTrackHidden,
+                }"
+              />
+            </div>
+          }
+        </div>
+      </div>
+    }
+  </div>
+
+  <div class="carousel__picker-controls" role="group" aria-label="Choose slide to display">
+    @for (_ of tracks; track $index) {
+      <app-picker-control
+        [ariaLabel]="`Slide ${$index + 1}`"
+        [active]="computedCurrentIndex === $index"
+        (click)="_handlePickerControl($index)"
+      />
+    }
+  </div>
+</div>

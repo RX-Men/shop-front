@@ -1,0 +1,37 @@
+@use 'assets/styles/mixins' as mix;
+
+:host {
+  display: block;
+}
+
+.carousel {
+  &__tracks {
+    overflow-x: hidden;
+    display: flex;
+    gap: var(--spacing-x4);
+    padding-block-end: var(--spacing-x4);
+  }
+
+  &__track {
+    min-width: 100%;
+    max-width: 100%;
+
+    @include mix.transition(transform);
+  }
+
+  &__slides {
+    display: grid;
+    height: 100%;
+    gap: var(--spacing-x4);
+  }
+
+  &__picker-controls {
+    display: flex;
+    justify-content: center;
+    gap: var(--spacing-x3);
+
+    @include mix.media('s') {
+      display: none;
+    }
+  }
+}
