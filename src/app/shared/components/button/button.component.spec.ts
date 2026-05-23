@@ -120,6 +120,13 @@ describe('ButtonComponent', () => {
     expect(componentElement?.getAttribute('disabled')).toBe('');
   });
 
+  it('should set tabindex attribute', () => {
+    componentRef.setInput('tabIndex', -1);
+    fixture.detectChanges();
+
+    expect(componentElement?.getAttribute('tabindex')).toBe('-1');
+  });
+
   it('should allow click event', () => {
     const fakeEvent = new Event('click');
     const preventSpy = vi.spyOn(fakeEvent, 'preventDefault');
