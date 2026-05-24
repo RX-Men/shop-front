@@ -1,4 +1,3 @@
-@let labelText = label();
 @let id = resolvedId();
 @let isReq = required();
 @let currentStatus = status();
@@ -7,14 +6,12 @@
 @let error = errorText();
 @let hintText = hint();
 
-@if (labelText) {
-  <label class="input__label" [attr.for]="id">
-    {{ labelText }}
-    @if (isReq) {
-      <span class="input__required" aria-hidden="true">*</span>
-    }
-  </label>
-}
+<label class="input__label" [attr.for]="id">
+  {{ label() }}
+  @if (isReq) {
+    <span class="input__required" aria-hidden="true">*</span>
+  }
+</label>
 
 <div
   class="input input_size_{{ size() }} input_status_{{ currentStatus }}"
