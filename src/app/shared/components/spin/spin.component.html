@@ -1,5 +1,9 @@
 <span
   class="spin spin_size_{{ size() }} spin_color_{{ color() }}"
-  aria-hidden="true"
+  role="status"
   [attr.data-testid]="_testIds.root"
-></span>
+>
+  <span class="spin__description" [class.spin__description_hidden]="!withDescription()">
+    Loading
+  </span>
+</span>

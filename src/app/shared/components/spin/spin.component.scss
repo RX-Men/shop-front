@@ -1,12 +1,15 @@
+@use 'assets/styles/placeholders';
+
 :host {
   display: inline-flex;
+  align-items: center;
   line-height: 0;
 }
 
 .spin {
   position: relative;
   display: inline-flex;
-  border: 2px solid currentcolor;
+  border: calc(var(--spacing-x1) / 2) solid currentcolor;
   border-block-start-color: transparent;
   border-radius: 50%;
   color: currentcolor;
@@ -29,43 +32,51 @@
     opacity: 0.35;
   }
 
+  &__description {
+    margin-inline-start: var(--spacing-x2);
+
+    &_hidden {
+      @extend %visually-hidden;
+    }
+  }
+
   &_size {
     &_s {
-      width: 0.75rem;
-      height: 0.75rem;
+      width: var(--spacing-x3);
+      height: var(--spacing-x3);
 
       &::before {
-        inset: 2px;
+        inset: calc(var(--spacing-x1) / 2);
       }
 
       &::after {
-        inset: -4px;
+        inset: calc(var(--spacing-x1) * -1);
       }
     }
 
     &_m {
-      width: 1rem;
-      height: 1rem;
+      width: var(--spacing-x4);
+      height: var(--spacing-x4);
 
       &::before {
-        inset: 3px;
+        inset: calc(var(--spacing-x1) * 0.75);
       }
 
       &::after {
-        inset: -5px;
+        inset: calc(var(--spacing-x1) * -1.25);
       }
     }
 
     &_l {
-      width: 1.5rem;
-      height: 1.5rem;
+      width: var(--spacing-x6);
+      height: var(--spacing-x6);
 
       &::before {
-        inset: 5px;
+        inset: calc(var(--spacing-x1) * 1.25);
       }
 
       &::after {
-        inset: -6px;
+        inset: calc(var(--spacing-x1) * -1.5);
       }
     }
   }

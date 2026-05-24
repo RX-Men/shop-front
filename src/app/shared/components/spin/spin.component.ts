@@ -13,7 +13,7 @@ import type { SpinColor, SpinSize } from './spin.types';
 export class SpinComponent {
   readonly size = input<SpinSize>('m');
   readonly color = input<SpinColor>('current');
-  readonly description = input<string>('');
+  readonly withDescription = input<boolean>(false);
 
   protected readonly _testIds = APP_TEST_IDS.spin;
 }

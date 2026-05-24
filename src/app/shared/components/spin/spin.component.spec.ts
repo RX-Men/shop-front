@@ -28,8 +28,11 @@ describe('SpinComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should render with default size and color classes', () => {
+  it('should render with default size class', () => {
     expect(spinElement?.classList.contains('spin_size_m')).toBe(true);
+  });
+
+  it('should render with default color class', () => {
     expect(spinElement?.classList.contains('spin_color_current')).toBe(true);
   });
 
@@ -47,7 +50,22 @@ describe('SpinComponent', () => {
     expect(spinElement?.classList.contains('spin_color_brand')).toBe(true);
   });
 
-  it('should be hidden from accessibility tree', () => {
-    expect(spinElement?.getAttribute('aria-hidden')).toBe('true');
+  it('should expose status role', () => {
+    expect(spinElement?.getAttribute('role')).toBe('status');
+  });
+
+  it('should hide description by default', () => {
+    const descriptionElement = spinElement?.querySelector('.spin__description');
+
+    expect(descriptionElement?.classList.contains('spin__description_hidden')).toBe(true);
+  });
+
+  it('should show description when enabled', () => {
+    componentRef.setInput('withDescription', true);
+    fixture.detectChanges();
+
+    const descriptionElement = spinElement?.querySelector('.spin__description');
+
+    expect(descriptionElement?.classList.contains('spin__description_hidden')).toBe(false);
   });
 });
