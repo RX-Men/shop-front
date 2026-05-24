@@ -32,25 +32,21 @@ export class InputComponent {
   readonly autocomplete = input<string>('off');
   readonly name = input<string>('');
 
-  readonly inputId = input<string>('');
-
   readonly focused = output<FocusEvent>();
   readonly blurred = output<FocusEvent>();
 
-  private readonly autoId = `app-input-${crypto.randomUUID()}`;
-
   protected readonly _testIds = APP_TEST_IDS.input;
 
-  protected readonly isDisabled = computed(() => this.disabled());
+  protected readonly resolvedId = `app-input-${crypto.randomUUID()}`;
 
-  protected readonly resolvedId = computed(() => this.inputId() || this.autoId);
+  protected readonly isDisabled = computed(() => this.disabled());
 
   protected readonly describedBy = computed(() => {
     const ids: string[] = [];
     if (this.error() && this.errorText()) {
-      ids.push(`${this.resolvedId()}-error`);
+      ids.push(`${this.resolvedId}-error`);
     } else if (this.hint()) {
-      ids.push(`${this.resolvedId()}-hint`);
+      ids.push(`${this.resolvedId}-hint`);
     }
     return ids.length ? ids.join(' ') : null;
   });
