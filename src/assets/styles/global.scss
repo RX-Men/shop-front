@@ -1,0 +1,44 @@
+@use './assets/styles/mixins' as mix;
+
+body {
+  font-family: Poppins, sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  color: var(--neutral-900);
+  background-color: var(--neutral-100);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'Bebas Neue', sans-serif;
+}
+
+.container {
+  max-width: 1320px;
+  margin-inline: auto;
+
+  @include mix.media('xxl') {
+    max-width: 1140px;
+  }
+
+  @include mix.media('xl') {
+    max-width: 960px;
+  }
+
+  @include mix.media('l') {
+    max-width: 720px;
+  }
+
+  @include mix.media('m') {
+    max-width: 540px;
+  }
+
+  @include mix.media('s') {
+    width: calc(100% - var(--spacing-x4) * 2);
+    margin-inline: var(--spacing-x4);
+  }
+}
