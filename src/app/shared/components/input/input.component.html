@@ -1,9 +1,9 @@
 @let id = resolvedId();
 @let isReq = required();
-@let currentStatus = status();
+@let isError = error();
 @let disabled = isDisabled();
 @let readonly = readonlyMode();
-@let error = errorText();
+@let errorMsg = errorText();
 @let hintText = hint();
 
 <label class="input__label" [attr.for]="id">
@@ -14,10 +14,12 @@
 </label>
 
 <div
-  class="input input_size_{{ size() }} input_status_{{ currentStatus }}"
+  class="input input_size_{{ size() }}"
   [attr.data-testid]="_testIds.root"
   [class.input_disabled]="disabled"
   [class.input_readonly]="readonly"
+  [class.input_status_error]="isError"
+  [class.input_status_warning]="warning()"
 >
   <input
     class="input__native"
@@ -33,7 +35,7 @@
     [attr.maxlength]="maxlength()"
     [attr.minlength]="minlength()"
     [attr.autocomplete]="autocomplete()"
-    [attr.aria-invalid]="currentStatus === 'error' || null"
+    [attr.aria-invalid]="isError || null"
     [attr.aria-describedby]="describedBy()"
     (input)="handleInput($event)"
     (focus)="focused.emit($event)"
@@ -41,9 +43,9 @@
   />
 </div>
 
-@if (currentStatus === 'error' && error) {
+@if (isError && errorMsg) {
   <span class="input__error" role="alert" [attr.data-testid]="_testIds.error" [id]="id + '-error'">
-    {{ error }}
+    {{ errorMsg }}
   </span>
 } @else if (hintText) {
   <span class="input__hint" [id]="id + '-hint'">{{ hintText }}</span>

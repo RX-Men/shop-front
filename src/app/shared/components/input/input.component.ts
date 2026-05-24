@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, computed, input, model, output } fr
 
 import { APP_TEST_IDS } from '../../../app.test-ids';
 
-import type { InputSize, InputStatus, InputType } from './input.types';
+import type { InputSize, InputType } from './input.types';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -15,12 +15,13 @@ export class InputComponent {
 
   readonly type = input<InputType>('text');
   readonly size = input<InputSize>('m');
-  readonly status = input<InputStatus>('default');
 
   readonly placeholder = input<string>('');
   readonly disabled = input<boolean>(false);
+  readonly error = input<boolean>(false);
   readonly readonlyMode = input<boolean>(false);
   readonly required = input<boolean>(false);
+  readonly warning = input<boolean>(false);
 
   readonly label = input<string>('');
   readonly hint = input<string>('');
@@ -46,7 +47,7 @@ export class InputComponent {
 
   protected readonly describedBy = computed(() => {
     const ids: string[] = [];
-    if (this.status() === 'error' && this.errorText()) {
+    if (this.error() && this.errorText()) {
       ids.push(`${this.resolvedId()}-error`);
     } else if (this.hint()) {
       ids.push(`${this.resolvedId()}-hint`);

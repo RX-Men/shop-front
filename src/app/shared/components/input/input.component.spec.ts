@@ -63,8 +63,8 @@ describe('InputComponent', () => {
     expect(nativeInput?.disabled).toBe(true);
   });
 
-  it('should show error message and aria-invalid when status=error and errorText set', async () => {
-    componentRef.setInput('status', 'error');
+  it('should show error message and aria-invalid when error=true and errorText set', async () => {
+    componentRef.setInput('error', true);
     componentRef.setInput('errorText', 'bad');
     fixture.detectChanges();
     await fixture.whenStable();
