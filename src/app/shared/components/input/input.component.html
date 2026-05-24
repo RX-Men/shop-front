@@ -18,13 +18,13 @@
 
 <div
   class="input input_size_{{ size() }} input_status_{{ currentStatus }}"
-  data-testid="input"
+  [attr.data-testid]="_testIds.root"
   [class.input_disabled]="disabled"
   [class.input_readonly]="readonly"
 >
   <input
-    data-testid="input-native"
     class="input__native"
+    [attr.data-testid]="_testIds.native"
     [id]="id"
     [type]="type()"
     [value]="value()"
@@ -45,7 +45,7 @@
 </div>
 
 @if (currentStatus === 'error' && error) {
-  <span class="input__error" data-testid="input-error" role="alert" [id]="id + '-error'">
+  <span class="input__error" role="alert" [attr.data-testid]="_testIds.error" [id]="id + '-error'">
     {{ error }}
   </span>
 } @else if (hintText) {

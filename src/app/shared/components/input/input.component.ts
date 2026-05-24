@@ -10,6 +10,8 @@ import {
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
+import { APP_TEST_IDS } from '../../../app.test-ids';
+
 import type { InputSize, InputStatus, InputType } from './input.types';
 
 @Component({
@@ -56,6 +58,8 @@ export class InputComponent implements ControlValueAccessor {
   private readonly cvaDisabled = signal(false);
   private readonly onChange = signal<(v: string) => void>(() => undefined);
   private readonly onTouched = signal<() => void>(() => undefined);
+
+  protected readonly _testIds = APP_TEST_IDS.input;
 
   protected readonly isDisabled = computed(() => this.disabled() || this.cvaDisabled());
 
