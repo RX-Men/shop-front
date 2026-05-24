@@ -1,6 +1,5 @@
-import { ChangeDetectionStrategy, Component, ComponentRef } from '@angular/core';
+import { ComponentRef } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
 
 import { InputComponent } from './input.component';
 
@@ -84,78 +83,5 @@ describe('InputComponent', () => {
     const nativeInput = nativeEl.querySelector<HTMLInputElement>('[data-testid="input-native"]');
     expect(label).toBeTruthy();
     expect(label?.htmlFor).toBe(nativeInput?.id);
-  });
-});
-
-describe('InputComponent — ControlValueAccessor', () => {
-  @Component({
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [InputComponent, ReactiveFormsModule],
-    template: `<app-input [formControl]="ctrl" />`,
-  })
-  class HostComponent {
-    ctrl = new FormControl('init');
-  }
-
-  let hostFixture: ComponentFixture<HostComponent>;
-  let hostEl: HTMLElement;
-  let ctrl: FormControl;
-
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [HostComponent],
-    }).compileComponents();
-
-    hostFixture = TestBed.createComponent(HostComponent);
-    hostEl = hostFixture.nativeElement as HTMLElement;
-    ctrl = hostFixture.componentInstance.ctrl;
-    hostFixture.detectChanges();
-    await hostFixture.whenStable();
-  });
-
-  it('should show initial FormControl value', () => {
-    const nativeInput = hostEl.querySelector<HTMLInputElement>('[data-testid="input-native"]');
-    expect(nativeInput?.value).toBe('init');
-  });
-
-  it('should update DOM when FormControl value changes', async () => {
-    ctrl.setValue('changed');
-    hostFixture.detectChanges();
-    await hostFixture.whenStable();
-    const nativeInput = hostEl.querySelector<HTMLInputElement>('[data-testid="input-native"]');
-    expect(nativeInput?.value).toBe('changed');
-  });
-
-  it('should update FormControl when user types', async () => {
-    const nativeInput = hostEl.querySelector<HTMLInputElement>('[data-testid="input-native"]')!;
-    nativeInput.value = 'typed';
-    nativeInput.dispatchEvent(new Event('input'));
-    hostFixture.detectChanges();
-    await hostFixture.whenStable();
-    expect(ctrl.value).toBe('typed');
-  });
-
-  it('should disable native input when FormControl is disabled', async () => {
-    ctrl.disable();
-    hostFixture.detectChanges();
-    await hostFixture.whenStable();
-    const nativeInput = hostEl.querySelector<HTMLInputElement>('[data-testid="input-native"]');
-    expect(nativeInput?.disabled).toBe(true);
-  });
-
-  it('should show empty string on FormControl reset (no null crash)', async () => {
-    ctrl.reset();
-    hostFixture.detectChanges();
-    await hostFixture.whenStable();
-    const nativeInput = hostEl.querySelector<HTMLInputElement>('[data-testid="input-native"]');
-    expect(nativeInput?.value).toBe('');
-  });
-
-  it('should mark FormControl as touched on blur', async () => {
-    const nativeInput = hostEl.querySelector<HTMLInputElement>('[data-testid="input-native"]')!;
-    nativeInput.dispatchEvent(new FocusEvent('blur'));
-    hostFixture.detectChanges();
-    await hostFixture.whenStable();
-    expect(ctrl.touched).toBe(true);
   });
 });

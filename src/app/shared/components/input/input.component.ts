@@ -1,14 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  computed,
-  forwardRef,
-  input,
-  model,
-  output,
-  signal,
-} from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { ChangeDetectionStrategy, Component, computed, input, model, output } from '@angular/core';
 
 import { APP_TEST_IDS } from '../../../app.test-ids';
 
@@ -19,15 +9,8 @@ import type { InputSize, InputStatus, InputType } from './input.types';
   selector: 'app-input',
   templateUrl: './input.component.html',
   styleUrl: './input.component.scss',
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => InputComponent),
-      multi: true,
-    },
-  ],
 })
-export class InputComponent implements ControlValueAccessor {
+export class InputComponent {
   readonly value = model<string>('');
 
   readonly type = input<InputType>('text');
@@ -55,13 +38,9 @@ export class InputComponent implements ControlValueAccessor {
 
   private readonly autoId = `app-input-${crypto.randomUUID()}`;
 
-  private readonly cvaDisabled = signal(false);
-  private readonly onChange = signal<(v: string) => void>(() => undefined);
-  private readonly onTouched = signal<() => void>(() => undefined);
-
   protected readonly _testIds = APP_TEST_IDS.input;
 
-  protected readonly isDisabled = computed(() => this.disabled() || this.cvaDisabled());
+  protected readonly isDisabled = computed(() => this.disabled());
 
   protected readonly resolvedId = computed(() => this.inputId() || this.autoId);
 
@@ -75,33 +54,15 @@ export class InputComponent implements ControlValueAccessor {
     return ids.length ? ids.join(' ') : null;
   });
 
-  writeValue(v: string | null): void {
-    this.value.set(v ?? '');
-  }
-
-  registerOnChange(fn: (v: string) => void): void {
-    this.onChange.set(fn);
-  }
-
-  registerOnTouched(fn: () => void): void {
-    this.onTouched.set(fn);
-  }
-
-  setDisabledState(isDisabled: boolean): void {
-    this.cvaDisabled.set(isDisabled);
-  }
-
   protected handleInput(e: Event): void {
     if (!(e.target instanceof HTMLInputElement)) {
       return;
     }
     const v = e.target.value;
     this.value.set(v);
-    this.onChange()(v);
   }
 
   protected handleBlur(e: FocusEvent): void {
-    this.onTouched()();
     this.blurred.emit(e);
   }
 }
