@@ -14,6 +14,8 @@ const icons = {
   'featured-seasonal-and-gifts': 'featured-seasonal-and-gifts',
   github: 'github',
   instagram: 'instagram',
+  'keyboard-arrow-left': 'keyboard-arrow-left',
+  'keyboard-arrow-right': 'keyboard-arrow-right',
   mail: 'mail',
   person: 'person',
   pinterest: 'pinterest',
