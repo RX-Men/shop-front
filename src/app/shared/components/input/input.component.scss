@@ -1,0 +1,132 @@
+@use '../../../../assets/styles/mixins' as mixins;
+
+:host {
+  display: inline-flex;
+  flex-direction: column;
+  width: 100%;
+  gap: var(--spacing-x1);
+}
+
+.input {
+  display: inline-flex;
+  align-items: center;
+  width: 100%;
+  background: var(--neutral-100);
+  border: 1px solid var(--neutral-300);
+  border-radius: var(--radius-xs);
+  color: var(--neutral-900);
+
+  @include mixins.transition((border-color, box-shadow));
+
+  @include mixins.hover {
+    border-color: var(--neutral-500);
+  }
+
+  &:focus-within {
+    border-color: var(--neutral-900);
+    box-shadow: inset 0 0 0 1px var(--neutral-900);
+    outline: none;
+  }
+
+  &__native {
+    flex: 1 1 auto;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: inherit;
+    font: inherit;
+
+    &::placeholder {
+      color: var(--neutral-500);
+    }
+
+    &:disabled {
+      cursor: not-allowed;
+    }
+  }
+
+  &_size {
+    &_s {
+      height: 32px;
+      padding-inline: var(--spacing-x2);
+      font-size: var(--text-sm);
+      line-height: var(--text-sm-line-height);
+    }
+
+    &_m {
+      height: 40px;
+      padding-inline: var(--spacing-x3);
+      font-size: var(--text-base);
+      line-height: var(--text-base-line-height);
+    }
+
+    &_l {
+      height: 48px;
+      padding-inline: var(--spacing-x4);
+      font-size: var(--text-lg);
+      line-height: var(--text-lg-line-height);
+    }
+  }
+
+  &_status {
+    &_error {
+      border-color: var(--error);
+
+      &:focus-within {
+        border-color: var(--error);
+        box-shadow: inset 0 0 0 1px var(--error);
+      }
+    }
+
+    &_warning {
+      border-color: var(--warning-500);
+
+      &:focus-within {
+        border-color: var(--warning-500);
+        box-shadow: inset 0 0 0 1px var(--warning-500);
+      }
+    }
+  }
+
+  &_disabled {
+    background: var(--neutral-100);
+    color: var(--neutral-500);
+    cursor: not-allowed;
+
+    @include mixins.hover {
+      border-color: var(--neutral-300);
+    }
+  }
+
+  &_readonly {
+    background: var(--neutral-100);
+
+    @include mixins.hover {
+      border-color: var(--neutral-300);
+    }
+  }
+
+  &__label {
+    font-size: var(--text-sm);
+    line-height: var(--text-sm-line-height);
+    color: var(--neutral-900);
+  }
+
+  &__required {
+    margin-inline-start: 2px;
+    color: var(--error);
+  }
+
+  &__hint {
+    font-size: var(--text-xs);
+    color: var(--neutral-700);
+  }
+
+  &__error {
+    font-size: var(--text-xs);
+    color: var(--error);
+  }
+}

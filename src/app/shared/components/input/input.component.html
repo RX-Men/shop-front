@@ -1,0 +1,52 @@
+@let id = resolvedId;
+@let isReq = required();
+@let isError = error();
+@let disabled = isDisabled();
+@let readonly = readonlyMode();
+@let errorMsg = errorText();
+@let hintText = hint();
+
+<label class="input__label" [attr.for]="id">
+  {{ label() }}
+  @if (isReq) {
+    <span class="input__required" aria-hidden="true">*</span>
+  }
+</label>
+
+<div
+  class="input input_size_{{ size() }}"
+  [attr.data-testid]="_testIds.root"
+  [class.input_disabled]="disabled"
+  [class.input_readonly]="readonly"
+  [class.input_status_error]="isError"
+  [class.input_status_warning]="warning()"
+>
+  <input
+    class="input__native"
+    [attr.data-testid]="_testIds.native"
+    [id]="id"
+    [type]="type()"
+    [value]="value()"
+    [placeholder]="placeholder()"
+    [disabled]="disabled"
+    [readOnly]="readonly"
+    [required]="isReq"
+    [attr.name]="name() || null"
+    [attr.maxlength]="maxlength()"
+    [attr.minlength]="minlength()"
+    [attr.autocomplete]="autocomplete()"
+    [attr.aria-invalid]="isError || null"
+    [attr.aria-describedby]="describedBy()"
+    (input)="handleInput($event)"
+    (focus)="focused.emit($event)"
+    (blur)="blurred.emit($event)"
+  />
+</div>
+
+@if (isError && errorMsg) {
+  <span class="input__error" role="alert" [attr.data-testid]="_testIds.error" [id]="id + '-error'">
+    {{ errorMsg }}
+  </span>
+} @else if (hintText) {
+  <span class="input__hint" [id]="id + '-hint'">{{ hintText }}</span>
+}

@@ -18,6 +18,11 @@ export const APP_TEST_IDS = {
   iconRouterLink: {
     root: 'icon-router-link',
   },
+  input: {
+    error: 'input-error',
+    native: 'input-native',
+    root: 'input',
+  },
   routerLink: {
     root: 'router-link',
   },
