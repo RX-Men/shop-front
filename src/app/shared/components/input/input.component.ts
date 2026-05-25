@@ -58,8 +58,4 @@ export class InputComponent {
     const v = e.target.value;
     this.value.set(v);
   }
-
-  protected handleBlur(e: FocusEvent): void {
-    this.blurred.emit(e);
-  }
 }

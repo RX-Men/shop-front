@@ -39,7 +39,7 @@
     [attr.aria-describedby]="describedBy()"
     (input)="handleInput($event)"
     (focus)="focused.emit($event)"
-    (blur)="handleBlur($event)"
+    (blur)="blurred.emit($event)"
   />
 </div>
 
