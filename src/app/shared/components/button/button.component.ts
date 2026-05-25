@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 
 import { IconComponent } from '../icon';
+import { SpinComponent } from '../spin';
 
 import { APP_TEST_IDS } from '../../../app.test-ids';
 
@@ -15,7 +16,7 @@ import type {
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-button',
-  imports: [IconComponent],
+  imports: [IconComponent, SpinComponent],
   templateUrl: './button.component.html',
   styleUrl: './button.component.scss',
   host: {

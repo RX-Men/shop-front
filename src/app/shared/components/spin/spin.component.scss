@@ -1,0 +1,107 @@
+@use 'assets/styles/placeholders';
+
+:host {
+  display: inline-flex;
+  align-items: center;
+  line-height: 0;
+}
+
+.spin {
+  position: relative;
+  display: inline-flex;
+  border: calc(var(--spacing-x1) / 2) solid currentcolor;
+  border-block-start-color: transparent;
+  border-radius: 50%;
+  color: currentcolor;
+  animation: spin-rotate 0.8s linear infinite;
+
+  &::before {
+    position: absolute;
+    border-radius: inherit;
+    background-color: currentcolor;
+    box-shadow: 0 0 6px currentcolor;
+    content: '';
+    opacity: 0.75;
+  }
+
+  &::after {
+    position: absolute;
+    border: 1px solid currentcolor;
+    border-radius: inherit;
+    content: '';
+    opacity: 0.35;
+  }
+
+  &__description {
+    margin-inline-start: var(--spacing-x2);
+
+    &_hidden {
+      @extend %visually-hidden;
+    }
+  }
+
+  &_size {
+    &_s {
+      width: 12px;
+      height: 12px;
+
+      &::before {
+        inset: calc(var(--spacing-x1) / 2);
+      }
+
+      &::after {
+        inset: calc(var(--spacing-x1) * -1);
+      }
+    }
+
+    &_m {
+      width: 16px;
+      height: 16px;
+
+      &::before {
+        inset: calc(var(--spacing-x1) * 0.75);
+      }
+
+      &::after {
+        inset: calc(var(--spacing-x1) * -1.25);
+      }
+    }
+
+    &_l {
+      width: 24px;
+      height: 24px;
+
+      &::before {
+        inset: calc(var(--spacing-x1) * 1.25);
+      }
+
+      &::after {
+        inset: calc(var(--spacing-x1) * -1.5);
+      }
+    }
+  }
+
+  &_color {
+    &_current {
+      color: currentcolor;
+    }
+
+    &_brand {
+      color: var(--brand-500);
+    }
+
+    &_light {
+      color: var(--neutral-100);
+    }
+
+    &_dark {
+      color: var(--neutral-900);
+    }
+  }
+}
+
+@keyframes spin-rotate {
+  to {
+    rotate: 1turn;
+  }
+}

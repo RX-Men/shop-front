@@ -2,7 +2,6 @@ export const APP_TEST_IDS = {
   button: {
     root: 'button',
     content: 'content',
-    loader: 'loader',
   },
   externalLink: {
     root: 'external-link',
@@ -21,5 +20,8 @@ export const APP_TEST_IDS = {
   },
   routerLink: {
     root: 'router-link',
+  },
+  spin: {
+    root: 'spin',
   },
 } as const;
