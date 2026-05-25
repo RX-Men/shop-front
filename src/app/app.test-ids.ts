@@ -2,7 +2,6 @@ export const APP_TEST_IDS = {
   button: {
     root: 'button',
     content: 'content',
-    loader: 'loader',
   },
   externalLink: {
     root: 'external-link',

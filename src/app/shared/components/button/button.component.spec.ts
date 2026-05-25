@@ -105,7 +105,7 @@ describe('ButtonComponent', () => {
     fixture.detectChanges();
 
     const loaderElement = componentElement?.querySelector(
-      `[data-testid="${APP_TEST_IDS.button.loader}"]`,
+      `[data-testid="${APP_TEST_IDS.spin.root}"]`,
     );
 
     expect(componentElement?.getAttribute('aria-busy')).toBe('true');
