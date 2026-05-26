@@ -4,5 +4,11 @@ export default {
   rules: {
     'scss/dollar-variable-empty-line-before': null,
     'custom-property-empty-line-before': null,
+    'selector-pseudo-element-no-unknown': [
+      true,
+      {
+        ignorePseudoElements: ['ng-deep'],
+      },
+    ],
   },
 };

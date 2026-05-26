@@ -4,7 +4,7 @@ import { provideRouter } from '@angular/router';
 
 import { RouterLinkComponent } from './router-link.component';
 
-import { APP_TEST_IDS } from '../../../app.test-ids';
+import { APP_TEST_IDS } from '@/app/app.test-ids';
 
 describe('RouterLinkComponent', () => {
   let component: RouterLinkComponent;

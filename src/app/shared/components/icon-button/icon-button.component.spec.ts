@@ -4,7 +4,7 @@ import { vi } from 'vitest';
 
 import { IconButtonComponent } from './icon-button.component';
 
-import { APP_TEST_IDS } from '../../../app.test-ids';
+import { APP_TEST_IDS } from '@/app/app.test-ids';
 
 describe('IconButtonComponent', () => {
   let component: IconButtonComponent;

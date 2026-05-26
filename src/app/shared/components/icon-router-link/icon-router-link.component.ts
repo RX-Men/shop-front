@@ -3,7 +3,7 @@ import { RouterLink } from '@angular/router';
 
 import { IconComponent } from '../icon/icon.component';
 
-import { APP_TEST_IDS } from '../../../app.test-ids';
+import { APP_TEST_IDS } from '@/app/app.test-ids';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
