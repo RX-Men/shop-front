@@ -38,4 +38,7 @@ export const APP_TEST_IDS = {
   spin: {
     root: 'spin',
   },
+  tooltip: {
+    root: 'tooltip',
+  },
 } as const;

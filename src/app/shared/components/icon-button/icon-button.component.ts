@@ -1,6 +1,8 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 
-import { IconComponent } from '../icon/icon.component';
+import { IconComponent } from '../icon';
+
+import { TooltipDirective } from '../../directives/tooltip';
 
 import { APP_TEST_IDS } from '@/app/app.test-ids';
 
@@ -9,7 +11,7 @@ import type { ButtonType } from '../../models/ui.model';
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-icon-button',
-  imports: [IconComponent],
+  imports: [IconComponent, TooltipDirective],
   templateUrl: './icon-button.component.html',
   styleUrl: './icon-button.component.scss',
   host: {
@@ -21,7 +23,7 @@ export class IconButtonComponent {
   readonly type = input<ButtonType>('button');
   readonly icon = input.required<ReturnType<IconComponent['name']>>();
   readonly size = input<ReturnType<IconComponent['size']>>('m');
-  readonly ariaLabel = input.required<string>();
+  readonly label = input.required<string>();
   readonly ariaPressed = input<boolean | 'mixed'>();
   readonly disabled = input<boolean>();
 

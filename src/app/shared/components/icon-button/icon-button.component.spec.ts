@@ -1,5 +1,6 @@
 import { ComponentRef } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { OverlayContainer } from '@angular/cdk/overlay';
 import { vi } from 'vitest';
 
 import { IconButtonComponent } from './icon-button.component';
@@ -12,23 +13,33 @@ describe('IconButtonComponent', () => {
   let componentElement: HTMLButtonElement | null;
   let fixture: ComponentFixture<IconButtonComponent>;
 
+  let overlayContainer: OverlayContainer;
+  let overlayContainerElement: HTMLElement;
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [IconButtonComponent],
     }).compileComponents();
+
+    overlayContainer = TestBed.inject(OverlayContainer);
+    overlayContainerElement = overlayContainer.getContainerElement();
 
     fixture = TestBed.createComponent(IconButtonComponent);
     component = fixture.componentInstance;
     componentRef = fixture.componentRef;
 
     componentRef.setInput('icon', 'person');
-    componentRef.setInput('ariaLabel', 'See user profile');
+    componentRef.setInput('label', 'See user profile');
 
     await fixture.whenStable();
 
     componentElement = (fixture.nativeElement as HTMLElement).querySelector(
       `[data-testid="${APP_TEST_IDS.iconButton.root}"]`,
     );
+  });
+
+  afterEach(() => {
+    overlayContainer.ngOnDestroy();
   });
 
   it('should create', () => {
@@ -85,7 +96,7 @@ describe('IconButtonComponent', () => {
   });
 
   it('should update aria-label attribute', () => {
-    componentRef.setInput('ariaLabel', 'Add to wishlist');
+    componentRef.setInput('label', 'Add to wishlist');
     fixture.detectChanges();
 
     expect(componentElement?.getAttribute('aria-label')).toBe('Add to wishlist');
@@ -143,5 +154,67 @@ describe('IconButtonComponent', () => {
     fixture.debugElement.triggerEventHandler('keydown', fakeEvent);
 
     expect(stopSpy).toHaveBeenCalledOnce();
+  });
+
+  it('should show tooltip on mouseenter', () => {
+    componentElement?.dispatchEvent(new MouseEvent('mouseenter'));
+    fixture.detectChanges();
+
+    const tooltipElement = overlayContainerElement.querySelector<HTMLDivElement>(
+      `[data-testid="${APP_TEST_IDS.tooltip.root}"]`,
+    );
+
+    expect(tooltipElement).toBeTruthy();
+  });
+
+  it('should hide tooltip on mouseleave', () => {
+    componentElement?.dispatchEvent(new MouseEvent('mouseenter'));
+    fixture.detectChanges();
+
+    componentElement?.dispatchEvent(new MouseEvent('mouseleave'));
+    fixture.detectChanges();
+
+    const tooltipElement = document.querySelector<HTMLDivElement>(
+      `[data-testid="${APP_TEST_IDS.tooltip.root}"]`,
+    );
+
+    expect(tooltipElement).toBeNull();
+  });
+
+  it('should show tooltip on focus', () => {
+    componentElement?.dispatchEvent(new KeyboardEvent('focus'));
+    fixture.detectChanges();
+
+    const tooltipElement = document.querySelector<HTMLDivElement>(
+      `[data-testid="${APP_TEST_IDS.tooltip.root}"]`,
+    );
+
+    expect(tooltipElement).toBeTruthy();
+  });
+
+  it('should hide tooltip on blur', () => {
+    componentElement?.dispatchEvent(new KeyboardEvent('focus'));
+    fixture.detectChanges();
+
+    componentElement?.dispatchEvent(new KeyboardEvent('blur'));
+    fixture.detectChanges();
+
+    const tooltipElement = document.querySelector<HTMLDivElement>(
+      `[data-testid="${APP_TEST_IDS.tooltip.root}"]`,
+    );
+
+    expect(tooltipElement).toBeNull();
+  });
+
+  it('should set equal aria-label and tooltip content by the provided label', () => {
+    componentElement?.dispatchEvent(new MouseEvent('mouseenter'));
+    fixture.detectChanges();
+
+    const tooltipElement = overlayContainerElement.querySelector<HTMLDivElement>(
+      `[data-testid="${APP_TEST_IDS.tooltip.root}"]`,
+    );
+
+    expect(componentElement?.getAttribute('aria-label')).toBe('See user profile');
+    expect(tooltipElement?.textContent?.trim()).toBe('See user profile');
   });
 });
