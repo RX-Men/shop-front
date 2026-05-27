@@ -1,4 +1,7 @@
 export const APP_TEST_IDS = {
+  banner: {
+    root: 'banner',
+  },
   button: {
     root: 'button',
     content: 'content',
