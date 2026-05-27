@@ -1,0 +1,33 @@
+@let computedVariant = variant();
+@let computedLink = link();
+
+<div class="banner" [attr.data-testid]="_testIds.root">
+  <div class="banner__wrapper">
+    <div
+      class="banner__content"
+      [class.banner__content_variant_diagonal]="computedVariant === 'diagonal'"
+    >
+      <div class="banner__title text-4xl">
+        <ng-content select="[app-banner-title]" />
+      </div>
+
+      <div class="banner__subtitle text-xl">
+        <ng-content select="[app-banner-subtitle]" />
+      </div>
+
+      <div class="banner__cta">
+        <ng-content select="[app-banner-cta]" />
+      </div>
+    </div>
+
+    <div class="banner__media banner__media_variant_{{ computedVariant }}">
+      <img class="banner__img" alt="Cover" fill [ngSrc]="imgSrc()" [priority]="imgPriority()" />
+    </div>
+  </div>
+
+  @if (computedLink) {
+    <a class="banner__link" [routerLink]="computedLink"
+      ><span class="banner__link-text">See details</span></a
+    >
+  }
+</div>
