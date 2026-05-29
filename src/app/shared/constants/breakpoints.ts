@@ -6,4 +6,7 @@ const BREAKPOINTS = {
   s: '(max-width: 575px)',
 } as const;
 
-export { BREAKPOINTS };
+type BreakpointKey = keyof typeof BREAKPOINTS;
+type BreakpointValue = (typeof BREAKPOINTS)[BreakpointKey];
+
+export { BREAKPOINTS, type BreakpointKey, type BreakpointValue };

@@ -11,6 +11,7 @@
   position: relative;
   display: inline-flex;
   border: 2px solid transparent;
+  font-family: Poppins, sans-serif;
   text-transform: uppercase;
 
   @include mix.transition((border-color, color, background-color));
@@ -140,8 +141,10 @@
 
   &__content {
     display: flex;
+    justify-content: center;
     align-items: center;
     gap: var(--spacing-x2);
+    width: 100%;
 
     &_icon-placement {
       &_start {

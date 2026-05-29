@@ -33,6 +33,7 @@ export class ButtonComponent {
   readonly iconPlacement = input<ActionIconPlacement>('end');
   readonly loading = input<boolean>();
   readonly disabled = input<boolean>();
+  readonly tabIndex = input<number>();
 
   protected readonly _testIds = APP_TEST_IDS.button;
 
