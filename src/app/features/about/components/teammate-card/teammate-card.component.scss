@@ -5,23 +5,25 @@
 }
 
 .card {
+  $this: &;
+
   width: min(100%, 370px);
   min-height: 500px;
   perspective: 1000px;
 
-  @include mix.hover {
-    .card-inner {
+  &:hover {
+    #{$this}__inner {
       transform: rotateY(180deg);
     }
   }
 
   &:focus-within {
-    .card-inner {
+    #{$this}__inner {
       transform: rotateY(180deg);
     }
   }
 
-  &-inner {
+  #{$this}__inner {
     position: relative;
     min-height: inherit;
 

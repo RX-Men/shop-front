@@ -1,10 +1,11 @@
+import { ExternalLinkComponent } from '@/app/shared/components/external-link';
 import { NgOptimizedImage } from '@angular/common';
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-teammate-card',
-  imports: [NgOptimizedImage],
+  imports: [NgOptimizedImage, ExternalLinkComponent],
   templateUrl: './teammate-card.component.html',
   styleUrl: './teammate-card.component.scss',
 })
