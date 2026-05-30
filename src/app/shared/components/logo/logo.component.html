@@ -1,0 +1,19 @@
+<ng-template #logo>
+  <img
+    class="logo"
+    alt="Logo"
+    [width]="_width"
+    [height]="_height"
+    [priority]="imgPriority()"
+    [ngSrc]="'@/assets/icons/logo.svg'"
+    [attr.data-testid]="_testIds.root"
+  />
+</ng-template>
+
+@if (linkable()) {
+  <a class="logo__link" aria-label="Go to Home page" [routerLink]="'/'">
+    <ng-container [ngTemplateOutlet]="logo" />
+  </a>
+} @else {
+  <ng-container [ngTemplateOutlet]="logo" />
+}

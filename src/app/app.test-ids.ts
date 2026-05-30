@@ -38,6 +38,9 @@ export const APP_TEST_IDS = {
     native: 'input-native',
     root: 'input',
   },
+  logo: {
+    root: 'logo',
+  },
   pickerControl: {
     root: 'picker-control',
   },
