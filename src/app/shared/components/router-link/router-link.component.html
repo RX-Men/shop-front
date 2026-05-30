@@ -6,6 +6,7 @@
   }} router-link_color_{{ color() }}"
   [class.router-link_icon-placement_start]="computedIcon && iconPlacement() === 'start'"
   [routerLink]="routerLink()"
+  [attr.tabindex]="tabIndex()"
   [attr.data-testid]="'router-link'"
 >
   <ng-content />

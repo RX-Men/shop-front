@@ -1,0 +1,26 @@
+<section [attr.data-testid]="_testIds.root">
+  <div class="hero__wrapper">
+    <app-carousel
+      [type]="'carousel'"
+      [autoplay]="_autoplayInMs"
+      [slides]="carouselBanners()"
+      [hasSlideControls]="true"
+    >
+      <ng-template let-slide let-hidden="hidden">
+        <app-banner class="hero__banner" [variant]="'full-screen'" [imgSrc]="slide.img">
+          <h2 app-banner-title>{{ slide.title }}</h2>
+
+          <p app-banner-subtitle>{{ slide.subtitle }}</p>
+
+          <div class="hero__banner-cta" app-banner-cta>
+            @for (link of slide.links; track $index) {
+              <app-external-link [href]="link.href" [tabIndex]="hidden ? -1 : undefined">{{
+                link.text
+              }}</app-external-link>
+            }
+          </div>
+        </app-banner>
+      </ng-template>
+    </app-carousel>
+  </div>
+</section>

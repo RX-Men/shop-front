@@ -1,3 +1,13 @@
+<app-hero [carouselBanners]="hero" />
+
 <app-product-list [title]="'New this week'" [products]="products" />
+
+<app-promo-section
+  [title]="promo.title"
+  [subtitle]="promo.subtitle"
+  [description]="promo.description"
+  [imgSrc]="promo.img"
+  [link]="promo.link"
+/>
 
 <app-product-list [title]="'Trending now'" [products]="products" />

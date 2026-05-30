@@ -1,6 +1,7 @@
 @use 'sass:map';
 
 $breakpoints: (
+  xxxl: 1512,
   xxl: 1400,
   xl: 1200,
   l: 992,
@@ -9,6 +10,7 @@ $breakpoints: (
   xs: 320,
 );
 
+$breakpoint-xxxl: map.get($breakpoints, xxxl);
 $breakpoint-xxl: map.get($breakpoints, xxl);
 $breakpoint-xl: map.get($breakpoints, xl);
 $breakpoint-l: map.get($breakpoints, l);

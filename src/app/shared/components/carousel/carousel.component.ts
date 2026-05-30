@@ -5,10 +5,13 @@ import {
   contentChild,
   effect,
   input,
+  OnDestroy,
+  OnInit,
   signal,
   TemplateRef,
 } from '@angular/core';
 import { NgTemplateOutlet } from '@angular/common';
+import { BehaviorSubject, interval, switchMap } from 'rxjs';
 
 import { PickerControlComponent } from './components/picker-control';
 
@@ -16,20 +19,52 @@ import { APP_TEST_IDS } from '@/app/app.test-ids';
 import { CAROUSEL_TYPE, MIN_SWIPE_SIZE, SWIPE_DIRECTION } from './carousel.constants';
 
 import type { CarouselType, Handlers, SwipeDirection } from './carousel.types';
+import { IconButtonComponent } from '../icon-button';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-carousel',
-  imports: [NgTemplateOutlet, PickerControlComponent],
+  imports: [NgTemplateOutlet, PickerControlComponent, IconButtonComponent],
   templateUrl: './carousel.component.html',
   styleUrl: './carousel.component.scss',
 })
-export class CarouselComponent<T extends object> {
+export class CarouselComponent<T extends object> implements OnInit, OnDestroy {
   readonly slideTemplate = contentChild.required(TemplateRef);
   readonly slides = input<T[]>([]);
 
   readonly type = input<CarouselType>(CAROUSEL_TYPE.slider);
   readonly perView = input<number>(1);
+  readonly autoplay = input<number>();
+
+  readonly hasSlideControls = input<boolean>(false);
+
+  protected readonly _withAutoplay = computed(() => {
+    const autoplay = this.autoplay();
+    if (autoplay === undefined) {
+      return false;
+    }
+
+    return Number.isFinite(autoplay) && autoplay > 0;
+  });
+
+  protected readonly _autoplayButton = computed<{
+    icon: ReturnType<IconButtonComponent['icon']>;
+    label: string;
+  }>(() => {
+    const isStopped = this._isAutoplayingManuallyStopped();
+    return {
+      icon: isStopped ? 'play-circle' : 'pause-circle',
+      label: isStopped ? 'Start slide show' : 'Stop slide show',
+    };
+  });
+
+  protected readonly _ariaLive = computed(() => {
+    if (this.type() === 'carousel') {
+      return this._isAutoplayingManuallyStopped() ? 'polite' : 'off';
+    }
+
+    return 'polite';
+  });
 
   protected readonly _tracks = computed(() => {
     const tracks = [];
@@ -70,8 +105,36 @@ export class CarouselComponent<T extends object> {
     });
   }
 
+  ngOnInit(): void {
+    if (this._withAutoplay()) {
+      this._isAutoplaying.next(true);
+      this._isAutoplaying
+        .pipe(switchMap((isPlaying) => (isPlaying ? interval(this.autoplay()) : [])))
+        .subscribe(() => {
+          this.switchNextSlide();
+        });
+    }
+  }
+
+  ngOnDestroy(): void {
+    this._isAutoplaying.unsubscribe();
+  }
+
   readonly isFirstSlide = (): boolean => this._currentIndex() <= 0;
   readonly isLastSlide = (): boolean => this._currentIndex() >= this._tracks().length - 1;
+
+  private readonly _isAutoplaying = new BehaviorSubject<boolean>(false);
+  private readonly _isAutoplayingManuallyStopped = signal<boolean>(false);
+
+  private readonly _nextHandlers: Handlers = {
+    [CAROUSEL_TYPE.carousel]: (): void => this._switchCarouselNextSlide(),
+    [CAROUSEL_TYPE.slider]: (): void => this._switchSliderNextSlide(),
+  };
+
+  private readonly _prevHandlers = {
+    [CAROUSEL_TYPE.carousel]: (): void => this._switchCarouselPreviousSlide(),
+    [CAROUSEL_TYPE.slider]: (): void => this._switchSliderPreviousSlide(),
+  };
 
   readonly switchNextSlide = (): void => {
     this._nextHandlers[this.type()]();
@@ -79,6 +142,18 @@ export class CarouselComponent<T extends object> {
 
   readonly switchPreviousSlide = (): void => {
     this._prevHandlers[this.type()]();
+  };
+
+  protected readonly _handleMouseEnter = (): void => {
+    this._stopAutoplay();
+  };
+
+  protected readonly _handleMouseLeave = (): void => {
+    if (this._isAutoplayingManuallyStopped()) {
+      return;
+    }
+
+    this._resumeAutoplay();
   };
 
   protected readonly _handleTouchStart = (event: TouchEvent): void => {
@@ -118,6 +193,24 @@ export class CarouselComponent<T extends object> {
     this._currentIndex.set(index);
   };
 
+  protected readonly _toggleAutoplayButton = (): void => {
+    this._isAutoplayingManuallyStopped.update((isPlaying) => !isPlaying);
+
+    if (this._isAutoplayingManuallyStopped()) {
+      this._stopAutoplay();
+    } else {
+      this._resumeAutoplay();
+    }
+  };
+
+  protected readonly _stopAutoplayOnFocus = (): void => {
+    if (this._isAutoplayingManuallyStopped()) {
+      return;
+    }
+
+    this._toggleAutoplayButton();
+  };
+
   private readonly _switchSliderNextSlide = (): void => {
     if (this.isLastSlide()) {
       return;
@@ -147,13 +240,11 @@ export class CarouselComponent<T extends object> {
     this._currentIndex.update((index) => (isFirstSlide ? lastSlideIndex : index - 1));
   };
 
-  private readonly _nextHandlers: Handlers = {
-    [CAROUSEL_TYPE.carousel]: (): void => this._switchCarouselNextSlide(),
-    [CAROUSEL_TYPE.slider]: (): void => this._switchSliderNextSlide(),
+  private readonly _resumeAutoplay = (): void => {
+    this._isAutoplaying.next(true);
   };
 
-  private readonly _prevHandlers = {
-    [CAROUSEL_TYPE.carousel]: (): void => this._switchCarouselPreviousSlide(),
-    [CAROUSEL_TYPE.slider]: (): void => this._switchSliderPreviousSlide(),
+  private readonly _stopAutoplay = (): void => {
+    this._isAutoplaying.next(false);
   };
 }

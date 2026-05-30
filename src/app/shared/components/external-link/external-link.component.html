@@ -8,6 +8,7 @@
   rel="noopener noreferrer"
   [class.external-link_icon-placement_start]="computedIcon && iconPlacement() === 'start'"
   [href]="href()"
+  [attr.tabindex]="tabIndex()"
   [attr.data-testid]="_testIds.root"
 >
   <ng-content />
