@@ -1,0 +1,26 @@
+<article class="card">
+  <div class="card-inner">
+    <section class="card__face card__face_front">
+      <div class="card__image-wrapper">
+        <img class="card__image" [ngSrc]="imgSrc()" [alt]="name()" />
+      </div>
+
+      <div class="card__content">
+        <p class="card__role text-sm">{{ role() }}</p>
+        <h2 class="card__name text-2xl">{{ name() }}</h2>
+        <a class="card__link" target="_blank" rel="noreferrer" [href]="linkHref()">
+          {{ linkHref() }}
+        </a>
+      </div>
+    </section>
+
+    <section class="card__face card__face_back" aria-label="Card details">
+      <p class="card__description text-lg">{{ description() }}</p>
+
+      <div class="card__promo">
+        <span class="card__promo-label text-xs">Promo code</span>
+        <strong class="card__promocode text-2xl">{{ promoCode() }}</strong>
+      </div>
+    </section>
+  </div>
+</article>
