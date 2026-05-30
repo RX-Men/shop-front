@@ -43,6 +43,7 @@
     background: var(--neutral-100);
     backface-visibility: hidden;
     box-shadow: 0 var(--spacing-x5) var(--spacing-x12) rgb(var(--neutral-900-rgb), 0.12);
+  }
 
     &_front {
       gap: var(--spacing-x5);
