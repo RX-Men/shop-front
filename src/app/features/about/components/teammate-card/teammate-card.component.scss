@@ -23,7 +23,7 @@
     }
   }
 
-  &-inner {
+  #{$this}__inner {
     position: relative;
     min-height: inherit;
 
