@@ -1,0 +1,52 @@
+<p class="kit-section__subtitle">Sizes</p>
+<div class="kit-row">
+  <app-input label="Small" placeholder="size s" size="s" />
+  <app-input label="Medium" placeholder="size m" size="m" />
+  <app-input label="Large" placeholder="size l" size="l" />
+</div>
+
+<p class="kit-section__subtitle">Statuses</p>
+<div class="kit-row">
+  <app-input label="Default" placeholder="default" />
+  <app-input label="Error" placeholder="error" errorText="This field is required" [error]="true" />
+  <app-input
+    label="Warning"
+    placeholder="warning"
+    hint="Double-check this value"
+    [warning]="true"
+  />
+</div>
+
+<p class="kit-section__subtitle">States</p>
+<div class="kit-row">
+  <app-input label="Disabled" placeholder="disabled" [disabled]="true" />
+  <app-input label="Readonly" value="Read-only value" [readonlyMode]="true" />
+  <app-input label="Required" placeholder="required field" [required]="true" />
+</div>
+
+<p class="kit-section__subtitle">Label · hint · error</p>
+<div class="kit-row">
+  <app-input
+    label="Email"
+    placeholder="you@example.com"
+    type="email"
+    hint="We will never share your email"
+  />
+  <app-input label="Password" placeholder="min 8 chars" errorText="Too short" [error]="true" />
+</div>
+
+<p class="kit-section__subtitle">Two-way binding</p>
+<div class="kit-row">
+  <div>
+    <app-input label="[(value)]" [(value)]="value" />
+    <small>value: {{ value }}</small>
+  </div>
+</div>
+
+<p class="kit-section__subtitle">Input types</p>
+<div class="kit-row">
+  <app-input label="email" placeholder="you@example.com" type="email" />
+  <app-input label="tel" placeholder="+1 555 000" type="tel" />
+  <app-input label="url" placeholder="https://" type="url" />
+  <app-input label="search" placeholder="Search…" type="search" />
+</div>
