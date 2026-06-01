@@ -1,0 +1,105 @@
+{
+  "description": "The next generation of\u00A0digital retail for comic book lovers. Enjoy a\u00A0modern shopping experience at\u00A0our premier store",
+  "brand": "ShopFront-Comics",
+  "date": "2026",
+  "notice": "All rights reserved",
+  "sitemap": {
+    "title": "Sitemap",
+    "content": [
+      {
+        "variant": "router-link",
+        "name": "Home",
+        "href": "/"
+      },
+      {
+        "variant": "router-link",
+        "name": "Catalog",
+        "href": "catalog"
+      },
+      {
+        "variant": "router-link",
+        "name": "cart",
+        "href": "cart"
+      },
+      {
+        "variant": "router-link",
+        "name": "about",
+        "href": "about"
+      }
+    ]
+  },
+  "legal": {
+    "title": "Legal details",
+    "content": [
+      {
+        "variant": "external-link",
+        "name": "Terms of\u00A0use",
+        "href": "#"
+      },
+      {
+        "variant": "external-link",
+        "name": "License agreement",
+        "href": "#"
+      },
+      {
+        "variant": "external-link",
+        "name": "Privacy policy",
+        "href": "#"
+      },
+      {
+        "variant": "external-link",
+        "name": "Accessibility",
+        "href": "#"
+      }
+    ]
+  },
+  "customer": {
+    "title": "Customer service",
+    "content": [
+      {
+        "variant": "external-link",
+        "name": "Shipping &\u00A0delivery",
+        "href": "#"
+      },
+      {
+        "variant": "external-link",
+        "name": "Returns and refunds",
+        "href": "#"
+      },
+      {
+        "variant": "external-link",
+        "name": "Quality assurance",
+        "href": "#"
+      }
+    ]
+  },
+  "social": {
+    "title": "Stay in touch",
+    "content": [
+      {
+        "variant": "icon-external-link",
+        "name": "facebook",
+        "href": "#",
+        "ariaLabel": "Visit our Facebook page"
+      },
+      {
+        "variant": "icon-external-link",
+        "name": "instagram",
+        "href": "#",
+        "ariaLabel": "Visit our Instagram page"
+      },
+      {
+        "variant": "icon-external-link",
+        "name": "pinterest",
+        "href": "#",
+        "ariaLabel": "Visit our Pinterest page"
+      },
+      {
+        "variant": "icon-external-link",
+        "name": "twitter",
+        "href": "#",
+        "ariaLabel": "Visit our Twitter page"
+      }
+    ]
+  }
+}
