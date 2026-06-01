@@ -1,0 +1,14 @@
+:host {
+  display: block;
+  margin-block-end: var(--spacing-x12);
+}
+
+.ui-kit {
+  &__section-title {
+    font-size: var(--text-lg);
+    font-weight: 600;
+    border-block-end: 1px solid var(--neutral-300);
+    padding-block-end: var(--spacing-x2);
+    margin-block-end: var(--spacing-x6);
+  }
+}
