@@ -1,0 +1,139 @@
+@use 'assets/styles/mixins' as mix;
+
+:host {
+  display: flex;
+  flex-direction: column;
+}
+
+.banner {
+  $height: 550px;
+
+  position: relative;
+  display: flex;
+  flex-grow: 1;
+  min-height: $height;
+  background-color: var(--neutral-900);
+
+  &__wrapper {
+    display: flex;
+    width: 100%;
+    min-height: $height;
+    color: var(--neutral-100);
+
+    @include mix.media('l') {
+      flex-direction: column-reverse;
+    }
+  }
+
+  &__content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: calc(50% - var(--spacing-x15));
+    padding: var(--spacing-x9) var(--spacing-x5) var(--spacing-x9) var(--spacing-x10);
+
+    @include mix.media('l') {
+      width: 100%;
+      align-items: center;
+      text-align: center;
+      padding-inline: var(--spacing-x5);
+    }
+
+    @include mix.media('s') {
+      padding-inline: var(--spacing-x4);
+    }
+
+    &_variant {
+      &_diagonal {
+        &::after {
+          $step: 160px;
+
+          content: '';
+          position: absolute;
+          inset-inline-end: -$step;
+          z-index: 1;
+          width: $step;
+          height: 100%;
+          border-block-end: $height solid var(--neutral-900);
+          border-inline-end: $step solid transparent;
+
+          @include mix.media('l') {
+            content: none;
+          }
+        }
+      }
+    }
+  }
+
+  &__title,
+  &__subtitle,
+  &__cta {
+    &:empty {
+      display: none;
+    }
+  }
+
+  &__subtitle {
+    margin-block-start: var(--spacing-x9);
+  }
+
+  &__cta {
+    margin-block-start: var(--spacing-x6);
+  }
+
+  &__media {
+    flex-grow: 1;
+    height: 100%;
+
+    &_variant {
+      &_diagonal {
+        position: relative;
+
+        @include mix.media('s') {
+          aspect-ratio: 4 / 5;
+        }
+      }
+
+      &_full-screen {
+        position: absolute;
+        inset-block-start: 0;
+        inset-inline-start: 0;
+        width: 100%;
+        aspect-ratio: 16 / 9;
+
+        &::after {
+          content: '';
+          position: absolute;
+          inset-block-start: 0;
+          inset-inline-start: 0;
+          width: 100%;
+          height: 100%;
+          background-color: rgb(var(--neutral-900-rgb), 0.3);
+        }
+
+        @include mix.media('l') {
+          position: relative;
+        }
+      }
+    }
+  }
+
+  &__img {
+    object-fit: cover;
+  }
+
+  &__link {
+    position: absolute;
+    inset-block-start: 0;
+    inset-inline-start: 0;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+  }
+
+  &__link-text {
+    opacity: 0;
+  }
+}

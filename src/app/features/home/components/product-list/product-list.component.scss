@@ -1,0 +1,54 @@
+@use 'assets/styles/mixins' as mix;
+
+.product-list {
+  &__wrapper {
+    padding-block: var(--spacing-x20);
+  }
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--spacing-x4);
+
+    @include mix.media('s') {
+      flex-direction: column;
+    }
+  }
+
+  &__title {
+    position: relative;
+
+    &::before {
+      content: '';
+      position: absolute;
+      inset-block-start: calc(-1 * var(--spacing-x1));
+      inset-inline-start: calc(-1 * var(--spacing-x5));
+      display: block;
+      width: 12px;
+      height: 100%;
+      background-color: var(--brand-500);
+    }
+  }
+
+  &__products {
+    margin-block-start: var(--spacing-x6);
+  }
+
+  &__nav {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-x4);
+
+    @include mix.media('s') {
+      justify-content: space-between;
+      width: 100%;
+    }
+  }
+
+  &__carousel-buttons {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-x3);
+  }
+}

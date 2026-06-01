@@ -1,4 +1,7 @@
 export const APP_TEST_IDS = {
+  banner: {
+    root: 'banner',
+  },
   button: {
     root: 'button',
     content: 'content',
@@ -31,6 +34,23 @@ export const APP_TEST_IDS = {
   },
   pickerControl: {
     root: 'picker-control',
+  },
+  productBadge: {
+    root: 'product-badge',
+  },
+  productCard: {
+    root: 'product-card',
+    headingLink: 'heading-link',
+    heading: 'heading',
+    subheading: 'subheading',
+    img: 'img',
+    price: 'price',
+    oldPrice: 'old-price',
+    currentPrice: 'current-price',
+  },
+  productList: {
+    root: 'product-list',
+    title: 'title',
   },
   routerLink: {
     root: 'router-link',

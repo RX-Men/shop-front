@@ -85,6 +85,7 @@ npm run test
 
 - [First meeting - May 15, 2026](https://github.com/orgs/RX-Men/projects/1/views/1?pane=issue&itemId=187239999&issue=RX-Men%7Cshop-front%7C25)
 - [Second meeting - May 23, 2026](https://github.com/orgs/RX-Men/projects/1/views/1?pane=issue&itemId=191478856&issue=RX-Men%7Cshop-front%7C69)
+- [Third meeting - May 31, 2026](https://github.com/orgs/RX-Men/projects/1/views/1?filterQuery=label%3Ameeting&pane=issue&itemId=191479008&issue=RX-Men%7Cshop-front%7C70)
 
 ## License 📄
 

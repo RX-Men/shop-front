@@ -1,0 +1,17 @@
+.product-badge {
+  padding-block: var(--spacing-x2);
+  font-weight: 600;
+  text-align: center;
+  text-transform: uppercase;
+  color: var(--neutral-100);
+
+  &_status {
+    &_active {
+      background-color: var(--brand-600);
+    }
+
+    &_disabled {
+      background-color: var(--neutral-500);
+    }
+  }
+}

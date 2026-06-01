@@ -1,0 +1,63 @@
+@let badge = _badge();
+@let computedTabIndex = tabIndex();
+@let withDiscount = _withDiscount();
+@let isOut = _isOut();
+@let priceAriaLabel = _priceAriaLabel();
+
+<article class="product-card" [attr.data-testid]="_testIds.root">
+  <header class="product-card__header">
+    <a
+      class="product-card__heading"
+      [routerLink]="`${_routes.catalog}/${id()}`"
+      [attr.tabindex]="computedTabIndex"
+      [attr.data-testid]="_testIds.headingLink"
+    >
+      <h3 class="text-2xl" [attr.data-testid]="_testIds.heading">{{ heading() }}</h3>
+    </a>
+
+    <p class="product-card__subheading" [attr.data-testid]="_testIds.subheading">
+      {{ subheading() }}
+    </p>
+  </header>
+
+  <div class="product-card__img-wrapper">
+    @if (badge) {
+      <app-product-badge
+        class="product-card__badge"
+        [status]="`${isOut ? 'disabled' : 'active'}`"
+        >{{ badge }}</app-product-badge
+      >
+    }
+
+    <div class="product-card__img-inner">
+      <img alt="Cover" fill [ngSrc]="img()" [attr.data-testid]="_testIds.img" />
+    </div>
+  </div>
+
+  <div
+    class="product-card__price"
+    [attr.aria-label]="priceAriaLabel"
+    [attr.data-testid]="_testIds.price"
+  >
+    <p
+      class="product-card__current-price text-xl"
+      aria-hidden="true"
+      [class.product-card__current-price_discount]="withDiscount"
+      [attr.data-testid]="_testIds.currentPrice"
+    >
+      {{ currentPrice() | price }}
+    </p>
+
+    @if (withDiscount) {
+      <p class="product-card__old-price" aria-hidden="true" [attr.data-testid]="_testIds.oldPrice">
+        {{ oldPrice() | price }}
+      </p>
+    }
+  </div>
+
+  <footer class="product-card__footer">
+    <app-button class="product-card__button" [tabIndex]="computedTabIndex" [disabled]="isOut"
+      >Add to cart</app-button
+    >
+  </footer>
+</article>
