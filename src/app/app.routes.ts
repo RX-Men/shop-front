@@ -8,7 +8,7 @@ export const routes: Routes = [
     loadComponent: () => import('./features/home/home.component').then((m) => m.HomeComponent),
   },
   {
-    path: 'ui-kit',
+    path: ROUTES.uiKit,
     loadComponent: () => import('./features/ui-kit/ui-kit.component').then((m) => m.UiKitComponent),
   },
 ];
