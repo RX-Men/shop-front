@@ -54,12 +54,12 @@
     }
 
     &:checked {
-      background: var(--brand-500);
-      border-color: var(--brand-500);
+      background: var(--neutral-900);
+      border-color: var(--neutral-900);
 
       @include mixins.hover {
-        background: var(--brand-700);
-        border-color: var(--brand-700);
+        background: var(--neutral-700);
+        border-color: var(--neutral-700);
       }
 
       &::after {
@@ -83,5 +83,5 @@
 }
 
 .required {
-  color: var(--brand-500);
+  color: var(--neutral-900);
 }
