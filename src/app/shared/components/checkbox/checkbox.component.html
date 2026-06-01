@@ -1,0 +1,14 @@
+<label class="checkbox-wrapper checkbox-wrapper_size_{{ size() }}"
+  ><input
+    type="checkbox"
+    [checked]="checked()"
+    [disabled]="disabled()"
+    [required]="required()"
+    (change)="onInputChange($event)"
+  />
+
+  <ng-content />
+  @if (required()) {
+    <span class="required">*</span>
+  }
+</label>
