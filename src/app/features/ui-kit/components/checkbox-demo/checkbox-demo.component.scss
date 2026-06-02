@@ -1,0 +1,12 @@
+.checkbox-demo {
+  &__list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-x6);
+  }
+
+  &__list-item {
+    display: flex;
+    align-items: center;
+  }
+}
