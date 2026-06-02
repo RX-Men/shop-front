@@ -108,6 +108,8 @@
     order: 3;
     width: fit-content;
     color: var(--brand-600);
+    margin-inline: auto;
+    padding-right: var(--spacing-x5);
 
     @include mix.transition(color);
 
@@ -122,6 +124,10 @@
   }
 
   &__description {
+    display: -webkit-box;
+    -webkit-line-clamp: 10;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
     color: var(--neutral-900);
   }
 
@@ -133,12 +139,14 @@
   }
 
   &__promo-label {
-    color: var(--brand-200);
+    color: var(--brand-500);
     text-transform: uppercase;
     letter-spacing: 0;
+    border: 2px solid currentcolor;
+    padding: var(--spacing-x4);
   }
 
   &__promocode {
-    color: var(--neutral-100);
+    color: var(--brand-400);
   }
 }

@@ -1,6 +1,12 @@
 <div class="about-card">
   @for (card of cards; track card.id) {
-    <!--  <app-card [image]="card.image" [title]="card.name" />-->
-    <div>{{ card.name }}</div>
+    <app-teammate-card
+      [name]="card.name"
+      [description]="card.description"
+      [role]="card.role"
+      [promoCode]="card.promoCode"
+      [imgSrc]="card.imgSrc"
+      [linkHref]="card.linkHref"
+    />
   }
 </div>
