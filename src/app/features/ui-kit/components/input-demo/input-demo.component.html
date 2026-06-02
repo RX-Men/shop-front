@@ -1,0 +1,46 @@
+<app-ui-kit-row title="Sizes">
+  <app-input label="Small" placeholder="size s" size="s" />
+  <app-input label="Medium" placeholder="size m" size="m" />
+  <app-input label="Large" placeholder="size l" size="l" />
+</app-ui-kit-row>
+
+<app-ui-kit-row title="Statuses">
+  <app-input label="Default" placeholder="default" />
+  <app-input label="Error" placeholder="error" errorText="This field is required" [error]="true" />
+  <app-input
+    label="Warning"
+    placeholder="warning"
+    hint="Double-check this value"
+    [warning]="true"
+  />
+</app-ui-kit-row>
+
+<app-ui-kit-row title="States">
+  <app-input label="Disabled" placeholder="disabled" [disabled]="true" />
+  <app-input label="Readonly" value="Read-only value" [readonlyMode]="true" />
+  <app-input label="Required" placeholder="required field" [required]="true" />
+</app-ui-kit-row>
+
+<app-ui-kit-row title="Label · hint · error">
+  <app-input
+    label="Email"
+    placeholder="you@example.com"
+    type="email"
+    hint="We will never share your email"
+  />
+  <app-input label="Password" placeholder="min 8 chars" errorText="Too short" [error]="true" />
+</app-ui-kit-row>
+
+<app-ui-kit-row title="Two-way binding">
+  <div>
+    <app-input label="[(value)]" [(value)]="value" />
+    <small>value: {{ value }}</small>
+  </div>
+</app-ui-kit-row>
+
+<app-ui-kit-row title="Input types">
+  <app-input label="email" placeholder="you@example.com" type="email" />
+  <app-input label="tel" placeholder="+1 555 000" type="tel" />
+  <app-input label="url" placeholder="https://" type="url" />
+  <app-input label="search" placeholder="Search…" type="search" />
+</app-ui-kit-row>

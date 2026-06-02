@@ -29,7 +29,11 @@ describe('SpinComponent', () => {
   });
 
   it('should render with default size class', () => {
-    expect(spinElement?.classList.contains('spin_size_m')).toBe(true);
+    const spinnerElement = fixture.nativeElement.querySelector(
+      `[data-testid="${APP_TEST_IDS.spin.spinner}"]`,
+    );
+
+    expect(spinnerElement?.classList.contains('spin__spinner_size_m')).toBe(true);
   });
 
   it('should render with default color class', () => {
@@ -40,7 +44,11 @@ describe('SpinComponent', () => {
     componentRef.setInput('size', 'l');
     fixture.detectChanges();
 
-    expect(spinElement?.classList.contains('spin_size_l')).toBe(true);
+    const spinnerElement = fixture.nativeElement.querySelector(
+      `[data-testid="${APP_TEST_IDS.spin.spinner}"]`,
+    );
+
+    expect(spinnerElement?.classList.contains('spin__spinner_size_l')).toBe(true);
   });
 
   it('should set color class', () => {

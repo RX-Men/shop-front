@@ -1,0 +1,95 @@
+<div class="carousel-demo">
+  <app-ui-kit-row [title]="'Slider'">
+    <div class="carousel-demo__example">
+      <div class="carousel-demo__header">
+        <div class="carousel-demo__carousel-buttons">
+          <app-icon-button
+            [icon]="'keyboard-arrow-left'"
+            [size]="'l'"
+            [label]="'Previous slide'"
+            [disabled]="sliderCarousel.isFirstSlide()"
+            (click)="sliderCarousel.switchPreviousSlide()"
+          />
+
+          <app-icon-button
+            [icon]="'keyboard-arrow-right'"
+            [size]="'l'"
+            [label]="'Next slide'"
+            [disabled]="sliderCarousel.isLastSlide()"
+            (click)="sliderCarousel.switchNextSlide()"
+          />
+        </div>
+      </div>
+
+      <app-carousel #sliderCarousel [slides]="slides">
+        <ng-template let-slide>
+          <article class="carousel-demo__slide">
+            <span class="carousel-demo__slide-label">{{ slide.title }}</span>
+          </article>
+        </ng-template>
+      </app-carousel>
+    </div>
+  </app-ui-kit-row>
+
+  <app-ui-kit-row [title]="'Carousel'">
+    <div class="carousel-demo__example">
+      <div class="carousel-demo__header">
+        <div class="carousel-demo__carousel-buttons">
+          <app-icon-button
+            [icon]="'keyboard-arrow-left'"
+            [size]="'l'"
+            [label]="'Previous slide'"
+            (click)="carouselCarousel.switchPreviousSlide()"
+          />
+
+          <app-icon-button
+            [icon]="'keyboard-arrow-right'"
+            [size]="'l'"
+            [label]="'Next slide'"
+            (click)="carouselCarousel.switchNextSlide()"
+          />
+        </div>
+      </div>
+
+      <app-carousel #carouselCarousel [slides]="slides" [type]="'carousel'">
+        <ng-template let-slide>
+          <article class="carousel-demo__slide">
+            <span class="carousel-demo__slide-label">{{ slide.title }}</span>
+          </article>
+        </ng-template>
+      </app-carousel>
+    </div>
+  </app-ui-kit-row>
+
+  <app-ui-kit-row [title]="'Multiple slides per view'">
+    <div class="carousel-demo__example">
+      <div class="carousel-demo__header">
+        <div class="carousel-demo__carousel-buttons">
+          <app-icon-button
+            [icon]="'keyboard-arrow-left'"
+            [size]="'l'"
+            [label]="'Previous slide'"
+            [disabled]="multiCarousel.isFirstSlide()"
+            (click)="multiCarousel.switchPreviousSlide()"
+          />
+
+          <app-icon-button
+            [icon]="'keyboard-arrow-right'"
+            [size]="'l'"
+            [label]="'Next slide'"
+            [disabled]="multiCarousel.isLastSlide()"
+            (click)="multiCarousel.switchNextSlide()"
+          />
+        </div>
+      </div>
+
+      <app-carousel #multiCarousel [slides]="slides" [perView]="2">
+        <ng-template let-slide>
+          <article class="carousel-demo__slide">
+            <span class="carousel-demo__slide-label">{{ slide.title }}</span>
+          </article>
+        </ng-template>
+      </app-carousel>
+    </div>
+  </app-ui-kit-row>
+</div>

@@ -1,0 +1,31 @@
+<app-ui-kit-row [title]="'Full-screen empty'">
+  <app-banner [variant]="'full-screen'" [imgSrc]="'assets/images/FRACTION-SLIDER.webp'" />
+</app-ui-kit-row>
+
+<app-ui-kit-row [title]="'Full-screen with content'">
+  <app-banner [variant]="'full-screen'" [imgSrc]="'assets/images/new_com_20260518_set_01 (1).jpg'">
+    <h3 app-banner-title>Banner title</h3>
+
+    <p app-banner-subtitle>Banner subtitle that describes the current content</p>
+
+    <app-button app-banner-cta>Primary action</app-button>
+  </app-banner>
+</app-ui-kit-row>
+
+<app-ui-kit-row [title]="'With link'">
+  <app-banner
+    [variant]="'full-screen'"
+    [imgSrc]="'assets/images/MAY-CAT-SLIDER_32e771d4-9222-4187-a803-b7269aafada9.webp'"
+    [link]="'/'"
+  />
+</app-ui-kit-row>
+
+<app-ui-kit-row [title]="'Diagonal'">
+  <app-banner [imgSrc]="'assets/images/new_com_20260518_set_01 (1).jpg'">
+    <h3 app-banner-title>Banner title</h3>
+
+    <p app-banner-subtitle>Banner subtitle that describes the current content</p>
+
+    <app-button app-banner-cta>Primary action</app-button>
+  </app-banner>
+</app-ui-kit-row>

@@ -7,79 +7,10 @@
 }
 
 .spin {
-  position: relative;
   display: inline-flex;
-  border: calc(var(--spacing-x1) / 2) solid currentcolor;
-  border-block-start-color: transparent;
-  border-radius: 50%;
-  color: currentcolor;
-  animation: spin-rotate 0.8s linear infinite;
-
-  &::before {
-    position: absolute;
-    border-radius: inherit;
-    background-color: currentcolor;
-    box-shadow: 0 0 6px currentcolor;
-    content: '';
-    opacity: 0.75;
-  }
-
-  &::after {
-    position: absolute;
-    border: 1px solid currentcolor;
-    border-radius: inherit;
-    content: '';
-    opacity: 0.35;
-  }
-
-  &__description {
-    margin-inline-start: var(--spacing-x2);
-
-    &_hidden {
-      @extend %visually-hidden;
-    }
-  }
-
-  &_size {
-    &_s {
-      width: 12px;
-      height: 12px;
-
-      &::before {
-        inset: calc(var(--spacing-x1) / 2);
-      }
-
-      &::after {
-        inset: calc(var(--spacing-x1) * -1);
-      }
-    }
-
-    &_m {
-      width: 16px;
-      height: 16px;
-
-      &::before {
-        inset: calc(var(--spacing-x1) * 0.75);
-      }
-
-      &::after {
-        inset: calc(var(--spacing-x1) * -1.25);
-      }
-    }
-
-    &_l {
-      width: 24px;
-      height: 24px;
-
-      &::before {
-        inset: calc(var(--spacing-x1) * 1.25);
-      }
-
-      &::after {
-        inset: calc(var(--spacing-x1) * -1.5);
-      }
-    }
-  }
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-x4);
 
   &_color {
     &_current {
@@ -96,6 +27,80 @@
 
     &_dark {
       color: var(--neutral-900);
+    }
+  }
+
+  &__spinner {
+    position: relative;
+    display: inline-flex;
+    border: calc(var(--spacing-x1) / 2) solid currentcolor;
+    border-block-start-color: transparent;
+    border-radius: 50%;
+    color: currentcolor;
+    animation: spin-rotate 0.8s linear infinite;
+
+    &::before {
+      position: absolute;
+      border-radius: inherit;
+      background-color: currentcolor;
+      box-shadow: 0 0 6px currentcolor;
+      content: '';
+      opacity: 0.75;
+    }
+
+    &::after {
+      position: absolute;
+      border: 1px solid currentcolor;
+      border-radius: inherit;
+      content: '';
+      opacity: 0.35;
+    }
+
+    &_size {
+      &_s {
+        width: 12px;
+        height: 12px;
+
+        &::before {
+          inset: calc(var(--spacing-x1) / 2);
+        }
+
+        &::after {
+          inset: calc(var(--spacing-x1) * -1);
+        }
+      }
+
+      &_m {
+        width: 16px;
+        height: 16px;
+
+        &::before {
+          inset: calc(var(--spacing-x1) * 0.75);
+        }
+
+        &::after {
+          inset: calc(var(--spacing-x1) * -1.25);
+        }
+      }
+
+      &_l {
+        width: 24px;
+        height: 24px;
+
+        &::before {
+          inset: calc(var(--spacing-x1) * 1.25);
+        }
+
+        &::after {
+          inset: calc(var(--spacing-x1) * -1.5);
+        }
+      }
+    }
+  }
+
+  &__description {
+    &_hidden {
+      @extend %visually-hidden;
     }
   }
 }

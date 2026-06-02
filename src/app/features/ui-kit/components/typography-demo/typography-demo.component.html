@@ -1,0 +1,25 @@
+@let sizeList = ['9xl', '8xl', '7xl', '6xl', '5xl', '4xl', '3xl', '2xl', 'lg', 'base', 'sm', 'xs'];
+
+<app-ui-kit-row [title]="'Bebas Neue'">
+  <ul class="typography-demo__list_bebas">
+    @for (size of sizeList; track $index) {
+      <li>
+        <p class="text-{{ size }}">Lorem ipsum</p>
+
+        <span>{{ size }}</span>
+      </li>
+    }
+  </ul>
+</app-ui-kit-row>
+
+<app-ui-kit-row [title]="'Poppins'">
+  <ul class="typography-demo__list_poppins">
+    @for (size of sizeList; track $index) {
+      <li>
+        <p class="text-{{ size }}">Lorem ipsum</p>
+
+        <span>{{ size }}</span>
+      </li>
+    }
+  </ul>
+</app-ui-kit-row>

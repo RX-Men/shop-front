@@ -1,4 +1,4 @@
-const icons = {
+const ICON_NAME = {
   'arrow-back': 'arrow-back',
   'arrow-forward': 'arrow-forward',
   'calendar-month': 'calendar-month',
@@ -31,4 +31,12 @@ const icons = {
   visibility: 'visibility',
 } as const;
 
-export { icons };
+const ICON_SIZE = {
+  xl: 'xl',
+  l: 'l',
+  m: 'm',
+  s: 's',
+  auto: 'auto',
+} as const;
+
+export { ICON_NAME, ICON_SIZE };

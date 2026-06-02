@@ -1,0 +1,26 @@
+@let icons = _icons();
+@let sizes = _sizes();
+
+<app-ui-kit-row [title]="'Name'">
+  <ul class="icon-demo__list">
+    @for (icon of icons; track $index) {
+      <li class="icon-demo__list-item">
+        <app-icon [name]="icon" />
+
+        <span>{{ icon }}</span>
+      </li>
+    }
+  </ul>
+</app-ui-kit-row>
+
+<app-ui-kit-row [title]="'Size'">
+  <ul class="icon-demo__list">
+    @for (size of sizes; track $index) {
+      <li class="icon-demo__list-item">
+        <app-icon [name]="'search'" [size]="size" />
+
+        <span>{{ size }}</span>
+      </li>
+    }
+  </ul>
+</app-ui-kit-row>

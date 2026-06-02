@@ -1,0 +1,10 @@
+:host {
+  display: block;
+  padding: var(--spacing-x8) var(--spacing-x12);
+}
+
+.ui-kit {
+  &__title {
+    margin-block-end: var(--spacing-x10);
+  }
+}

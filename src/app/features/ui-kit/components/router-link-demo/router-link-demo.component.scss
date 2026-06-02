@@ -1,0 +1,11 @@
+.router-link-demo {
+  &__wrapper {
+    display: grid;
+    grid-template-columns: repeat(3, 148px);
+    gap: var(--spacing-x4);
+  }
+
+  &__button {
+    margin-inline: auto;
+  }
+}
