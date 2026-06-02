@@ -1,0 +1,19 @@
+<app-ui-kit-row [title]="'State'">
+  <ul class="date-picker-demo__list">
+    <li class="date-picker-demo__list-item">
+      <app-date-picker>Default</app-date-picker>
+    </li>
+
+    <li class="date-picker-demo__list-item">
+      <app-date-picker [required]="true">Required</app-date-picker>
+    </li>
+
+    <li class="date-picker-demo__list-item">
+      <app-date-picker [disabled]="true">Disabled</app-date-picker>
+    </li>
+
+    <li class="date-picker-demo__list-item">
+      <app-date-picker [disabled]="true" [required]="true">Disabled required</app-date-picker>
+    </li>
+  </ul>
+</app-ui-kit-row>

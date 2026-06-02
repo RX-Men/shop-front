@@ -1,0 +1,15 @@
+$date-picker-demo-item-width: 200px;
+
+.date-picker-demo {
+  &__list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-x6);
+  }
+
+  &__list-item {
+    display: flex;
+    align-items: flex-start;
+    width: $date-picker-demo-item-width;
+  }
+}
