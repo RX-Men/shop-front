@@ -1,0 +1,34 @@
+<article class="card">
+  <div class="card__inner">
+    <div class="card__face card__face_front">
+      <div class="card__image-wrapper">
+        <img class="card__image" fill [ngSrc]="imgSrc()" [alt]="name()" />
+      </div>
+
+      <div class="card__content">
+        <p class="card__role text-sm">{{ role() }}</p>
+        <h2 class="card__name text-2xl">{{ name() }}</h2>
+      </div>
+    </div>
+
+    <div class="card__face card__face_back" aria-label="Card details">
+      <p class="card__description text-lg">
+        {{ description() }}
+        <app-external-link
+          class="card__link"
+          [variant]="'text'"
+          [href]="linkHref()"
+          [icon]="'github'"
+          [iconPlacement]="'start'"
+        >
+          {{ linkHref() }}
+        </app-external-link>
+      </p>
+
+      <div class="card__promo">
+        <span class="card__promo-label text-xs">Promo code</span>
+        <strong class="card__promocode text-2xl">{{ promoCode() }}</strong>
+      </div>
+    </div>
+  </div>
+</article>
