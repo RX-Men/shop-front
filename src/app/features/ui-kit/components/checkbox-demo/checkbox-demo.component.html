@@ -1,0 +1,39 @@
+<app-ui-kit-row [title]="'Size'">
+  <ul class="checkbox-demo__list">
+    <li class="checkbox-demo__list-item">
+      <app-checkbox [size]="'s'">Small</app-checkbox>
+    </li>
+
+    <li class="checkbox-demo__list-item">
+      <app-checkbox>Medium</app-checkbox>
+    </li>
+
+    <li class="checkbox-demo__list-item">
+      <app-checkbox [size]="'l'">Large</app-checkbox>
+    </li>
+  </ul>
+</app-ui-kit-row>
+
+<app-ui-kit-row [title]="'State'">
+  <ul class="checkbox-demo__list">
+    <li class="checkbox-demo__list-item">
+      <app-checkbox>Unchecked</app-checkbox>
+    </li>
+
+    <li class="checkbox-demo__list-item">
+      <app-checkbox [checked]="true">Checked</app-checkbox>
+    </li>
+
+    <li class="checkbox-demo__list-item">
+      <app-checkbox [disabled]="true">Disabled</app-checkbox>
+    </li>
+
+    <li class="checkbox-demo__list-item">
+      <app-checkbox [checked]="true" [disabled]="true">Disabled checked</app-checkbox>
+    </li>
+
+    <li class="checkbox-demo__list-item">
+      <app-checkbox [required]="true">Required</app-checkbox>
+    </li>
+  </ul>
+</app-ui-kit-row>
