@@ -1,6 +1,6 @@
 @use 'assets/styles/mixins' as mixins;
 
-.checkbox-wrapper {
+.checkbox {
   --cb-size: var(--spacing-x5); // 20px
   --cb-radius: var(--radius-sm); // 4px
   --cb-gap: var(--spacing-x2); // 8px
@@ -11,6 +11,7 @@
   gap: var(--cb-gap);
   font-size: var(--cb-font);
   cursor: pointer;
+  user-select: none;
 
   &_size_s {
     --cb-size: var(--spacing-x4); // 16px
@@ -26,12 +27,12 @@
     --cb-font: var(--text-base); // 16px
   }
 
-  &:has(input:disabled) {
+  &_disabled {
     cursor: not-allowed;
     opacity: 0.6;
   }
 
-  input[type='checkbox'] {
+  &__input {
     appearance: none;
     position: relative;
     flex-shrink: 0;
@@ -69,7 +70,7 @@
         margin: auto;
         width: calc(var(--cb-size) * 0.28);
         height: calc(var(--cb-size) * 0.5);
-        border: 2px solid #fff;
+        border: 2px solid var(--neutral-100);
         border-top: none;
         border-left: none;
         transform: rotate(45deg) translateY(-1px);
@@ -80,8 +81,8 @@
       cursor: not-allowed;
     }
   }
-}
 
-.required {
-  color: var(--neutral-900);
+  &__required {
+    color: var(--error);
+  }
 }

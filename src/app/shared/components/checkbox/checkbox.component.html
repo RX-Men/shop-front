@@ -1,5 +1,6 @@
-<label class="checkbox-wrapper checkbox-wrapper_size_{{ size() }}"
+<label class="checkbox checkbox_size_{{ size() }}" [class.checkbox_disabled]="disabled()"
   ><input
+    class="checkbox__input"
     type="checkbox"
     [checked]="checked()"
     [disabled]="disabled()"
@@ -9,6 +10,6 @@
 
   <ng-content />
   @if (required()) {
-    <span class="required">*</span>
+    <span class="checkbox__required" aria-hidden="true">*</span>
   }
 </label>

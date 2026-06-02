@@ -16,8 +16,11 @@ export class CheckboxComponent {
 
   readonly checkedChange = output<boolean>();
 
-  onInputChange(event: Event): void {
-    const checkboxElement = event.target as HTMLInputElement;
-    this.checkedChange.emit(checkboxElement.checked);
+  onInputChange({ target }: Event): void {
+    if (!(target instanceof HTMLInputElement)) {
+      return;
+    }
+
+    this.checkedChange.emit(target.checked);
   }
 }
