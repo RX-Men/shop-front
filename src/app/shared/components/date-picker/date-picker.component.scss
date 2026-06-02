@@ -1,0 +1,77 @@
+@use 'assets/styles/mixins' as mixins;
+
+$picker-icon-opacity: 0.5;
+$picker-icon-opacity-disabled: 0.3;
+
+:host {
+  display: inline-flex;
+  width: 100%;
+}
+
+.date-picker {
+  display: inline-flex;
+  flex-direction: column;
+  width: 100%;
+  gap: var(--spacing-x1);
+
+  &__label {
+    display: inline-flex;
+    align-items: center;
+    gap: calc(var(--spacing-x1) / 2);
+    font-size: var(--text-sm);
+    line-height: var(--text-sm-line-height);
+    color: var(--neutral-900);
+  }
+
+  &__required {
+    color: var(--error);
+  }
+
+  &__input {
+    width: 100%;
+    height: var(--spacing-x10);
+    padding-inline: var(--spacing-x3);
+    background: var(--neutral-100);
+    border: 1px solid var(--neutral-300);
+    border-radius: var(--radius-xs);
+    color: var(--neutral-900);
+    font-size: var(--text-base);
+    line-height: var(--text-base-line-height);
+    font-family: inherit;
+    outline: none;
+    cursor: pointer;
+
+    @include mixins.transition((border-color, box-shadow));
+
+    &::-webkit-calendar-picker-indicator {
+      cursor: pointer;
+      opacity: $picker-icon-opacity;
+
+      @include mixins.transition(opacity);
+    }
+
+    @include mixins.hover {
+      border-color: var(--neutral-500);
+
+      &::-webkit-calendar-picker-indicator {
+        opacity: 1;
+      }
+    }
+
+    &:focus {
+      border-color: var(--neutral-900);
+      box-shadow: inset 0 0 0 1px var(--neutral-900);
+    }
+
+    &:disabled {
+      color: var(--neutral-500);
+      border-color: var(--neutral-300);
+      cursor: not-allowed;
+
+      &::-webkit-calendar-picker-indicator {
+        cursor: not-allowed;
+        opacity: $picker-icon-opacity-disabled;
+      }
+    }
+  }
+}

@@ -1,0 +1,17 @@
+<label class="date-picker">
+  <span class="date-picker__label">
+    <ng-content />
+    @if (required()) {
+      <span class="date-picker__required" aria-hidden="true">*</span>
+    }
+  </span>
+
+  <input
+    class="date-picker__input"
+    type="date"
+    [disabled]="disabled()"
+    [value]="value()"
+    [required]="required()"
+    (change)="onChange($event)"
+  />
+</label>
