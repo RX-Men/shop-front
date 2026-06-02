@@ -1,0 +1,30 @@
+@let icons = _icons();
+@let sizes = _sizes();
+
+<app-ui-kit-row [title]="'Name'">
+  <ul class="icon-button-demo__list">
+    @for (icon of icons; track $index) {
+      <li class="icon-button-demo__list-item">
+        <app-icon-button [icon]="icon" [label]="'Icon button'" />
+
+        <span>{{ icon }}</span>
+      </li>
+    }
+  </ul>
+</app-ui-kit-row>
+
+<app-ui-kit-row [title]="'Size'">
+  <ul class="icon-button-demo__list">
+    @for (size of sizes; track $index) {
+      <li class="icon-button-demo__list-item">
+        <app-icon-button [icon]="'favorite'" [size]="size" [label]="'Icon button'" />
+
+        <span>{{ size }}</span>
+      </li>
+    }
+  </ul>
+</app-ui-kit-row>
+
+<app-ui-kit-row [title]="'Disabled'">
+  <app-icon-button [icon]="'favorite'" [label]="'Icon button'" [disabled]="true" />
+</app-ui-kit-row>

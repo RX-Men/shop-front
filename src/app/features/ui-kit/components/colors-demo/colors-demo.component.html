@@ -1,0 +1,84 @@
+<div class="colors-demo">
+  <app-ui-kit-row [title]="'Neutral'">
+    <ul class="colors-demo__list">
+      @for (tone of [100, 300, 500, 600, 700, 900]; track $index) {
+        <li class="colors-demo__list-item">
+          <div
+            class="colors-demo__tone"
+            [style.background-color]="'var(--neutral-' + tone + ')'"
+          ></div>
+
+          <span>{{ tone }}</span>
+        </li>
+      }
+    </ul>
+  </app-ui-kit-row>
+
+  <app-ui-kit-row [title]="'Brand'">
+    <ul class="colors-demo__list">
+      @for (tone of [100, 200, 300, 500, 600, 700, 900]; track $index) {
+        <li class="colors-demo__list-item">
+          <div
+            class="colors-demo__tone"
+            [style.background-color]="'var(--brand-' + tone + ')'"
+          ></div>
+
+          <span>{{ tone }}</span>
+        </li>
+      }
+    </ul>
+  </app-ui-kit-row>
+
+  <app-ui-kit-row [title]="'Warning'">
+    <ul class="colors-demo__list">
+      @for (tone of [300, 500, 700]; track $index) {
+        <li class="colors-demo__list-item">
+          <div
+            class="colors-demo__tone"
+            [style.background-color]="'var(--warning-' + tone + ')'"
+          ></div>
+
+          <span>{{ tone }}</span>
+        </li>
+      }
+    </ul>
+  </app-ui-kit-row>
+
+  <app-ui-kit-row [title]="'Info'">
+    <ul class="colors-demo__list">
+      @for (tone of [300, 500, 700]; track $index) {
+        <li class="colors-demo__list-item">
+          <div
+            class="colors-demo__tone"
+            [style.background-color]="'var(--info-' + tone + ')'"
+          ></div>
+
+          <span>{{ tone }}</span>
+        </li>
+      }
+    </ul>
+  </app-ui-kit-row>
+
+  <app-ui-kit-row [title]="'Success'">
+    <ul class="colors-demo__list">
+      @for (tone of [300, 500, 700]; track $index) {
+        <li class="colors-demo__list-item">
+          <div
+            class="colors-demo__tone"
+            [style.background-color]="'var(--success-' + tone + ')'"
+          ></div>
+
+          <span>{{ tone }}</span>
+        </li>
+      }
+    </ul>
+  </app-ui-kit-row>
+
+  <app-ui-kit-row [title]="'Error'">
+    <ul class="colors-demo__list">
+      <li class="colors-demo__list-item">
+        <div class="colors-demo__tone" style="background-color: var(--error)"></div>
+      </li>
+    </ul>
+  </app-ui-kit-row>
+</div>

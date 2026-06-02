@@ -1,8 +1,8 @@
-<div class="ui-kit-row">
+<div class="ui-kit-row" [class.ui-kit-row_dark]="color() === 'dark'">
   @if (title()) {
-    <p class="ui-kit-row__title">{{ title() }}</p>
+    <h3 class="ui-kit-row__title text-2xl">{{ title() }}</h3>
   }
-  <div class="ui-kit-row__items">
+  <div class="ui-kit-row__items" [class.ui-kit-row__items_col]="direction() === 'col'">
     <ng-content />
   </div>
 </div>

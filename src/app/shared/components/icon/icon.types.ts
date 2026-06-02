@@ -1,6 +1,6 @@
-import { icons } from './icon.constants';
+import { ICON_NAME, ICON_SIZE } from './icon.constants';
 
-type IconName = (typeof icons)[keyof typeof icons];
-type IconSize = 'xl' | 'l' | 'm' | 's' | 'auto';
+type IconName = (typeof ICON_NAME)[keyof typeof ICON_NAME];
+type IconSize = (typeof ICON_SIZE)[keyof typeof ICON_SIZE];
 
 export type { IconName, IconSize };

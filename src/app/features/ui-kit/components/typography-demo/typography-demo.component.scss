@@ -1,0 +1,11 @@
+.typography-demo {
+  &__list {
+    &_bebas {
+      font-family: 'Bebas Neue', sans-serif;
+    }
+
+    &_poppins {
+      font-family: Poppins, sans-serif;
+    }
+  }
+}

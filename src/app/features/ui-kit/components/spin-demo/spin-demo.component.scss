@@ -1,0 +1,23 @@
+.spin-demo {
+  &__list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-x6);
+  }
+
+  &__list-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-width: 64px;
+    aspect-ratio: 1;
+    gap: var(--spacing-x2);
+    text-align: center;
+
+    &_light {
+      color: var(--neutral-100);
+      background-color: var(--neutral-900);
+    }
+  }
+}

@@ -1,0 +1,19 @@
+.border-radius {
+  &__list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-x6);
+  }
+
+  &__list-item {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+  }
+
+  &__box {
+    width: 64px;
+    aspect-ratio: 1;
+    border: 2px solid var(--neutral-900);
+  }
+}

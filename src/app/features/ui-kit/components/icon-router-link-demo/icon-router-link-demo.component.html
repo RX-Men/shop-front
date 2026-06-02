@@ -1,0 +1,31 @@
+@let icons = _icons();
+@let sizes = _sizes();
+
+<app-ui-kit-row [title]="'Name'">
+  <ul class="icon-router-link-demo__list">
+    @for (icon of icons; track $index) {
+      <li class="icon-router-link-demo__list-item">
+        <app-icon-router-link [routerLink]="'/'" [icon]="icon" [label]="'Icon router link'" />
+
+        <span>{{ icon }}</span>
+      </li>
+    }
+  </ul>
+</app-ui-kit-row>
+
+<app-ui-kit-row [title]="'Size'">
+  <ul class="icon-router-link-demo__list">
+    @for (size of sizes; track $index) {
+      <li class="icon-router-link-demo__list-item">
+        <app-icon-router-link
+          [routerLink]="'/'"
+          [icon]="'github'"
+          [size]="size"
+          [label]="'Icon router link'"
+        />
+
+        <span>{{ size }}</span>
+      </li>
+    }
+  </ul>
+</app-ui-kit-row>

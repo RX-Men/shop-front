@@ -1,0 +1,65 @@
+<app-ui-kit-row [title]="'Color'">
+  <ul class="spin-demo__list">
+    <li class="spin-demo__list-item">
+      <app-spin />
+
+      <span>Current</span>
+    </li>
+
+    <li class="spin-demo__list-item">
+      <app-spin [color]="'brand'" />
+
+      <span>Brand</span>
+    </li>
+
+    <li class="spin-demo__list-item spin-demo__list-item_light">
+      <app-spin [color]="'light'" />
+
+      <span>Light</span>
+    </li>
+
+    <li class="spin-demo__list-item">
+      <app-spin [color]="'dark'" />
+
+      <span>Dark</span>
+    </li>
+  </ul>
+</app-ui-kit-row>
+
+<app-ui-kit-row [title]="'Size'">
+  <ul class="spin-demo__list">
+    <li class="spin-demo__list-item">
+      <app-spin [size]="'l'" />
+
+      <span>l</span>
+    </li>
+
+    <li class="spin-demo__list-item">
+      <app-spin />
+
+      <span>m</span>
+    </li>
+
+    <li class="spin-demo__list-item">
+      <app-spin [size]="'s'" />
+
+      <span>s</span>
+    </li>
+  </ul>
+</app-ui-kit-row>
+
+<app-ui-kit-row [title]="'With description'">
+  <ul class="spin-demo__list">
+    <li class="spin-demo__list-item">
+      <app-spin [size]="'l'" [withDescription]="true" />
+    </li>
+
+    <li class="spin-demo__list-item">
+      <app-spin [withDescription]="true" />
+    </li>
+
+    <li class="spin-demo__list-item">
+      <app-spin [size]="'s'" [withDescription]="true" />
+    </li>
+  </ul>
+</app-ui-kit-row>

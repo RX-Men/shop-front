@@ -1,5 +1,7 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 
+import type { Color, Direction } from './ui-kit-row.types';
+
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-ui-kit-row',
@@ -8,4 +10,6 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 })
 export class UiKitRowComponent {
   readonly title = input<string>('');
+  readonly direction = input<Direction>('row');
+  readonly color = input<Color>('light');
 }

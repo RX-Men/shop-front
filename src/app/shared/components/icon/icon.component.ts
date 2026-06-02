@@ -14,7 +14,7 @@ export class IconComponent {
   readonly name = input.required<IconName>();
   readonly size = input<IconSize>('m');
 
-  readonly href = computed(() => `@/assets/icons/sprite.svg#${this.name()}`);
+  protected readonly _href = computed(() => `@/assets/icons/sprite.svg#${this.name()}`);
 
   protected readonly _testIds = APP_TEST_IDS.icon;
 }

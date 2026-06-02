@@ -1,0 +1,14 @@
+<app-ui-kit-row>
+  <ul class="border-radius__list">
+    @for (radius of ['4xl', '3xl', '2xl', 'xl', 'lg', 'md', 'sm', 'xs']; track $index) {
+      <li class="border-radius__list-item">
+        <div
+          class="border-radius__box"
+          [style.border-radius]="'var(--radius-' + radius + ')'"
+        ></div>
+
+        <span>{{ radius }}</span>
+      </li>
+    }
+  </ul>
+</app-ui-kit-row>

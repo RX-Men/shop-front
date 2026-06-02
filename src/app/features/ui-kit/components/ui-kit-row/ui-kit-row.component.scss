@@ -4,20 +4,28 @@
 }
 
 .ui-kit-row {
+  padding: var(--spacing-x3);
+
+  &_dark {
+    background-color: var(--neutral-900);
+  }
+
   &__title {
-    font-size: var(--text-base);
     color: var(--neutral-700);
     margin-block-end: var(--spacing-x3);
   }
 
   &__items {
     display: flex;
-    flex-wrap: wrap;
     gap: var(--spacing-x4);
     align-items: flex-start;
 
     > * {
       width: var(--kit-row-item-width, auto);
+    }
+
+    &_col {
+      flex-direction: column;
     }
   }
 }
