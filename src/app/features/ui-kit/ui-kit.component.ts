@@ -14,6 +14,7 @@ import { IconDemoComponent } from './components/icon-demo';
 import { IconExternalLinkDemoComponent } from './components/icon-external-link-demo';
 import { IconRouterLinkDemoComponent } from './components/icon-router-link-demo';
 import { InputDemoComponent } from './components/input-demo';
+import { LogoDemoComponent } from './components/logo-demo/logo-demo.component';
 import { RouterLinkDemoComponent } from './components/router-link-demo';
 import { SpinDemoComponent } from './components/spin-demo';
 import { TypographyDemoComponent } from './components/typography-demo';
@@ -37,6 +38,7 @@ import { UiKitSectionComponent } from './components/ui-kit-section/ui-kit-sectio
     IconExternalLinkDemoComponent,
     IconRouterLinkDemoComponent,
     InputDemoComponent,
+    LogoDemoComponent,
     RouterLinkDemoComponent,
     SpinDemoComponent,
     TypographyDemoComponent,
