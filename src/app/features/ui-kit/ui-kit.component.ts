@@ -5,6 +5,7 @@ import { BorderRadiusDemoComponent } from './components/border-radius-demo';
 import { ButtonDemoComponent } from './components/button-demo';
 import { CarouselDemoComponent } from './components/carousel-demo';
 import { CheckboxDemoComponent } from './components/checkbox-demo';
+import { DatePickerDemoComponent } from './components/date-picker-demo';
 import { ColorsDemoComponent } from './components/colors-demo';
 import { EmptyDemoComponent } from './components/empty-demo';
 import { ExternalLinkDemoComponent } from './components/external-link-demo';
@@ -27,6 +28,7 @@ import { UiKitSectionComponent } from './components/ui-kit-section/ui-kit-sectio
     ButtonDemoComponent,
     CarouselDemoComponent,
     CheckboxDemoComponent,
+    DatePickerDemoComponent,
     ColorsDemoComponent,
     EmptyDemoComponent,
     ExternalLinkDemoComponent,
