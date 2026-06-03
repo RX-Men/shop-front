@@ -48,6 +48,23 @@
     }
   }
 
+  &__password-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    padding: 0 var(--spacing-x2) 0 0;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--neutral-500);
+    line-height: 0;
+
+    @include mixins.hover {
+      color: var(--neutral-900);
+    }
+  }
+
   &_size {
     &_s {
       height: 32px;

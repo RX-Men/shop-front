@@ -25,7 +25,7 @@
     class="input__native"
     [attr.data-testid]="_testIds.native"
     [id]="id"
-    [type]="type()"
+    [type]="_resolvedType()"
     [value]="value()"
     [placeholder]="placeholder()"
     [disabled]="disabled"
@@ -41,6 +41,17 @@
     (focus)="focused.emit($event)"
     (blur)="blurred.emit($event)"
   />
+  @if (type() === 'password' && showPasswordToggle()) {
+    <button
+      class="input__password-toggle"
+      type="button"
+      tabindex="-1"
+      [attr.aria-label]="_showPassword() ? 'Hide password' : 'Show password'"
+      (click)="togglePasswordVisibility()"
+    >
+      <app-icon size="s" [name]="_showPassword() ? 'visibility' : 'visibility-off'" />
+    </button>
+  }
 </div>
 
 @if (isError && errorMsg) {

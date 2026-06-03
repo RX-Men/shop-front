@@ -1,4 +1,14 @@
-import { ChangeDetectionStrategy, Component, computed, input, model, output } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  input,
+  model,
+  output,
+  signal,
+} from '@angular/core';
+
+import { IconComponent } from '@/app/shared/components/icon';
 
 import { APP_TEST_IDS } from '@/app/app.test-ids';
 
@@ -7,6 +17,7 @@ import type { InputSize, InputType } from './input.types';
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-input',
+  imports: [IconComponent],
   templateUrl: './input.component.html',
   styleUrl: './input.component.scss',
 })
@@ -32,10 +43,18 @@ export class InputComponent {
   readonly autocomplete = input<string>('off');
   readonly name = input<string>('');
 
+  readonly showPasswordToggle = input<boolean>(false);
+
   readonly focused = output<FocusEvent>();
   readonly blurred = output<FocusEvent>();
 
   protected readonly _testIds = APP_TEST_IDS.input;
+
+  protected readonly _showPassword = signal(false);
+
+  protected readonly _resolvedType = computed(() =>
+    this.type() === 'password' && this._showPassword() ? 'text' : this.type(),
+  );
 
   protected readonly resolvedId = `app-input-${crypto.randomUUID()}`;
 
@@ -50,6 +69,10 @@ export class InputComponent {
     }
     return ids.length ? ids.join(' ') : null;
   });
+
+  protected togglePasswordVisibility(): void {
+    this._showPassword.update((v) => !v);
+  }
 
   protected handleInput(e: Event): void {
     if (!(e.target instanceof HTMLInputElement)) {

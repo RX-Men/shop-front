@@ -44,3 +44,13 @@
   <app-input label="url" placeholder="https://" type="url" />
   <app-input label="search" placeholder="Search…" type="search" />
 </app-ui-kit-row>
+
+<app-ui-kit-row title="Password">
+  <app-input label="Password (masked)" placeholder="min 8 chars" type="password" />
+  <app-input
+    label="Password (with toggle)"
+    placeholder="min 8 chars"
+    type="password"
+    [showPasswordToggle]="true"
+  />
+</app-ui-kit-row>

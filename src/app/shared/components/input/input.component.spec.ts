@@ -84,4 +84,39 @@ describe('InputComponent', () => {
     expect(label).toBeTruthy();
     expect(label?.htmlFor).toBe(nativeInput?.id);
   });
+
+  it('should mask input when type is "password"', () => {
+    componentRef.setInput('type', 'password');
+    fixture.detectChanges();
+    const nativeInput = nativeEl.querySelector<HTMLInputElement>('[data-testid="input-native"]');
+    expect(nativeInput?.type).toBe('password');
+  });
+
+  it('should show toggle button only when showPasswordToggle=true and type="password"', () => {
+    componentRef.setInput('type', 'password');
+    componentRef.setInput('showPasswordToggle', true);
+    fixture.detectChanges();
+    const toggle = nativeEl.querySelector<HTMLButtonElement>('.input__password-toggle');
+    expect(toggle).toBeTruthy();
+  });
+
+  it('should toggle native input type between "password" and "text" on button click', async () => {
+    componentRef.setInput('type', 'password');
+    componentRef.setInput('showPasswordToggle', true);
+    fixture.detectChanges();
+    const nativeInput = nativeEl.querySelector<HTMLInputElement>('[data-testid="input-native"]')!;
+    const toggle = nativeEl.querySelector<HTMLButtonElement>('.input__password-toggle')!;
+
+    expect(nativeInput.type).toBe('password');
+
+    toggle.click();
+    fixture.detectChanges();
+    await fixture.whenStable();
+    expect(nativeInput.type).toBe('text');
+
+    toggle.click();
+    fixture.detectChanges();
+    await fixture.whenStable();
+    expect(nativeInput.type).toBe('password');
+  });
 });
