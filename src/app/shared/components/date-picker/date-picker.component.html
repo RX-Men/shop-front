@@ -12,6 +12,8 @@
     [disabled]="disabled()"
     [value]="value()"
     [required]="required()"
+    [attr.min]="min() ?? null"
+    [attr.max]="max() ?? null"
     (change)="onChange($event)"
   />
 </label>

@@ -10,11 +10,15 @@ export class DatePickerComponent {
   readonly disabled = input<boolean>(false);
   readonly value = input<string>('');
   readonly required = input<boolean>(false);
+  readonly min = input<string>();
+  readonly max = input<string>();
 
   readonly valueChange = output<string>();
 
-  onChange(event: Event): void {
-    const inputElement = event.target as HTMLInputElement;
-    this.valueChange.emit(inputElement.value);
+  onChange({ target }: Event): void {
+    if (!(target instanceof HTMLInputElement)) {
+      return;
+    }
+    this.valueChange.emit(target.value);
   }
 }

@@ -1,8 +1,5 @@
 @use 'assets/styles/mixins' as mixins;
 
-$picker-icon-opacity: 0.5;
-$picker-icon-opacity-disabled: 0.3;
-
 :host {
   display: inline-flex;
   width: 100%;
@@ -45,7 +42,7 @@ $picker-icon-opacity-disabled: 0.3;
 
     &::-webkit-calendar-picker-indicator {
       cursor: pointer;
-      opacity: $picker-icon-opacity;
+      opacity: 0.5;
 
       @include mixins.transition(opacity);
     }
@@ -70,7 +67,7 @@ $picker-icon-opacity-disabled: 0.3;
 
       &::-webkit-calendar-picker-indicator {
         cursor: not-allowed;
-        opacity: $picker-icon-opacity-disabled;
+        opacity: 0.3;
       }
     }
   }

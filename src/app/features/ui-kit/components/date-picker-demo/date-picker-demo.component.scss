@@ -1,5 +1,3 @@
-$date-picker-demo-item-width: 200px;
-
 .date-picker-demo {
   &__list {
     display: flex;
@@ -10,6 +8,6 @@ $date-picker-demo-item-width: 200px;
   &__list-item {
     display: flex;
     align-items: flex-start;
-    width: $date-picker-demo-item-width;
+    width: 200px;
   }
 }
