@@ -56,6 +56,10 @@ export class InputComponent {
     this.type() === 'password' && this._showPassword() ? 'text' : this.type(),
   );
 
+  protected readonly _showPasswordLabel = computed(() =>
+    this._showPassword() ? 'Hide password' : 'Show password',
+  );
+
   protected readonly resolvedId = `app-input-${crypto.randomUUID()}`;
 
   protected readonly isDisabled = computed(() => this.disabled());

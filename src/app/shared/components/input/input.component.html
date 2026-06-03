@@ -46,7 +46,7 @@
       class="input__password-toggle"
       type="button"
       tabindex="-1"
-      [attr.aria-label]="_showPassword() ? 'Hide password' : 'Show password'"
+      [attr.aria-label]="_showPasswordLabel()"
       (click)="togglePasswordVisibility()"
     >
       <app-icon size="s" [name]="_showPassword() ? 'visibility' : 'visibility-off'" />
