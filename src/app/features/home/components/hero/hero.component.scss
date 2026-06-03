@@ -1,0 +1,35 @@
+@use 'assets/styles/breakpoints' as breakpoints;
+@use 'assets/styles/mixins' as mix;
+@use 'assets/styles/placeholders';
+
+.hero {
+  &__wrapper {
+    max-width: #{breakpoints.$breakpoint-xxxl}px;
+    margin-inline: auto;
+  }
+
+  &__banner {
+    height: 100%;
+
+    ::ng-deep {
+      /* stylelint-disable-next-line selector-class-pattern */
+      .banner__content {
+        padding-inline-start: calc(var(--spacing-x20) + var(--spacing-x4));
+
+        @include mix.media('l') {
+          padding-inline-start: var(--spacing-x5);
+        }
+
+        @include mix.media('s') {
+          padding-inline-start: var(--spacing-x4);
+        }
+      }
+    }
+  }
+
+  &__banner-cta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-x4);
+  }
+}

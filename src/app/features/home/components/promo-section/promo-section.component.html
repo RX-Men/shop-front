@@ -1,0 +1,15 @@
+<section [attr.data-testid]="_testIds.root">
+  <div class="promo-section__wrapper">
+    <app-banner [imgSrc]="imgSrc()">
+      <div class="promo-section__banner-title" app-banner-title>
+        <h2>{{ title() }}</h2>
+
+        <p>{{ subtitle() }}</p>
+      </div>
+
+      <p app-banner-subtitle>{{ description() }}</p>
+
+      <app-router-link app-banner-cta [routerLink]="'#'">{{ link() }}</app-router-link>
+    </app-banner>
+  </div>
+</section>

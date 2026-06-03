@@ -25,6 +25,7 @@ export class ExternalLinkComponent {
   readonly color = input<ActionColor>('brand');
   readonly icon = input<ReturnType<IconComponent['name']>>();
   readonly iconPlacement = input<ActionIconPlacement>('end');
+  readonly tabIndex = input<number>();
 
   protected readonly _testIds = APP_TEST_IDS.externalLink;
 }

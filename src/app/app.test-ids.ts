@@ -11,9 +11,15 @@ export const APP_TEST_IDS = {
     tracks: 'tracks',
     track: 'track',
     slide: 'slide',
+    rotationAutoplay: 'rotation-autoplay',
+    prevSlideControl: 'prev-slide-control',
+    nextSlideControl: 'next-slide-control',
   },
   externalLink: {
     root: 'external-link',
+  },
+  hero: {
+    root: 'hero',
   },
   icon: {
     root: 'icon',
@@ -51,6 +57,9 @@ export const APP_TEST_IDS = {
   productList: {
     root: 'product-list',
     title: 'title',
+  },
+  promoSection: {
+    root: 'promo-section',
   },
   routerLink: {
     root: 'router-link',

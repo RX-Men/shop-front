@@ -6,10 +6,48 @@
 
 .carousel {
   &__tracks {
+    position: relative;
     overflow-x: hidden;
     display: flex;
     gap: var(--spacing-x4);
     padding-block-end: var(--spacing-x4);
+  }
+
+  &__rotation-autoplay {
+    position: absolute;
+    inset-block-start: var(--spacing-x4);
+    inset-inline-start: var(--spacing-x7);
+    z-index: 1;
+    display: inline-flex;
+
+    ::ng-deep {
+      .icon-button {
+        color: var(--neutral-100);
+      }
+    }
+  }
+
+  &__prev-button,
+  &__next-button {
+    position: absolute;
+    inset-block-start: 50%;
+    transform: translateY(-50%);
+    z-index: 1;
+    display: inline-flex;
+
+    ::ng-deep {
+      .icon-button {
+        color: var(--neutral-100);
+      }
+    }
+  }
+
+  &__prev-button {
+    inset-inline-start: var(--spacing-x7);
+  }
+
+  &__next-button {
+    inset-inline-end: var(--spacing-x7);
   }
 
   &__track {

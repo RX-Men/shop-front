@@ -91,4 +91,11 @@ describe('RouterLinkComponent', () => {
 
     expect(componentElement?.classList.contains('router-link_icon-placement_start')).toBe(true);
   });
+
+  it('should set tabindex attribute', () => {
+    componentRef.setInput('tabIndex', -1);
+    fixture.detectChanges();
+
+    expect(componentElement?.getAttribute('tabindex')).toBe('-1');
+  });
 });

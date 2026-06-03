@@ -11,7 +11,13 @@ import type { CarouselType } from './carousel.types';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [CarouselComponent],
   template: `
-    <app-carousel [type]="type()" [slides]="slides()" [perView]="perView()">
+    <app-carousel
+      [type]="type()"
+      [slides]="slides()"
+      [perView]="perView()"
+      [autoplay]="autoplay()"
+      [hasSlideControls]="hasSlideControls()"
+    >
       <ng-template let-slide>
         <span class="slide-content">{{ slide.title }}</span>
       </ng-template>
@@ -22,6 +28,8 @@ class TestHostComponent {
   readonly slides = signal([{ title: 'Slide 1' }, { title: 'Slide 2' }, { title: 'Slide 3' }]);
   readonly type = signal<CarouselType>('slider');
   readonly perView = signal(1);
+  readonly hasSlideControls = signal<boolean>(false);
+  readonly autoplay = signal<number | undefined>(undefined);
 
   readonly _carouselEl = viewChild.required(CarouselComponent);
 
@@ -299,5 +307,95 @@ describe('CarouselComponent', () => {
     expect(tracks?.[0].getAttribute('aria-hidden')).toBe('true');
     expect(tracks?.[1].getAttribute('aria-hidden')).toBe('false');
     expect(tracks?.[2].getAttribute('aria-hidden')).toBe('true');
+  });
+
+  it('should not have slide controls by default', () => {
+    const prevSlideControlEl = componentElement?.querySelector<HTMLDivElement>(
+      `[data-testid="${APP_TEST_IDS.carousel.prevSlideControl}"]`,
+    );
+    const nextSlideControlEl = componentElement?.querySelector<HTMLDivElement>(
+      `[data-testid="${APP_TEST_IDS.carousel.nextSlideControl}"]`,
+    );
+
+    expect(prevSlideControlEl).toBeNull();
+    expect(nextSlideControlEl).toBeNull();
+  });
+
+  it('should have slide controls if set', () => {
+    fixture.componentInstance.hasSlideControls.set(true);
+    fixture.detectChanges();
+
+    const prevSlideControlEl = componentElement?.querySelector<HTMLDivElement>(
+      `[data-testid="${APP_TEST_IDS.carousel.prevSlideControl}"]`,
+    );
+    const nextSlideControlEl = componentElement?.querySelector<HTMLDivElement>(
+      `[data-testid="${APP_TEST_IDS.carousel.nextSlideControl}"]`,
+    );
+
+    expect(prevSlideControlEl).toBeTruthy();
+    expect(nextSlideControlEl).toBeTruthy();
+  });
+
+  it('should not have rotation autoplay button by default', () => {
+    const rotationAutoplayEl = componentElement?.querySelector<HTMLDivElement>(
+      `[data-testid="${APP_TEST_IDS.carousel.rotationAutoplay}"]`,
+    );
+
+    expect(rotationAutoplayEl).toBeNull();
+  });
+
+  it('should have autoplay button if autoplay is set', () => {
+    fixture.componentInstance.autoplay.set(5000);
+    fixture.detectChanges();
+
+    const rotationAutoplayEl = componentElement?.querySelector<HTMLDivElement>(
+      `[data-testid="${APP_TEST_IDS.carousel.rotationAutoplay}"]`,
+    );
+
+    expect(rotationAutoplayEl).toBeTruthy();
+  });
+
+  it('should not have autoplay button if autoplay is 0', () => {
+    fixture.componentInstance.autoplay.set(0);
+    fixture.detectChanges();
+
+    const rotationAutoplayEl = componentElement?.querySelector<HTMLDivElement>(
+      `[data-testid="${APP_TEST_IDS.carousel.rotationAutoplay}"]`,
+    );
+
+    expect(rotationAutoplayEl).toBeNull();
+  });
+
+  it('should not have autoplay button if autoplay is negative', () => {
+    fixture.componentInstance.autoplay.set(-1);
+    fixture.detectChanges();
+
+    const rotationAutoplayEl = componentElement?.querySelector<HTMLDivElement>(
+      `[data-testid="${APP_TEST_IDS.carousel.rotationAutoplay}"]`,
+    );
+
+    expect(rotationAutoplayEl).toBeNull();
+  });
+
+  it('should not have autoplay button if autoplay is NaN', () => {
+    fixture.componentInstance.autoplay.set(NaN);
+    fixture.detectChanges();
+
+    const rotationAutoplayEl = componentElement?.querySelector<HTMLDivElement>(
+      `[data-testid="${APP_TEST_IDS.carousel.rotationAutoplay}"]`,
+    );
+
+    expect(rotationAutoplayEl).toBeNull();
+  });
+
+  it('should not have autoplay button if autoplay is Infinity', () => {
+    fixture.componentInstance.autoplay.set(Infinity);
+    fixture.detectChanges();
+
+    const rotationAutoplayEl = componentElement?.querySelector<HTMLDivElement>(
+      `[data-testid="${APP_TEST_IDS.carousel.rotationAutoplay}"]`,
+    );
+
+    expect(rotationAutoplayEl).toBeNull();
   });
 });

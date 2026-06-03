@@ -1,0 +1,13 @@
+@use 'assets/styles/breakpoints' as breakpoints;
+
+.promo-section {
+  &__wrapper {
+    max-width: #{breakpoints.$breakpoint-xxl}px;
+    margin-inline: auto;
+  }
+
+  &__banner-title {
+    display: flex;
+    flex-direction: column-reverse;
+  }
+}

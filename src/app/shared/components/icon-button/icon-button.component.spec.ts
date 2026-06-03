@@ -217,4 +217,29 @@ describe('IconButtonComponent', () => {
     expect(componentElement?.getAttribute('aria-label')).toBe('See user profile');
     expect(tooltipElement?.textContent?.trim()).toBe('See user profile');
   });
+
+  it('should have dark tooltip by default', () => {
+    componentElement?.dispatchEvent(new MouseEvent('mouseenter'));
+    fixture.detectChanges();
+
+    const tooltipElement = overlayContainerElement.querySelector<HTMLDivElement>(
+      `[data-testid="${APP_TEST_IDS.tooltip.root}"]`,
+    );
+
+    expect(tooltipElement?.classList.contains('tooltip_color_dark')).toBe(true);
+  });
+
+  it('should change tooltip color', () => {
+    componentRef.setInput('tooltipColor', 'light');
+    fixture.detectChanges();
+
+    componentElement?.dispatchEvent(new MouseEvent('mouseenter'));
+    fixture.detectChanges();
+
+    const tooltipElement = overlayContainerElement.querySelector<HTMLDivElement>(
+      `[data-testid="${APP_TEST_IDS.tooltip.root}"]`,
+    );
+
+    expect(tooltipElement?.classList.contains('tooltip_color_light')).toBe(true);
+  });
 });
