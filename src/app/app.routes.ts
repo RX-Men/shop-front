@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 
 import { ROUTES } from './core/constants/routes';
+import { AUTH_ROUTES } from './core/auth/auth.routes';
 
 export const routes: Routes = [
   {
@@ -16,4 +17,5 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./features/not-found/not-found.component').then((m) => m.NotFoundComponent),
   },
+  ...AUTH_ROUTES,
 ];

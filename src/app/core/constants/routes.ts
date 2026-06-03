@@ -3,6 +3,7 @@ const ROUTES = {
   catalog: 'catalog',
   uiKit: 'ui-kit',
   notFound: '**',
+  signUp: 'sign-up',
 } as const;
 
 export { ROUTES };
