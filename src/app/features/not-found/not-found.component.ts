@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-not-found',
-  imports: [],
   templateUrl: './not-found.component.html',
   styleUrl: './not-found.component.scss',
 })
