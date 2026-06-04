@@ -8,7 +8,7 @@ import {
   signal,
 } from '@angular/core';
 
-import { IconComponent } from '@/app/shared/components/icon';
+import { IconButtonComponent } from '@/app/shared/components/icon-button';
 
 import { APP_TEST_IDS } from '@/app/app.test-ids';
 
@@ -17,7 +17,7 @@ import type { InputSize, InputType } from './input.types';
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-input',
-  imports: [IconComponent],
+  imports: [IconButtonComponent],
   templateUrl: './input.component.html',
   styleUrl: './input.component.scss',
 })
@@ -42,8 +42,6 @@ export class InputComponent {
   readonly minlength = input<number | null>(null);
   readonly autocomplete = input<string>('off');
   readonly name = input<string>('');
-
-  readonly showPasswordToggle = input<boolean>(false);
 
   readonly focused = output<FocusEvent>();
   readonly blurred = output<FocusEvent>();

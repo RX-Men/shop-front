@@ -41,16 +41,16 @@
     (focus)="focused.emit($event)"
     (blur)="blurred.emit($event)"
   />
-  @if (type() === 'password' && showPasswordToggle()) {
-    <button
+  @if (type() === 'password') {
+    <app-icon-button
       class="input__password-toggle"
-      type="button"
-      tabindex="-1"
-      [attr.aria-label]="_showPasswordLabel()"
+      size="s"
+      [attr.data-testid]="_testIds.passwordToggle"
+      [icon]="_showPassword() ? 'visibility' : 'visibility-off'"
+      [label]="_showPasswordLabel()"
+      [ariaPressed]="_showPassword()"
       (click)="togglePasswordVisibility()"
-    >
-      <app-icon size="s" [name]="_showPassword() ? 'visibility' : 'visibility-off'" />
-    </button>
+    />
   }
 </div>
 
