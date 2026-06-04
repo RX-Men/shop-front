@@ -1,0 +1,85 @@
+<h1 class="sign-up__title">Sign Up</h1>
+
+<form class="sign-up__form" id="sign-up-form" [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
+  <section class="sign-up__section">
+    <h2 class="sign-up__section-title">Account</h2>
+    <div class="sign-up__fields">
+      <app-input
+        label="Email"
+        placeholder="me@ilovecomics.com"
+        type="email"
+        [value]="signUpForm.controls.email.value ?? ''"
+        [error]="
+          signUpForm.controls.email.invalid &&
+          (signUpForm.controls.email.touched || signUpForm.controls.email.dirty)
+        "
+        [errorText]="getEmailErrorText()"
+        (valueChange)="
+          signUpForm.controls.email.setValue($event); signUpForm.controls.email.markAsDirty()
+        "
+        (blurred)="signUpForm.controls.email.markAsTouched()"
+      />
+      <app-input
+        label="Password"
+        [value]="signUpForm.controls.password.value ?? ''"
+        [error]="
+          signUpForm.controls.password.invalid &&
+          (signUpForm.controls.password.touched || signUpForm.controls.password.dirty)
+        "
+        [errorText]="getPasswordErrorText()"
+        (valueChange)="
+          signUpForm.controls.password.setValue($event); signUpForm.controls.password.markAsDirty()
+        "
+        (blurred)="signUpForm.controls.password.markAsTouched()"
+      />
+      <app-input
+        label="Confirm Password"
+        [value]="signUpForm.controls.confirmPassword.value ?? ''"
+        [error]="
+          (signUpForm.controls.confirmPassword.invalid ||
+            signUpForm.hasError('passwordMismatch')) &&
+          (signUpForm.controls.confirmPassword.touched || signUpForm.controls.confirmPassword.dirty)
+        "
+        [errorText]="getConfirmPasswordErrorText()"
+        (valueChange)="
+          signUpForm.controls.confirmPassword.setValue($event);
+          signUpForm.controls.confirmPassword.markAsDirty()
+        "
+        (blurred)="signUpForm.controls.confirmPassword.markAsTouched()"
+      />
+    </div>
+  </section>
+
+  <section class="sign-up__section">
+    <h2 class="sign-up__section-title">Personal Info</h2>
+    <div class="sign-up__fields">
+      <div class="sign-up__row">
+        <app-input label="First Name" placeholder="Tony" />
+        <app-input label="Last Name" placeholder="Stark" />
+      </div>
+      <app-date-picker min="1900-01-01">Date of Birth</app-date-picker>
+    </div>
+  </section>
+
+  <section class="sign-up__section">
+    <h2 class="sign-up__section-title">Address</h2>
+    <div class="sign-up__fields">
+      <app-input label="Street" placeholder="Marple st." />
+      <div class="sign-up__select">
+        <label class="sign-up__select-label" for="country">Country</label>
+        <select class="sign-up__select-native" name="country" id="country">
+          <option value="US">USA</option>
+          <option value="CA">Canada</option>
+        </select>
+      </div>
+      <div class="sign-up__row">
+        <app-input label="City" placeholder="New York" />
+        <app-input label="Postal Code" placeholder="000000" />
+      </div>
+    </div>
+  </section>
+
+  <div class="sign-up__actions">
+    <app-button type="submit" [size]="'l'">Register</app-button>
+  </div>
+</form>
