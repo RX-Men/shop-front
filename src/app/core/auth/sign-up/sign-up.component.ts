@@ -12,6 +12,12 @@ import {
   Validators,
 } from '@angular/forms';
 
+const POSTAL_CODE_PATTERNS: Record<string, { pattern: RegExp; example: string }> = {
+  US: { pattern: /^\d{5}(-\d{4})?$/, example: '12345 or 12345-6789' },
+  CA: { pattern: /^[A-Za-z]\d[A-Za-z][ -]?\d[A-Za-z]\d$/, example: 'A1B 2C3' },
+  MX: { pattern: /^\d{5}$/, example: '12345' },
+};
+
 function passwordMatchValidator(control: AbstractControl): ValidationErrors | null {
   const password = control.get('password')?.value;
   const confirmPassword = control.get('confirmPassword')?.value;
@@ -63,6 +69,22 @@ function maxAgeValidator(maxAge: number): ValidatorFn {
   };
 }
 
+function postalCodeValidator(control: AbstractControl): ValidationErrors | null {
+  if (!control.value) {
+    return null;
+  }
+
+  const country: string = control.parent?.get('country')?.value;
+
+  if (!country) {
+    return null;
+  }
+
+  const config = POSTAL_CODE_PATTERNS[country];
+
+  return config?.pattern.test(control.value) ? null : { postalCode: { country } };
+}
+
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [ButtonComponent, DatePickerComponent, InputComponent, ReactiveFormsModule],
@@ -89,6 +111,9 @@ export class SignUpComponent {
         minAgeValidator(13),
         maxAgeValidator(120),
       ]),
+      address: new FormControl('', [Validators.required]),
+      country: new FormControl('', [Validators.required]),
+      postalCode: new FormControl('', [Validators.required, postalCodeValidator]),
     },
     {
       validators: [passwordMatchValidator],
@@ -181,6 +206,49 @@ export class SignUpComponent {
     }
 
     return '';
+  }
+
+  getAddressErrorText(): string {
+    const errors = this.signUpForm.controls.address.errors;
+
+    if (errors?.['required']) {
+      return 'Address is required';
+    }
+
+    return '';
+  }
+
+  getCountryErrorText(): string {
+    const errors = this.signUpForm.controls.country.errors;
+
+    if (errors?.['required']) {
+      return 'Country is required';
+    }
+
+    return '';
+  }
+
+  getPostalCodeErrorText(): string {
+    const errors = this.signUpForm.controls.postalCode.errors;
+
+    if (errors?.['required']) {
+      return 'Postal code is required';
+    }
+
+    if (errors?.['postalCode']) {
+      const country: string = errors['postalCode'].country;
+      const example = POSTAL_CODE_PATTERNS[country]?.example;
+      return `Invalid postal code format. Expected: ${example}`;
+    }
+
+    return '';
+  }
+
+  onCountryChange(event: Event): void {
+    const value = (event.target as HTMLSelectElement).value;
+    this.signUpForm.controls.country.setValue(value);
+    this.signUpForm.controls.country.markAsDirty();
+    this.signUpForm.controls.postalCode.updateValueAndValidity();
   }
 
   onSubmit(): void {

@@ -117,18 +117,63 @@
   <section class="sign-up__section">
     <h2 class="sign-up__section-title">Address</h2>
     <div class="sign-up__fields">
-      <app-input label="Street" placeholder="Marple st." />
+      <app-input
+        label="Address"
+        placeholder="New York, Marple st., 182"
+        [required]="true"
+        [value]="signUpForm.controls.address.value ?? ''"
+        [error]="
+          signUpForm.controls.address.invalid &&
+          (signUpForm.controls.address.touched || signUpForm.controls.address.dirty)
+        "
+        [errorText]="getAddressErrorText()"
+        (valueChange)="
+          signUpForm.controls.address.setValue($event); signUpForm.controls.address.markAsDirty()
+        "
+        (blurred)="signUpForm.controls.address.markAsTouched()"
+      />
       <div class="sign-up__select">
-        <label class="sign-up__select-label" for="country">Country</label>
-        <select class="sign-up__select-native" name="country" id="country">
-          <option value="US">USA</option>
+        <label class="sign-up__select-label" for="country">
+          Country
+          <span class="sign-up__select-required" aria-hidden="true">*</span>
+        </label>
+        <select
+          class="sign-up__select-native"
+          id="country"
+          [class.sign-up__select-native_error]="
+            signUpForm.controls.country.invalid &&
+            (signUpForm.controls.country.touched || signUpForm.controls.country.dirty)
+          "
+          (change)="onCountryChange($event)"
+          (blur)="signUpForm.controls.country.markAsTouched()"
+        >
+          <option value="" disabled selected>Select a country</option>
+          <option value="US">United States</option>
           <option value="CA">Canada</option>
+          <option value="MX">Mexico</option>
         </select>
+        @if (
+          signUpForm.controls.country.invalid &&
+          (signUpForm.controls.country.touched || signUpForm.controls.country.dirty)
+        ) {
+          <span class="sign-up__field-error">{{ getCountryErrorText() }}</span>
+        }
       </div>
-      <div class="sign-up__row">
-        <app-input label="City" placeholder="New York" />
-        <app-input label="Postal Code" placeholder="000000" />
-      </div>
+      <app-input
+        label="Postal Code"
+        [required]="true"
+        [value]="signUpForm.controls.postalCode.value ?? ''"
+        [error]="
+          signUpForm.controls.postalCode.invalid &&
+          (signUpForm.controls.postalCode.touched || signUpForm.controls.postalCode.dirty)
+        "
+        [errorText]="getPostalCodeErrorText()"
+        (valueChange)="
+          signUpForm.controls.postalCode.setValue($event);
+          signUpForm.controls.postalCode.markAsDirty()
+        "
+        (blurred)="signUpForm.controls.postalCode.markAsTouched()"
+      />
     </div>
   </section>
 
