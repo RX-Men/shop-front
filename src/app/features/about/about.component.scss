@@ -12,7 +12,7 @@
   background-repeat: no-repeat;
   margin-bottom: 100px;
 
-  .about__title {
+  .about-title {
     color: var(--neutral-100);
   }
 }
@@ -43,4 +43,5 @@
   display: flex;
   flex-direction: column;
   gap: var(--spacing-x6);
+  margin-bottom: 100px;
 }

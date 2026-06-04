@@ -1,0 +1,47 @@
+{
+  "companyInfo": {
+    "title": "Company Info and Contact",
+    "description": "Apex Comics Universe, a wholly-owned subsidiary of Horizon Media Corporation, is one of the world's most prominent character-based entertainment companies, built on a proven library of more than 5,000 characters featured in a variety of media over thirty years. Apex utilizes its character franchises in entertainment, licensing and publishing. For more information visit apexcomics.com.",
+    "copyright": "APEX COMICS"
+  },
+  "headquarters": {
+    "title": "Corporate Headquarters",
+    "lines": ["Apex Comics Universe", "742 Evergreen Terrace", "Springfield, OR 97477"]
+  },
+  "inquiries": [
+    {
+      "title": "Business Inquiries",
+      "paragraphs": [
+        {
+          "textBefore": "For tech support, please visit the ",
+          "linkText": "Help Page",
+          "routerLink": "/help",
+          "textAfter": "."
+        },
+        {
+          "textBefore": "General phone number, Apex Comics Universe: ",
+          "linkText": "555-0199",
+          "href": "tel:555-0199",
+          "textAfter": ""
+        }
+      ]
+    },
+    {
+      "title": "Consumer Inquiries",
+      "paragraphs": [
+        {
+          "textBefore": "For FAQ's related to Apex Comics and Apexcomics.com: ",
+          "linkText": "Visit the Help Page",
+          "routerLink": "/faq",
+          "textAfter": "."
+        },
+        {
+          "textBefore": "Apexcomics.com, Apex Comics app, and Apex Digital Comics Unlimited Subscriptions: For any inquiries unresolved by the Help Page, please use the ",
+          "linkText": "Contact Form here",
+          "routerLink": "/contact-form",
+          "textAfter": "."
+        }
+      ]
+    }
+  ]
+}

@@ -1,5 +1,5 @@
 <div class="about-banner">
-  <h1 class="about__title text-7xl">About us</h1>
+  <h1 class="about-title text-7xl">About us</h1>
 </div>
 <div class="container">
   <div class="about-card">
@@ -18,52 +18,44 @@
   <div class="company-info">
     <!-- About Company -->
     <article class="company-info__block">
-      <h2 class="company-info__title company-info__title--main">Company Info and Contact</h2>
+      <h2 class="company-info__title company-info__title--main">{{ info.companyInfo.title }}</h2>
       <p class="company-info__description">
-        Apex Comics Universe, a wholly-owned subsidiary of Horizon Media Corporation, is one of the
-        world's most prominent character-based entertainment companies, built on a proven library of
-        more than 5,000 characters featured in a variety of media over thirty years. Apex utilizes
-        its character franchises in entertainment, licensing and publishing. For more information
-        visit apexcomics.com.
-        <span class="company-info__copyright">© {{ currentYear }} APEX COMICS</span>
+        {{ info.companyInfo.description }}
+        <span class="company-info__copyright"
+          >© {{ currentYear }} {{ info.companyInfo.copyright }}</span
+        >
       </p>
     </article>
 
     <!-- Corporate Headquarters -->
     <address class="company-info__block">
-      <h3 class="company-info__title company-info__title--sub">Corporate Headquarters</h3>
+      <h3 class="company-info__title company-info__title--sub">{{ info.headquarters.title }}</h3>
       <p class="company-info__address-details">
-        Apex Comics Universe<br />
-        742 Evergreen Terrace<br />
-        Springfield, OR 97477
+        @for (line of info.headquarters.lines; track line) {
+          {{ line }}<br />
+        }
       </p>
     </address>
 
-    <!-- Business Inquiries -->
-    <article class="company-info__block">
-      <h3 class="company-info__title company-info__title--sub">Business Inquiries</h3>
-      <p class="company-info__text">
-        For tech support, please visit the
-        <a routerLink="/help" class="company-info__link">Help Page</a>.
-      </p>
-      <p class="company-info__text">
-        General phone number, Apex Comics Universe:
-        <a href="tel:555-0199" class="company-info__link">555-0199</a>
-      </p>
-    </article>
+    <!-- Inquiries (Business & Consumer) -->
+    @for (block of info.inquiries; track block.title) {
+      <article class="company-info__block">
+        <h3 class="company-info__title company-info__title--sub">{{ block.title }}</h3>
 
-    <!-- Consumer Inquiries -->
-    <article class="company-info__block">
-      <h3 class="company-info__title company-info__title--sub">Consumer Inquiries</h3>
-      <p class="company-info__text">
-        For FAQ's related to Apex Comics and Apexcomics.com:
-        <a routerLink="/faq" class="company-info__link">Visit the Help Page</a>.
-      </p>
-      <p class="company-info__text">
-        Apexcomics.com, Apex Comics app, and Apex Digital Comics Unlimited Subscriptions: For any
-        inquiries unresolved by the Help Page, please use the
-        <a routerLink="/contact-form" class="company-info__link">Contact Form here</a>.
-      </p>
-    </article>
+        @for (p of block.paragraphs; track p.textBefore) {
+          <p class="company-info__text">
+            {{ p.textBefore }}
+
+            @if (p.routerLink) {
+              <a class="company-info__link" [routerLink]="p.routerLink">{{ p.linkText }}</a>
+            } @else if (p.href) {
+              <a class="company-info__link" [href]="p.href">{{ p.linkText }}</a>
+            }
+
+            {{ p.textAfter }}
+          </p>
+        }
+      </article>
+    }
   </div>
 </div>
