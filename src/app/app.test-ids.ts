@@ -39,6 +39,7 @@ export const APP_TEST_IDS = {
   input: {
     error: 'input-error',
     native: 'input-native',
+    passwordToggle: 'input-password-toggle',
     root: 'input',
   },
   logo: {
