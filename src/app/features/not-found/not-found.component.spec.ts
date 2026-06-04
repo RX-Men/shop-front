@@ -1,5 +1,5 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { type ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router'; // Импортируем провайдер
 import { NotFoundComponent } from './not-found.component';
 
 describe('NotFoundComponent', () => {
@@ -8,12 +8,15 @@ describe('NotFoundComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [NotFoundComponent],
+      imports: [NotFoundComponent], // Если компонент standalone
+      providers: [
+        provideRouter([]), // Инициализируем окружение роутера
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(NotFoundComponent);
     component = fixture.componentInstance;
-    await fixture.whenStable();
+    fixture.detectChanges();
   });
 
   it('should create', () => {
