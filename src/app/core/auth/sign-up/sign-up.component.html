@@ -8,6 +8,7 @@
         label="Email"
         placeholder="me@ilovecomics.com"
         type="email"
+        [required]="true"
         [value]="signUpForm.controls.email.value ?? ''"
         [error]="
           signUpForm.controls.email.invalid &&
@@ -21,6 +22,8 @@
       />
       <app-input
         label="Password"
+        type="password"
+        [required]="true"
         [value]="signUpForm.controls.password.value ?? ''"
         [error]="
           signUpForm.controls.password.invalid &&
@@ -34,6 +37,8 @@
       />
       <app-input
         label="Confirm Password"
+        type="password"
+        [required]="true"
         [value]="signUpForm.controls.confirmPassword.value ?? ''"
         [error]="
           (signUpForm.controls.confirmPassword.invalid ||
@@ -54,10 +59,58 @@
     <h2 class="sign-up__section-title">Personal Info</h2>
     <div class="sign-up__fields">
       <div class="sign-up__row">
-        <app-input label="First Name" placeholder="Tony" />
-        <app-input label="Last Name" placeholder="Stark" />
+        <app-input
+          label="First Name"
+          placeholder="Tony"
+          [required]="true"
+          [value]="signUpForm.controls.firstName.value ?? ''"
+          [error]="
+            signUpForm.controls.firstName.invalid &&
+            (signUpForm.controls.firstName.touched || signUpForm.controls.firstName.dirty)
+          "
+          [errorText]="getFirstNameErrorText()"
+          (valueChange)="
+            signUpForm.controls.firstName.setValue($event);
+            signUpForm.controls.firstName.markAsDirty()
+          "
+          (blurred)="signUpForm.controls.firstName.markAsTouched()"
+        />
+        <app-input
+          label="Last Name"
+          placeholder="Stark"
+          [required]="true"
+          [value]="signUpForm.controls.lastName.value ?? ''"
+          [error]="
+            signUpForm.controls.lastName.invalid &&
+            (signUpForm.controls.lastName.touched || signUpForm.controls.lastName.dirty)
+          "
+          [errorText]="getLastNameErrorText()"
+          (valueChange)="
+            signUpForm.controls.lastName.setValue($event);
+            signUpForm.controls.lastName.markAsDirty()
+          "
+          (blurred)="signUpForm.controls.lastName.markAsTouched()"
+        />
       </div>
-      <app-date-picker min="1900-01-01">Date of Birth</app-date-picker>
+      <div class="sign-up__date-field">
+        <app-date-picker
+          min="1900-01-01"
+          [value]="signUpForm.controls.dateOfBirth.value ?? ''"
+          [required]="true"
+          (valueChange)="
+            signUpForm.controls.dateOfBirth.setValue($event);
+            signUpForm.controls.dateOfBirth.markAsDirty();
+            signUpForm.controls.dateOfBirth.markAsTouched()
+          "
+          >Date of Birth</app-date-picker
+        >
+        @if (
+          signUpForm.controls.dateOfBirth.invalid &&
+          (signUpForm.controls.dateOfBirth.touched || signUpForm.controls.dateOfBirth.dirty)
+        ) {
+          <span class="sign-up__date-error">{{ getDateOfBirthErrorText() }}</span>
+        }
+      </div>
     </div>
   </section>
 
