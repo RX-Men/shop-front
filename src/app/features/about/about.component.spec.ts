@@ -1,5 +1,5 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { type ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router'; // Импортируем провайдер
 import { AboutComponent } from './about.component';
 
 describe('AboutComponent', () => {
@@ -8,12 +8,15 @@ describe('AboutComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AboutComponent],
+      imports: [AboutComponent], // или в declarations, если компонент не standalone
+      providers: [
+        provideRouter([]), // Добавляем пустой массив маршрутов для тестов
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(AboutComponent);
     component = fixture.componentInstance;
-    await fixture.whenStable();
+    fixture.detectChanges();
   });
 
   it('should create', () => {
