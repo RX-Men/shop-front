@@ -1,3 +1,4 @@
+import { RouterLinkComponent } from '@/app/shared/components/router-link';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
@@ -6,6 +7,6 @@ import { RouterLink } from '@angular/router';
   selector: 'app-not-found',
   templateUrl: './not-found.component.html',
   styleUrl: './not-found.component.scss',
-  imports: [RouterLink],
+  imports: [RouterLink, RouterLinkComponent],
 })
 export class NotFoundComponent {}

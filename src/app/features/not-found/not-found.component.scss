@@ -12,12 +12,8 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: var(--spacing-x4);
+  padding: var(--spacing-x15);
   text-align: center;
   width: 100%;
   gap: var(--spacing-x1);
-
-  &__link {
-    text-decoration: underline;
-  }
 }
