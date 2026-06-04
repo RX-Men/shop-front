@@ -180,4 +180,8 @@
   <div class="sign-up__actions">
     <app-button type="submit" [size]="'l'">Register</app-button>
   </div>
+
+  @if (submitted()) {
+    <div class="sign-up__success" role="alert">Registration successful! Welcome aboard.</div>
+  }
 </form>

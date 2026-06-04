@@ -1,5 +1,5 @@
 import { ButtonComponent } from '@/app/shared/components/button';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { DatePickerComponent } from '@/app/shared/components/date-picker';
 import { InputComponent } from '@/app/shared/components/input';
 import {
@@ -83,6 +83,25 @@ function postalCodeValidator(control: AbstractControl): ValidationErrors | null 
   const config = POSTAL_CODE_PATTERNS[country];
 
   return config?.pattern.test(control.value) ? null : { postalCode: { country } };
+}
+
+interface SignUpAddress {
+  streetName: string;
+  country: string;
+  postalCode: string;
+}
+
+interface SignUpPayload {
+  email: string;
+  password: string;
+  firstName: string;
+  lastName: string;
+  dateOfBirth: string;
+  // commercetools supports multiple addresses per customer; we register with exactly one
+  addresses: [SignUpAddress];
+  // index into the addresses array; literal 0 because right now we have a single address
+  defaultShippingAddress: 0;
+  defaultBillingAddress: 0;
 }
 
 @Component({
@@ -244,6 +263,8 @@ export class SignUpComponent {
     return '';
   }
 
+  readonly submitted = signal(false);
+
   onCountryChange(event: Event): void {
     const value = (event.target as HTMLSelectElement).value;
     this.signUpForm.controls.country.setValue(value);
@@ -256,6 +277,22 @@ export class SignUpComponent {
       this.signUpForm.markAllAsTouched();
       return;
     }
-    console.log(this.signUpForm.value);
+
+    const { email, password, firstName, lastName, dateOfBirth, address, country, postalCode } =
+      this.signUpForm.getRawValue();
+
+    const payload: SignUpPayload = {
+      email: email!,
+      password: password!,
+      firstName: firstName!,
+      lastName: lastName!,
+      dateOfBirth: dateOfBirth!,
+      addresses: [{ streetName: address!, country: country!, postalCode: postalCode! }],
+      defaultShippingAddress: 0,
+      defaultBillingAddress: 0,
+    };
+
+    console.log('[mock] Registration payload:', payload);
+    this.submitted.set(true);
   }
 }
