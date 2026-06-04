@@ -295,4 +295,11 @@ export class SignUpComponent {
     console.log('[mock] Registration payload:', payload);
     this.submitted.set(true);
   }
+
+  canDeactivate(): boolean {
+    if (this.signUpForm.pristine) {
+      return true;
+    }
+    return confirm('You have unsaved changes. Leave this page?');
+  }
 }
