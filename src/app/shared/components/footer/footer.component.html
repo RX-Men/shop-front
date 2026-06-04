@@ -1,0 +1,43 @@
+<footer class="footer" [attr.data-testid]="_testIds.root">
+  <div class="footer__wrapper container">
+    <div class="footer__block-start">
+      <div class="footer__main">
+        <app-logo [imgPriority]="false" [linkable]="false" />
+
+        <p class="footer__description">{{ _data.description }}</p>
+      </div>
+
+      <app-footer-nav-col
+        class="footer__nav"
+        [title]="_data.sitemap.title"
+        [links]="_data.sitemap.content"
+      />
+
+      <app-footer-nav-col
+        class="footer__nav footer__nav_legal"
+        [title]="_data.legal.title"
+        [links]="_data.legal.content"
+      />
+
+      <app-footer-nav-col
+        class="footer__nav footer__customer"
+        [title]="_data.customer.title"
+        [links]="_data.customer.content"
+      />
+
+      <app-footer-nav-col
+        class="footer__nav footer__nav_social"
+        [title]="_data.social.title"
+        [links]="_data.social.content"
+        [direction]="'row'"
+      />
+    </div>
+
+    <div class="footer__block-end">
+      <p class="footer__copyright">
+        &copy; <time [attr.datetime]="_data.date">{{ _data.date }}</time> {{ _data.brand }}.
+        {{ _data.notice }}
+      </p>
+    </div>
+  </div>
+</footer>

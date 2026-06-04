@@ -1,0 +1,51 @@
+@let computedLinks = links();
+
+<ng-template #li>
+  <li class="footer-nav-col__item">
+    <ng-content />
+  </li>
+</ng-template>
+
+<nav class="footer-nav-col" [aria-labelledby]="_id">
+  <h2 class="text-2xl" [id]="_id">{{ title() }}</h2>
+
+  <ul class="footer-nav-col__list" [class.footer-nav-col__list_col]="direction() === 'col'">
+    @for (link of computedLinks; track $index) {
+      @switch (link.variant) {
+        @case (_linkVariant.routerLink) {
+          <ng-container [ngTemplateOutlet]="li">
+            <app-router-link
+              [routerLink]="link.href"
+              [variant]="'text'"
+              [size]="'s'"
+              [color]="'light'"
+              >{{ link.name }}</app-router-link
+            >
+          </ng-container>
+        }
+
+        @case (_linkVariant.externalLink) {
+          <ng-container [ngTemplateOutlet]="li">
+            <app-external-link
+              [href]="link.href"
+              [variant]="'text'"
+              [size]="'s'"
+              [color]="'light'"
+              >{{ link.name }}</app-external-link
+            >
+          </ng-container>
+        }
+
+        @case (_linkVariant.iconExternalLink) {
+          <ng-container [ngTemplateOutlet]="li">
+            <app-icon-external-link
+              [href]="link.href"
+              [icon]="link.name"
+              [label]="link.ariaLabel"
+            />
+          </ng-container>
+        }
+      }
+    }
+  </ul>
+</nav>

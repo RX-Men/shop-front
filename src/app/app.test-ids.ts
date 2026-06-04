@@ -18,6 +18,9 @@ export const APP_TEST_IDS = {
   externalLink: {
     root: 'external-link',
   },
+  footer: {
+    root: 'footer',
+  },
   hero: {
     root: 'hero',
   },
