@@ -1,109 +1,17 @@
 import { ButtonComponent } from '@/app/shared/components/button';
 import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
-import signUpContent from 'content/pages/sign-up/sign-up.json';
 import { DatePickerComponent } from '@/app/shared/components/date-picker';
 import { InputComponent } from '@/app/shared/components/input';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import signUpContent from 'content/pages/sign-up/sign-up.json';
+import { MAX_AGE, MIN_AGE, NAME_PATTERN, POSTAL_CODE_PATTERNS } from './sign-up.constants';
+import { SignUpPayload } from './sign-up.types';
 import {
-  AbstractControl,
-  FormControl,
-  FormGroup,
-  ReactiveFormsModule,
-  ValidationErrors,
-  ValidatorFn,
-  Validators,
-} from '@angular/forms';
-
-const POSTAL_CODE_PATTERNS: Record<string, { pattern: RegExp; example: string }> = {
-  US: { pattern: /^\d{5}(-\d{4})?$/, example: '12345 or 12345-6789' },
-  CA: { pattern: /^[A-Za-z]\d[A-Za-z][ -]?\d[A-Za-z]\d$/, example: 'A1B 2C3' },
-  MX: { pattern: /^\d{5}$/, example: '12345' },
-};
-
-function passwordMatchValidator(control: AbstractControl): ValidationErrors | null {
-  const password = control.get('password')?.value;
-  const confirmPassword = control.get('confirmPassword')?.value;
-
-  if (!password || !confirmPassword) {
-    return null;
-  }
-
-  return password === confirmPassword ? null : { passwordMismatch: true };
-}
-
-function calcAge(birthValue: string): number {
-  const birth = new Date(birthValue);
-  const today = new Date();
-  let age = today.getFullYear() - birth.getFullYear();
-
-  const notYetHadBirthday =
-    today.getMonth() < birth.getMonth() ||
-    (today.getMonth() === birth.getMonth() && today.getDate() < birth.getDate());
-
-  if (notYetHadBirthday) {
-    age--;
-  }
-
-  return age;
-}
-
-function minAgeValidator(minAge: number): ValidatorFn {
-  return (control: AbstractControl): ValidationErrors | null => {
-    if (!control.value) {
-      return null;
-    }
-
-    const age = calcAge(control.value);
-
-    return age >= minAge ? null : { minAge: { required: minAge, actual: age } };
-  };
-}
-
-function maxAgeValidator(maxAge: number): ValidatorFn {
-  return (control: AbstractControl): ValidationErrors | null => {
-    if (!control.value) {
-      return null;
-    }
-
-    const age = calcAge(control.value);
-
-    return age <= maxAge ? null : { maxAge: { limit: maxAge, actual: age } };
-  };
-}
-
-function postalCodeValidator(control: AbstractControl): ValidationErrors | null {
-  if (!control.value) {
-    return null;
-  }
-
-  const country: string = control.parent?.get('country')?.value;
-
-  if (!country) {
-    return null;
-  }
-
-  const config = POSTAL_CODE_PATTERNS[country];
-
-  return config?.pattern.test(control.value) ? null : { postalCode: { country } };
-}
-
-interface SignUpAddress {
-  streetName: string;
-  country: string;
-  postalCode: string;
-}
-
-interface SignUpPayload {
-  email: string;
-  password: string;
-  firstName: string;
-  lastName: string;
-  dateOfBirth: string;
-  // commercetools supports multiple addresses per customer; we register with exactly one
-  addresses: [SignUpAddress];
-  // index into the addresses array; literal 0 because right now we have a single address
-  defaultShippingAddress: 0;
-  defaultBillingAddress: 0;
-}
+  maxAgeValidator,
+  minAgeValidator,
+  passwordMatchValidator,
+  postalCodeValidator,
+} from './sign-up.utils';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -120,18 +28,12 @@ export class SignUpComponent {
       email: new FormControl('', [Validators.email, Validators.required]),
       password: new FormControl('', [Validators.required, Validators.minLength(8)]),
       confirmPassword: new FormControl('', [Validators.required]),
-      firstName: new FormControl('', [
-        Validators.required,
-        Validators.pattern(/^[a-zA-ZЀ-ӿ\s'-]+$/),
-      ]),
-      lastName: new FormControl('', [
-        Validators.required,
-        Validators.pattern(/^[a-zA-ZЀ-ӿ\s'-]+$/),
-      ]),
+      firstName: new FormControl('', [Validators.required, Validators.pattern(NAME_PATTERN)]),
+      lastName: new FormControl('', [Validators.required, Validators.pattern(NAME_PATTERN)]),
       dateOfBirth: new FormControl('', [
         Validators.required,
-        minAgeValidator(13),
-        maxAgeValidator(120),
+        minAgeValidator(MIN_AGE),
+        maxAgeValidator(MAX_AGE),
       ]),
       address: new FormControl('', [Validators.required]),
       country: new FormControl('', [Validators.required]),
@@ -141,6 +43,8 @@ export class SignUpComponent {
       validators: [passwordMatchValidator],
     },
   );
+
+  readonly submitted = signal(false);
 
   getEmailErrorText(): string {
     const errors = this.signUpForm.controls.email.errors;
@@ -258,8 +162,6 @@ export class SignUpComponent {
 
     return '';
   }
-
-  readonly submitted = signal(false);
 
   onCountryChange(event: Event): void {
     const value = (event.target as HTMLSelectElement).value;
