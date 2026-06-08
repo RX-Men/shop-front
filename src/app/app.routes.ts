@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
 
+import { unsavedChangesGuard } from './core/guards/unsaved-changes.guard';
 import { ROUTES } from './core/constants/routes';
-import { AUTH_ROUTES } from './core/auth/auth.routes';
 
 export const routes: Routes = [
   {
@@ -17,5 +17,10 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./features/not-found/not-found.component').then((m) => m.NotFoundComponent),
   },
-  ...AUTH_ROUTES,
+  {
+    path: ROUTES.signUp,
+    loadComponent: () =>
+      import('./core/auth/sign-up/sign-up.component').then((m) => m.SignUpComponent),
+    canDeactivate: [unsavedChangesGuard],
+  },
 ];
