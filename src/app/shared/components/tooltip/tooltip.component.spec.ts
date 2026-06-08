@@ -14,9 +14,11 @@ class TestTooltipComponent {
   readonly _tooltiplEl = viewChild.required(TooltipComponent);
 
   readonly setText = (text: ReturnType<TooltipComponent['text']>): void =>
-    this._tooltiplEl().setText(text);
+    this._tooltiplEl().text.set(text);
   readonly setColor = (color: ReturnType<TooltipComponent['color']>): void =>
-    this._tooltiplEl().setColor(color);
+    this._tooltiplEl().color.set(color);
+  readonly setPosition = (position: ReturnType<TooltipComponent['position']>): void =>
+    this._tooltiplEl().position.set(position);
 }
 
 describe('TooltipComponent', () => {
@@ -58,5 +60,12 @@ describe('TooltipComponent', () => {
     fixture.detectChanges();
 
     expect(componentElement?.classList.contains('tooltip_color_light')).toBe(true);
+  });
+
+  it('should set new position', () => {
+    fixture.componentInstance.setPosition('inline-start');
+    fixture.detectChanges();
+
+    expect(componentElement?.classList.contains('tooltip_position_inline-start')).toBe(true);
   });
 });

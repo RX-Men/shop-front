@@ -24,7 +24,9 @@ export class IconButtonComponent {
   readonly icon = input.required<ReturnType<IconComponent['name']>>();
   readonly size = input<ReturnType<IconComponent['size']>>('m');
   readonly label = input.required<string>();
+  readonly tooltipPosition = input<ReturnType<TooltipDirective['tooltipPosition']>>('block-start');
   readonly tooltipColor = input<ReturnType<TooltipDirective['tooltipColor']>>('dark');
+  readonly popovertarget = input<string>();
   readonly ariaPressed = input<boolean | 'mixed'>();
   readonly disabled = input<boolean>();
 

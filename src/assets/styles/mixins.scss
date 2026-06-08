@@ -51,6 +51,7 @@
 
 @mixin action-button {
   display: inline-flex;
+  color: currentcolor;
 
   @include transition(color);
 
