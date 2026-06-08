@@ -4,7 +4,10 @@
 @let isOut = _isOut();
 @let priceAriaLabel = _priceAriaLabel();
 
-<article class="product-card" [attr.data-testid]="_testIds.root">
+<article
+  class="product-card product-card_orientation_{{ orientation() }}"
+  [attr.data-testid]="_testIds.root"
+>
   <header class="product-card__header">
     <a
       class="product-card__heading"
@@ -30,7 +33,13 @@
     }
 
     <div class="product-card__img-inner">
-      <img alt="Cover" fill [ngSrc]="img()" [attr.data-testid]="_testIds.img" />
+      <img
+        class="product-card__img"
+        alt="Cover"
+        fill
+        [ngSrc]="img()"
+        [attr.data-testid]="_testIds.img"
+      />
     </div>
   </div>
 

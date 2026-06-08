@@ -21,6 +21,9 @@ export const APP_TEST_IDS = {
   footer: {
     root: 'footer',
   },
+  header: {
+    root: 'header',
+  },
   hero: {
     root: 'hero',
   },

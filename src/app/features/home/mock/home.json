@@ -214,56 +214,6 @@
       "oldPrice": 1750,
       "discount": 0,
       "count": 7
-    },
-    {
-      "id": "16",
-      "heading": "Major Grom (2012) #1",
-      "subheading": "Bubble Comics",
-      "img": "assets/images/portrait_uncanny.jpg",
-      "currentPrice": 360,
-      "oldPrice": 600,
-      "discount": 40,
-      "count": 50
-    },
-    {
-      "id": "17",
-      "heading": "Immortal Hulk (2018) #1",
-      "subheading": "Marvel Comics",
-      "img": "assets/images/portrait_uncanny.jpg",
-      "currentPrice": 200,
-      "oldPrice": 200,
-      "discount": 0,
-      "count": 0
-    },
-    {
-      "id": "18",
-      "heading": "Tokyo Ghoul (2011) #1",
-      "subheading": "Shueisha",
-      "img": "assets/images/portrait_uncanny.jpg",
-      "currentPrice": 1012,
-      "oldPrice": 1100,
-      "discount": 8,
-      "count": 88
-    },
-    {
-      "id": "19",
-      "heading": "V for Vendetta (1982) #1",
-      "subheading": "DC Comics",
-      "img": "assets/images/portrait_uncanny.jpg",
-      "currentPrice": 1600,
-      "oldPrice": 1600,
-      "discount": 0,
-      "count": 19
-    },
-    {
-      "id": "20",
-      "heading": "Justice League (2013) #1",
-      "subheading": "DC Comics",
-      "img": "assets/images/portrait_uncanny.jpg",
-      "currentPrice": 1050,
-      "oldPrice": 1400,
-      "discount": 25,
-      "count": 2
     }
   ],
   "promo": {

@@ -13,7 +13,7 @@ import { Subscription } from 'rxjs';
 
 import { CarouselComponent } from '@/app/shared/components/carousel';
 import { IconButtonComponent } from '@/app/shared/components/icon-button';
-import { ProductCardComponent } from '../product-card';
+import { ProductCardComponent } from '@/app/shared/components/product-card';
 import { RouterLinkComponent } from '@/app/shared/components/router-link';
 
 import { getCardsCountByScreenSize, SCREEN_SIZE_ORDER_ASC } from './product-list.utils';
@@ -21,7 +21,7 @@ import { getCardsCountByScreenSize, SCREEN_SIZE_ORDER_ASC } from './product-list
 import { APP_TEST_IDS } from '@/app/app.test-ids';
 import { ROUTES } from '@/app/core/constants/routes';
 
-import type { ProductCard } from '../product-card/product-card.types';
+import type { ProductCard } from '@/app/shared/components/product-card';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,

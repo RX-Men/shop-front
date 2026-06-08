@@ -1,0 +1,17 @@
+.cart-button {
+  position: relative;
+  display: flex;
+
+  &__badge {
+    position: absolute;
+    inset-block-start: calc(-1 * var(--spacing-x3));
+    inset-inline-end: calc(-1 * var(--spacing-x3));
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 24px;
+    aspect-ratio: 1;
+    border-radius: 100%;
+    background-color: var(--brand-500);
+  }
+}

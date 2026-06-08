@@ -1,0 +1,15 @@
+@let badge = _badge();
+
+<div class="cart-button">
+  <app-icon-router-link
+    [routerLink]="_routes.cart"
+    [icon]="'shopping-cart'"
+    [label]="_data.label"
+    [tooltipPosition]="'block-end'"
+    [tooltipColor]="'light'"
+  />
+
+  @if (badge) {
+    <span class="cart-button__badge text-xs" aria-live="polite">{{ badge }}</span>
+  }
+</div>

@@ -5,8 +5,13 @@
 
   &__wrapper {
     padding-block: var(--spacing-x15) var(--spacing-x10);
+    margin-block-start: var(--spacing-x20);
     text-transform: capitalize;
     color: var(--neutral-100);
+
+    @include mix.media('m') {
+      margin-block-start: var(--spacing-x10);
+    }
   }
 
   &__block-start {
@@ -75,13 +80,22 @@
   }
 
   &__block-end {
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
     padding-block-start: var(--spacing-x5);
-    border-block-start: 2px solid var(--neutral-700);
     margin-block-start: var(--spacing-x8);
     text-align: center;
+
+    &::before {
+      content: '';
+      position: absolute;
+      inset-block-start: calc(var(--spacing-x1) / 2 * -1);
+      width: 100vw;
+      height: 2px;
+      background-color: var(--neutral-700);
+    }
   }
 
   &__copyright {

@@ -23,6 +23,7 @@
 >
   <input
     class="input__native"
+    [appAutofocus]="autofocus()"
     [attr.data-testid]="_testIds.native"
     [id]="id"
     [type]="_resolvedType()"

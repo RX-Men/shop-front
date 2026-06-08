@@ -67,9 +67,5 @@
     display: flex;
     justify-content: center;
     gap: var(--spacing-x3);
-
-    @include mix.media('s') {
-      display: none;
-    }
   }
 }

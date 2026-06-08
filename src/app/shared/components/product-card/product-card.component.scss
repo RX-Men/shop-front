@@ -1,15 +1,57 @@
 @use 'assets/styles/mixins' as mix;
 
 .product-card {
-  display: flex;
-  flex-direction: column;
+  $this: &;
+
   height: 100%;
+
+  &_orientation {
+    &_vertical {
+      display: flex;
+      flex-direction: column;
+    }
+
+    &_horizontal {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: auto 1fr auto;
+      column-gap: var(--spacing-x3);
+
+      #{$this}__img-wrapper {
+        grid-row: 1 / 4;
+        height: 100%;
+      }
+
+      #{$this}__header,
+      #{$this}__price,
+      #{$this}__footer {
+        grid-column: 2 / 4;
+      }
+
+      #{$this}__header {
+        grid-row: 1 / 2;
+        margin-block-start: 0;
+      }
+
+      #{$this}__price {
+        grid-row: 2 / 3;
+      }
+
+      #{$this}__footer {
+        grid-row: 3 / 4;
+      }
+
+      @include mix.media('m') {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  }
 
   &__header {
     display: flex;
     flex-direction: column;
     order: 2;
-    margin-block: var(--spacing-x3) var(--spacing-x5);
+    margin-block: var(--spacing-x3);
   }
 
   &__heading {
@@ -30,7 +72,7 @@
 
   &__subheading {
     order: 1;
-    color: var(--neutral-700);
+    color: var(--neutral-600);
   }
 
   &__img-wrapper {
@@ -38,7 +80,7 @@
     overflow: hidden;
     order: 1;
     width: 100%;
-    aspect-ratio: 3 / 4;
+    aspect-ratio: 8 / 9;
   }
 
   &__img-inner {
@@ -54,6 +96,10 @@
       height: 100%;
       background-color: rgb(var(--neutral-900-rgb), 0.08);
     }
+  }
+
+  &__img {
+    object-fit: cover;
   }
 
   &__badge {

@@ -10,6 +10,8 @@ import {
 
 import { IconButtonComponent } from '@/app/shared/components/icon-button';
 
+import { AutofocusDirective } from '../../directives/autofocus';
+
 import { APP_TEST_IDS } from '@/app/app.test-ids';
 
 import type { InputSize, InputType } from './input.types';
@@ -17,7 +19,7 @@ import type { InputSize, InputType } from './input.types';
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-input',
-  imports: [IconButtonComponent],
+  imports: [AutofocusDirective, IconButtonComponent],
   templateUrl: './input.component.html',
   styleUrl: './input.component.scss',
 })
@@ -45,6 +47,8 @@ export class InputComponent {
 
   readonly focused = output<FocusEvent>();
   readonly blurred = output<FocusEvent>();
+
+  readonly autofocus = input<boolean>(false);
 
   protected readonly _testIds = APP_TEST_IDS.input;
 

@@ -21,11 +21,11 @@
     <ng-content />
 
     @if (computedIcon) {
-      <app-icon [name]="computedIcon" [size]="'s'" />
+      <app-icon [name]="computedIcon" />
     }
   </span>
 
   @if (computedLoading) {
-    <app-spin class="button__loader" [size]="'s'" [color]="'current'" />
+    <app-spin class="button__loader" [color]="'current'" />
   }
 </button>

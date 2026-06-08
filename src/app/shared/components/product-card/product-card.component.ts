@@ -3,16 +3,18 @@ import { NgOptimizedImage } from '@angular/common';
 import { RouterLink } from '@angular/router';
 
 import { ButtonComponent } from '@/app/shared/components/button';
-import { ProductBadgeComponent } from '../product-badge';
+import { ProductBadgeComponent } from './components/product-badge';
 
 import { getBadgeLabel, getPriceAriaLabel } from './product-card.utils';
+
+import { PRODUCT_CARD_ORIENTATION } from './product-card.constants';
 
 import { APP_TEST_IDS } from '@/app/app.test-ids';
 import { ROUTES } from '@/app/core/constants/routes';
 
 import { PricePipe } from '@/app/shared/pipes/price';
 
-import type { ProductCard } from './product-card.types';
+import type { ProductCard, ProductCardOrientation } from './product-card.types';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -24,6 +26,7 @@ import type { ProductCard } from './product-card.types';
 })
 export class ProductCardComponent {
   readonly id = input.required<ProductCard['id']>();
+  readonly orientation = input<ProductCardOrientation>(PRODUCT_CARD_ORIENTATION.vertical);
   readonly heading = input.required<ProductCard['heading']>();
   readonly subheading = input.required<ProductCard['subheading']>();
   readonly img = input.required<ProductCard['img']>();
