@@ -1,9 +1,10 @@
 import { ButtonComponent } from '@/app/shared/components/button';
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { DatePickerComponent } from '@/app/shared/components/date-picker';
 import { InputComponent } from '@/app/shared/components/input';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import signUpContent from '@/app/content/pages/sign-up/sign-up.json' with { type: 'json' };
+import { AuthService } from '@/app/core/services/auth.service';
 import { MAX_AGE, MIN_AGE, NAME_PATTERN, POSTAL_CODE_PATTERNS } from './sign-up.constants';
 import { SignUpPayload } from './sign-up.types';
 import {
@@ -22,6 +23,7 @@ import {
 })
 export class SignUpComponent {
   readonly content = signUpContent;
+  private readonly _authService = inject(AuthService);
 
   readonly signUpForm = new FormGroup(
     {
@@ -190,7 +192,7 @@ export class SignUpComponent {
       defaultBillingAddress: 0,
     };
 
-    console.log('[mock] Registration payload:', payload);
+    this._authService.register(payload);
     this.submitted.set(true);
   }
 

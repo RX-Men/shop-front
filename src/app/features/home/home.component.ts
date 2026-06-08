@@ -1,10 +1,9 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 
+import { ProductsService } from '@/app/core/services/products.service';
 import { HeroComponent } from './components/hero';
 import { ProductListComponent } from './components/product-list';
 import { PromoSectionComponent } from './components/promo-section';
-
-import mock from './mock/home.json' with { type: 'json' };
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -13,7 +12,9 @@ import mock from './mock/home.json' with { type: 'json' };
   templateUrl: './home.component.html',
 })
 export class HomeComponent {
-  readonly hero = mock.hero;
-  readonly promo = mock.promo;
-  readonly products = mock.products;
+  private readonly _productsService = inject(ProductsService);
+
+  readonly hero = this._productsService.getHomeHero();
+  readonly promo = this._productsService.getHomePromo();
+  readonly products = this._productsService.getHomeProducts();
 }
