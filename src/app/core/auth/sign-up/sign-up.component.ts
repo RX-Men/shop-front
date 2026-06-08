@@ -1,5 +1,6 @@
 import { ButtonComponent } from '@/app/shared/components/button';
 import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import signUpContent from 'content/pages/sign-up/sign-up.json';
 import { DatePickerComponent } from '@/app/shared/components/date-picker';
 import { InputComponent } from '@/app/shared/components/input';
 import {
@@ -112,6 +113,8 @@ interface SignUpPayload {
   styleUrl: './sign-up.component.scss',
 })
 export class SignUpComponent {
+  readonly content = signUpContent;
+
   readonly signUpForm = new FormGroup(
     {
       email: new FormControl('', [Validators.email, Validators.required]),
@@ -143,11 +146,10 @@ export class SignUpComponent {
     const errors = this.signUpForm.controls.email.errors;
 
     if (errors?.['required']) {
-      return 'Email is required';
+      return this.content.errors.email.required;
     }
-
     if (errors?.['email']) {
-      return 'Enter a valid email';
+      return this.content.errors.email.email;
     }
 
     return '';
@@ -157,11 +159,10 @@ export class SignUpComponent {
     const errors = this.signUpForm.controls.password.errors;
 
     if (errors?.['required']) {
-      return 'Password is required';
+      return this.content.errors.password.required;
     }
-
     if (errors?.['minlength']) {
-      return 'Password must contain 8 or more characters';
+      return this.content.errors.password.minlength;
     }
 
     return '';
@@ -171,11 +172,10 @@ export class SignUpComponent {
     const errors = this.signUpForm.controls.confirmPassword.errors;
 
     if (errors?.['required']) {
-      return 'Confirm password is required';
+      return this.content.errors.confirmPassword.required;
     }
-
     if (this.signUpForm.errors?.['passwordMismatch']) {
-      return 'Passwords do not match';
+      return this.content.errors.confirmPassword.passwordMismatch;
     }
 
     return '';
@@ -185,11 +185,10 @@ export class SignUpComponent {
     const errors = this.signUpForm.controls.firstName.errors;
 
     if (errors?.['required']) {
-      return 'First name is required';
+      return this.content.errors.firstName.required;
     }
-
     if (errors?.['pattern']) {
-      return 'First name may only contain letters, spaces, hyphens, and apostrophes';
+      return this.content.errors.firstName.pattern;
     }
 
     return '';
@@ -199,11 +198,10 @@ export class SignUpComponent {
     const errors = this.signUpForm.controls.lastName.errors;
 
     if (errors?.['required']) {
-      return 'Last name is required';
+      return this.content.errors.lastName.required;
     }
-
     if (errors?.['pattern']) {
-      return 'Last name may only contain letters, spaces, hyphens, and apostrophes';
+      return this.content.errors.lastName.pattern;
     }
 
     return '';
@@ -213,15 +211,13 @@ export class SignUpComponent {
     const errors = this.signUpForm.controls.dateOfBirth.errors;
 
     if (errors?.['required']) {
-      return 'Date of birth is required';
+      return this.content.errors.dateOfBirth.required;
     }
-
     if (errors?.['minAge']) {
-      return `You must be at least ${errors['minAge'].required} years old to register`;
+      return this.content.errors.dateOfBirth.minAge.replace('{minAge}', errors['minAge'].required);
     }
-
     if (errors?.['maxAge']) {
-      return `Please enter a realistic date of birth`;
+      return this.content.errors.dateOfBirth.maxAge;
     }
 
     return '';
@@ -231,7 +227,7 @@ export class SignUpComponent {
     const errors = this.signUpForm.controls.address.errors;
 
     if (errors?.['required']) {
-      return 'Address is required';
+      return this.content.errors.address.required;
     }
 
     return '';
@@ -241,7 +237,7 @@ export class SignUpComponent {
     const errors = this.signUpForm.controls.country.errors;
 
     if (errors?.['required']) {
-      return 'Country is required';
+      return this.content.errors.country.required;
     }
 
     return '';
@@ -251,13 +247,13 @@ export class SignUpComponent {
     const errors = this.signUpForm.controls.postalCode.errors;
 
     if (errors?.['required']) {
-      return 'Postal code is required';
+      return this.content.errors.postalCode.required;
     }
 
     if (errors?.['postalCode']) {
       const country: string = errors['postalCode'].country;
       const example = POSTAL_CODE_PATTERNS[country]?.example;
-      return `Invalid postal code format. Expected: ${example}`;
+      return this.content.errors.postalCode.format.replace('{example}', example ?? '');
     }
 
     return '';
@@ -300,6 +296,6 @@ export class SignUpComponent {
     if (this.signUpForm.pristine) {
       return true;
     }
-    return confirm('You have unsaved changes. Leave this page?');
+    return confirm(this.content.messages.unsavedChanges);
   }
 }

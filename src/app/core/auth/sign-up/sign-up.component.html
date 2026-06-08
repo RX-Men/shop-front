@@ -1,13 +1,13 @@
-<h1 class="sign-up__title">Sign Up</h1>
+<h1 class="sign-up__title">{{ content.title }}</h1>
 
 <form class="sign-up__form" id="sign-up-form" [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
-  <section class="sign-up__section">
-    <h2 class="sign-up__section-title">Account</h2>
+  <fieldset class="sign-up__section">
+    <legend class="sign-up__section-title">{{ content.sections.account.title }}</legend>
     <div class="sign-up__fields">
       <app-input
-        label="Email"
-        placeholder="me@ilovecomics.com"
         type="email"
+        [label]="content.sections.account.fields.email.label"
+        [placeholder]="content.sections.account.fields.email.placeholder"
         [required]="true"
         [value]="signUpForm.controls.email.value ?? ''"
         [error]="
@@ -21,8 +21,8 @@
         (blurred)="signUpForm.controls.email.markAsTouched()"
       />
       <app-input
-        label="Password"
         type="password"
+        [label]="content.sections.account.fields.password.label"
         [required]="true"
         [value]="signUpForm.controls.password.value ?? ''"
         [error]="
@@ -36,8 +36,8 @@
         (blurred)="signUpForm.controls.password.markAsTouched()"
       />
       <app-input
-        label="Confirm Password"
         type="password"
+        [label]="content.sections.account.fields.confirmPassword.label"
         [required]="true"
         [value]="signUpForm.controls.confirmPassword.value ?? ''"
         [error]="
@@ -53,15 +53,15 @@
         (blurred)="signUpForm.controls.confirmPassword.markAsTouched()"
       />
     </div>
-  </section>
+  </fieldset>
 
-  <section class="sign-up__section">
-    <h2 class="sign-up__section-title">Personal Info</h2>
+  <fieldset class="sign-up__section">
+    <legend class="sign-up__section-title">{{ content.sections.personalInfo.title }}</legend>
     <div class="sign-up__fields">
       <div class="sign-up__row">
         <app-input
-          label="First Name"
-          placeholder="Tony"
+          [label]="content.sections.personalInfo.fields.firstName.label"
+          [placeholder]="content.sections.personalInfo.fields.firstName.placeholder"
           [required]="true"
           [value]="signUpForm.controls.firstName.value ?? ''"
           [error]="
@@ -76,8 +76,8 @@
           (blurred)="signUpForm.controls.firstName.markAsTouched()"
         />
         <app-input
-          label="Last Name"
-          placeholder="Stark"
+          [label]="content.sections.personalInfo.fields.lastName.label"
+          [placeholder]="content.sections.personalInfo.fields.lastName.placeholder"
           [required]="true"
           [value]="signUpForm.controls.lastName.value ?? ''"
           [error]="
@@ -102,7 +102,7 @@
             signUpForm.controls.dateOfBirth.markAsDirty();
             signUpForm.controls.dateOfBirth.markAsTouched()
           "
-          >Date of Birth</app-date-picker
+          >{{ content.sections.personalInfo.fields.dateOfBirth.label }}</app-date-picker
         >
         @if (
           signUpForm.controls.dateOfBirth.invalid &&
@@ -112,14 +112,14 @@
         }
       </div>
     </div>
-  </section>
+  </fieldset>
 
-  <section class="sign-up__section">
-    <h2 class="sign-up__section-title">Address</h2>
+  <fieldset class="sign-up__section">
+    <legend class="sign-up__section-title">{{ content.sections.address.title }}</legend>
     <div class="sign-up__fields">
       <app-input
-        label="Address"
-        placeholder="New York, Marple st., 182"
+        [label]="content.sections.address.fields.address.label"
+        [placeholder]="content.sections.address.fields.address.placeholder"
         [required]="true"
         [value]="signUpForm.controls.address.value ?? ''"
         [error]="
@@ -134,7 +134,7 @@
       />
       <div class="sign-up__select">
         <label class="sign-up__select-label" for="country">
-          Country
+          {{ content.sections.address.fields.country.label }}
           <span class="sign-up__select-required" aria-hidden="true">*</span>
         </label>
         <select
@@ -147,10 +147,12 @@
           (change)="onCountryChange($event)"
           (blur)="signUpForm.controls.country.markAsTouched()"
         >
-          <option value="" disabled selected>Select a country</option>
-          <option value="US">United States</option>
-          <option value="CA">Canada</option>
-          <option value="MX">Mexico</option>
+          <option value="" disabled selected>
+            {{ content.sections.address.fields.country.placeholder }}
+          </option>
+          @for (option of content.sections.address.fields.country.options; track option.value) {
+            <option [value]="option.value">{{ option.label }}</option>
+          }
         </select>
         @if (
           signUpForm.controls.country.invalid &&
@@ -160,7 +162,7 @@
         }
       </div>
       <app-input
-        label="Postal Code"
+        [label]="content.sections.address.fields.postalCode.label"
         [required]="true"
         [value]="signUpForm.controls.postalCode.value ?? ''"
         [error]="
@@ -175,13 +177,13 @@
         (blurred)="signUpForm.controls.postalCode.markAsTouched()"
       />
     </div>
-  </section>
+  </fieldset>
 
   <div class="sign-up__actions">
-    <app-button type="submit" [size]="'l'">Register</app-button>
+    <app-button type="submit" [size]="'l'">{{ content.actions.submit }}</app-button>
   </div>
 
   @if (submitted()) {
-    <div class="sign-up__success" role="alert">Registration successful! Welcome aboard.</div>
+    <div class="sign-up__success" role="status">{{ content.messages.success }}</div>
   }
 </form>

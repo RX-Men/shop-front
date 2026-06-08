@@ -5,7 +5,8 @@
   "compilerOptions": {
     "baseUrl": "./src",
     "paths": {
-      "@/*": ["*"]
+      "@/*": ["*"],
+      "content/*": ["../content/*"]
     },
     "strict": true,
     "noImplicitOverride": true,
@@ -16,6 +17,7 @@
     "isolatedModules": true,
     "experimentalDecorators": true,
     "importHelpers": true,
+    "resolveJsonModule": true,
     "target": "ES2022",
     "module": "preserve"
   },
