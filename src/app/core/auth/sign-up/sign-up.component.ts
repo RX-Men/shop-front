@@ -3,7 +3,7 @@ import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { DatePickerComponent } from '@/app/shared/components/date-picker';
 import { InputComponent } from '@/app/shared/components/input';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import signUpContent from 'content/pages/sign-up/sign-up.json';
+import signUpContent from '@/app/content/pages/sign-up/sign-up.json' with { type: 'json' };
 import { MAX_AGE, MIN_AGE, NAME_PATTERN, POSTAL_CODE_PATTERNS } from './sign-up.constants';
 import { SignUpPayload } from './sign-up.types';
 import {
