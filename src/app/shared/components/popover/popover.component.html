@@ -1,0 +1,11 @@
+<div class="popover" popover [id]="id()">
+  <div class="popover__content">
+    <div class="popover__header">
+      <ng-content select="[app-popover-header]" />
+    </div>
+
+    <div class="popover__body">
+      <ng-content select="[app-popover-body]" />
+    </div>
+  </div>
+</div>

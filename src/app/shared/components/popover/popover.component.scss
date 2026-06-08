@@ -1,0 +1,54 @@
+.popover {
+  position: fixed;
+  inset: auto;
+  position-area: bottom center;
+  position-try-fallbacks:
+    bottom end,
+    bottom start;
+  inline-size: max-content;
+  max-inline-size: min(320px, calc(100vw - var(--spacing-x6)));
+  margin: 0;
+  margin-block-start: 8px;
+  border: none;
+  opacity: 0;
+  color: var(--neutral-900);
+  background: transparent;
+  transform: translateY(calc(-1 * var(--spacing-x1)));
+  transition:
+    transform var(--transition-duration-basic) var(--transition-easing-func),
+    opacity var(--transition-duration-basic) var(--transition-easing-func),
+    display var(--transition-duration-basic) allow-discrete,
+    overlay var(--transition-duration-basic) allow-discrete;
+
+  &:popover-open {
+    opacity: 1;
+    transform: translateY(0);
+
+    @starting-style {
+      opacity: 0;
+      transform: translateY(calc(-1 * var(--spacing-x1)));
+    }
+  }
+
+  &__content {
+    border: 2px solid var(--neutral-500);
+    border-radius: var(--radius-sm);
+    background-color: var(--neutral-100);
+  }
+
+  &__header,
+  &__body {
+    &:empty {
+      display: none;
+    }
+  }
+
+  &__header {
+    padding: var(--spacing-x4);
+    background-color: var(--neutral-300);
+  }
+
+  &__body {
+    padding: var(--spacing-x4);
+  }
+}
