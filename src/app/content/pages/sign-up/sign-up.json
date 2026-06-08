@@ -1,0 +1,81 @@
+{
+  "title": "Sign Up",
+  "sections": {
+    "account": {
+      "title": "Account",
+      "fields": {
+        "email": { "label": "Email", "placeholder": "me@ilovecomics.com" },
+        "password": { "label": "Password" },
+        "confirmPassword": { "label": "Confirm Password" }
+      }
+    },
+    "personalInfo": {
+      "title": "Personal Info",
+      "fields": {
+        "firstName": { "label": "First Name", "placeholder": "Tony" },
+        "lastName": { "label": "Last Name", "placeholder": "Stark" },
+        "dateOfBirth": { "label": "Date of Birth" }
+      }
+    },
+    "address": {
+      "title": "Address",
+      "fields": {
+        "address": { "label": "Address", "placeholder": "New York, Marple st., 182" },
+        "country": {
+          "label": "Country",
+          "placeholder": "Select a country",
+          "options": [
+            { "value": "US", "label": "United States" },
+            { "value": "CA", "label": "Canada" },
+            { "value": "MX", "label": "Mexico" }
+          ]
+        },
+        "postalCode": { "label": "Postal Code" }
+      }
+    }
+  },
+  "actions": {
+    "submit": "Register"
+  },
+  "messages": {
+    "success": "Registration successful! Welcome aboard.",
+    "unsavedChanges": "You have unsaved changes. Leave this page?"
+  },
+  "errors": {
+    "email": {
+      "required": "Email is required",
+      "email": "Enter a valid email"
+    },
+    "password": {
+      "required": "Password is required",
+      "minlength": "Password must contain 8 or more characters"
+    },
+    "confirmPassword": {
+      "required": "Confirm password is required",
+      "passwordMismatch": "Passwords do not match"
+    },
+    "firstName": {
+      "required": "First name is required",
+      "pattern": "First name may only contain letters, spaces, hyphens, and apostrophes"
+    },
+    "lastName": {
+      "required": "Last name is required",
+      "pattern": "Last name may only contain letters, spaces, hyphens, and apostrophes"
+    },
+    "dateOfBirth": {
+      "required": "Date of birth is required",
+      "minAge": "You must be at least {minAge} years old to register",
+      "maxAge": "Please enter a realistic date of birth"
+    },
+    "address": {
+      "required": "Address is required"
+    },
+    "country": {
+      "required": "Country is required"
+    },
+    "postalCode": {
+      "required": "Postal code is required",
+      "format": "Invalid postal code format. Expected: {example}"
+    }
+  }
+}
