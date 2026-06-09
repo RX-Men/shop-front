@@ -91,15 +91,9 @@
     }
   }
 
-  &__content {
-    display: flex;
-    align-items: center;
-    gap: var(--spacing-x2);
-
-    &_icon-placement {
-      &_start {
-        flex-direction: row-reverse;
-      }
+  &_icon-placement {
+    &_start {
+      flex-direction: row-reverse;
     }
   }
 }
