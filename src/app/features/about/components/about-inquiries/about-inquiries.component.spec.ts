@@ -18,7 +18,6 @@ describe('AboutInquiriesComponent', () => {
     component = fixture.componentInstance;
     componentRef = fixture.componentRef;
 
-    // Заполняем обязательный input для инквизиций
     componentRef.setInput('data', {
       title: 'Inquiries',
       phone: '555-0199',
