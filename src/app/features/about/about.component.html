@@ -3,7 +3,7 @@
 </div>
 <div class="container">
   <div class="about-card">
-    @for (card of cards; track card.id) {
+    @for (card of info.developmentTeam; track card.id) {
       <app-teammate-card
         [name]="card.name"
         [description]="card.description"
@@ -16,46 +16,8 @@
   </div>
 
   <div class="company-info">
-    <!-- About Company -->
-    <article class="company-info__block">
-      <h2 class="company-info__title company-info__title--main">{{ info.companyInfo.title }}</h2>
-      <p class="company-info__description">
-        {{ info.companyInfo.description }}
-        <span class="company-info__copyright"
-          >© {{ currentYear }} {{ info.companyInfo.copyright }}</span
-        >
-      </p>
-    </article>
-
-    <!-- Corporate Headquarters -->
-    <address class="company-info__block">
-      <h3 class="company-info__title company-info__title--sub">{{ info.headquarters.title }}</h3>
-      <p class="company-info__address-details">
-        @for (line of info.headquarters.lines; track line) {
-          {{ line }}<br />
-        }
-      </p>
-    </address>
-
-    <!-- Inquiries (Business & Consumer) -->
-    @for (block of info.inquiries; track block.title) {
-      <article class="company-info__block">
-        <h3 class="company-info__title company-info__title--sub">{{ block.title }}</h3>
-
-        @for (p of block.paragraphs; track p.textBefore) {
-          <p class="company-info__text">
-            {{ p.textBefore }}
-
-            @if (p.routerLink) {
-              <a class="company-info__link" [routerLink]="p.routerLink">{{ p.linkText }}</a>
-            } @else if (p.href) {
-              <a class="company-info__link" [href]="p.href">{{ p.linkText }}</a>
-            }
-
-            {{ p.textAfter }}
-          </p>
-        }
-      </article>
-    }
+    <app-about-company [data]="info.companyInfo" [year]="currentYear" />
+    <app-about-headquarters [data]="info.headquarters" />
+    <app-about-inquiries [data]="info.inquiries" />
   </div>
 </div>

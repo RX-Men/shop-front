@@ -19,6 +19,10 @@ export const routes: Routes = [
     loadComponent: () => import('./features/ui-kit/ui-kit.component').then((m) => m.UiKitComponent),
   },
   {
+    path: ROUTES.about,
+    loadComponent: () => import('./features/about/about.component').then((m) => m.AboutComponent),
+  },
+  {
     path: ROUTES.notFound,
     loadComponent: () =>
       import('./features/not-found/not-found.component').then((m) => m.NotFoundComponent),

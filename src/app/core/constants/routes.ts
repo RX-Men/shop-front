@@ -4,6 +4,7 @@ const ROUTES = {
   uiKit: 'ui-kit',
   notFound: '**',
   signUp: 'sign-up',
+  about: 'about',
 } as const;
 
 export { ROUTES };

@@ -124,11 +124,12 @@
   }
 
   &__description {
-    display: -webkit-box;
-    -webkit-line-clamp: 10;
-    -webkit-box-orient: vertical;
     overflow: hidden;
     color: var(--neutral-900);
+
+    &--collapsed {
+      @include mix.line-clamp(10);
+    }
   }
 
   &__promo {
