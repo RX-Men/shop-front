@@ -1,9 +1,15 @@
 @use 'assets/styles/breakpoints' as breakpoints;
+@use 'assets/styles/mixins' as mix;
 
 .promo-section {
   &__wrapper {
     max-width: #{breakpoints.$breakpoint-xxl}px;
     margin-inline: auto;
+    padding-block: var(--spacing-x20);
+
+    @include mix.media('m') {
+      padding-block: var(--spacing-x10);
+    }
   }
 
   &__banner-title {

@@ -6,7 +6,7 @@ const DEFAULT_CARDS_COUNT = 5;
 const CARDS_COUNT_BY_SCREEN_SIZE: Partial<Record<BreakpointValue, number>> = {
   [BREAKPOINTS.xl]: 4,
   [BREAKPOINTS.m]: 3,
-  [BREAKPOINTS.s]: 1,
+  [BREAKPOINTS.s]: 2,
 } as const;
 
 export const SCREEN_SIZE_ORDER_ASC = [BREAKPOINTS.s, BREAKPOINTS.m, BREAKPOINTS.xl];

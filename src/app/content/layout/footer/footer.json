@@ -18,12 +18,12 @@
       },
       {
         "variant": "router-link",
-        "name": "cart",
+        "name": "Cart",
         "href": "cart"
       },
       {
         "variant": "router-link",
-        "name": "about",
+        "name": "About us",
         "href": "about"
       }
     ]
@@ -74,7 +74,7 @@
     ]
   },
   "social": {
-    "title": "Stay in touch",
+    "title": "Follow us",
     "content": [
       {
         "variant": "icon-external-link",

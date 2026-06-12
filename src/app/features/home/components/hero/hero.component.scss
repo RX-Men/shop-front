@@ -6,12 +6,27 @@
   &__wrapper {
     max-width: #{breakpoints.$breakpoint-xxxl}px;
     margin-inline: auto;
+    padding-block-end: var(--spacing-x20);
+
+    @include mix.media('m') {
+      padding-block-end: var(--spacing-x10);
+    }
   }
 
   &__banner {
     height: 100%;
 
     ::ng-deep {
+      .banner,
+      /* stylelint-disable-next-line selector-class-pattern */
+      .banner__wrapper {
+        min-height: calc(100vh - calc(var(--spacing-x20) * 2 + var(--spacing-x4)));
+
+        @include mix.media('m') {
+          min-height: calc(100vh - calc(var(--spacing-x12) * 2));
+        }
+      }
+
       /* stylelint-disable-next-line selector-class-pattern */
       .banner__content {
         padding-inline-start: calc(var(--spacing-x20) + var(--spacing-x4));

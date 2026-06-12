@@ -1,7 +1,20 @@
-:host,
-.logo {
-  display: inline-flex;
+@use 'assets/styles/mixins' as mix;
 
+:host {
+  display: inline-flex;
+}
+
+.logo {
+  position: relative;
+  display: inline-flex;
+  width: 153px;
+  aspect-ratio: 3.06 / 1;
+
+  @include mix.media('m') {
+    width: 120px;
+  }
+
+  &__img,
   &__link {
     display: inline-flex;
   }

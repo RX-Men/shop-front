@@ -1,13 +1,14 @@
 <ng-template #logo>
-  <img
-    class="logo"
-    alt="Logo"
-    [width]="_width"
-    [height]="_height"
-    [priority]="imgPriority()"
-    [ngSrc]="'@/assets/icons/logo.svg'"
-    [attr.data-testid]="_testIds.root"
-  />
+  <span class="logo">
+    <img
+      class="logo__img"
+      alt="Logo"
+      fill
+      [priority]="imgPriority()"
+      [ngSrc]="'@/assets/icons/logo.svg'"
+      [attr.data-testid]="_testIds.root"
+    />
+  </span>
 </ng-template>
 
 @if (linkable()) {

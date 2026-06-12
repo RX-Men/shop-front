@@ -3,6 +3,10 @@
 .product-list {
   &__wrapper {
     padding-block: var(--spacing-x20);
+
+    @include mix.media('m') {
+      padding-block: var(--spacing-x10);
+    }
   }
 
   &__header {
