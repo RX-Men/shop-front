@@ -5,9 +5,11 @@
   appTooltip
   [type]="type()"
   [tooltipText]="computedLabel"
+  [tooltipPosition]="tooltipPosition()"
   [tooltipColor]="tooltipColor()"
   [ariaLabel]="computedLabel"
   [ariaPressed]="ariaPressed()"
+  [attr.popovertarget]="popovertarget()"
   [attr.data-testid]="_testIds.root"
   [disabled]="disabled()"
 >

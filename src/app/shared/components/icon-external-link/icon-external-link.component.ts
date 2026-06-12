@@ -18,6 +18,8 @@ export class IconExternalLinkComponent {
   readonly icon = input.required<ReturnType<IconComponent['name']>>();
   readonly size = input<ReturnType<IconComponent['size']>>('m');
   readonly label = input.required<string>();
+  readonly tooltipPosition = input<ReturnType<TooltipDirective['tooltipPosition']>>('block-start');
+  readonly tooltipColor = input<ReturnType<TooltipDirective['tooltipColor']>>('dark');
 
   protected readonly _testIds = APP_TEST_IDS.iconExternalLink;
 }

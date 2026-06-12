@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import homeContent from '@/app/features/home/mock/home.json' with { type: 'json' };
 
 import type { HeroCarouselBanner } from '@/app/features/home/components/hero/hero.types';
-import type { ProductCard } from '@/app/features/home/components/product-card/product-card.types';
+import type { ProductCard } from '@/app/shared/components/product-card';
 
 interface PromoContent {
   title: string;

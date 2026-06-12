@@ -1,0 +1,9 @@
+@use 'assets/styles/mixins' as mix;
+
+.main {
+  margin-block-start: calc(var(--spacing-x15) * 2);
+
+  @include mix.media('m') {
+    margin-block-start: calc(var(--spacing-x20) + var(--spacing-x4));
+  }
+}

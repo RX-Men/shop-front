@@ -1,0 +1,35 @@
+{
+  "profileButton": {
+    "label": "User menu"
+  },
+  "profilePopover": {
+    "title": "Welcome to ShopFront-Comics",
+    "signIn": "Sign in",
+    "signUp": "Join us",
+    "profile": "My profile"
+  },
+  "search": {
+    "toggleButton": {
+      "openLabel": "Open product search",
+      "closeLabel": "Close product search"
+    },
+    "placeholder": "What are you looking for?",
+    "emptyState": {
+      "title": "Nothing found",
+      "description": "We couldn't find any comics matching your search. Try checking the spelling or search for a different title"
+    }
+  },
+  "cartButton": {
+    "label": "View shopping cart"
+  },
+  "nav": [
+    {
+      "name": "Catalog",
+      "href": "catalog"
+    },
+    {
+      "name": "About us",
+      "href": "about"
+    }
+  ]
+}

@@ -1,3 +1,4 @@
+type TooltipPosition = 'block-start' | 'block-end' | 'inline-start' | 'inline-end';
 type TooltipColor = 'light' | 'dark';
 
-export type { TooltipColor };
+export type { TooltipPosition, TooltipColor };

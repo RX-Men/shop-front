@@ -1,0 +1,86 @@
+@let isSearchWidgetOpen = _isSearchWidgetOpen();
+@let searchWidgetToggleButtonData = searchWidgetToggleButton();
+
+<header class="header" [attr.data-testid]="_testIds.root">
+  <div class="header__wrapper">
+    <div class="header__inset-block-start container">
+      <div>
+        <app-icon-button
+          class="header__profile-button header__action"
+          [icon]="'person'"
+          [label]="_data.profileButton.label"
+          [tooltipPosition]="'block-end'"
+          [tooltipColor]="'light'"
+          [popovertarget]="_profilePopoverId"
+        />
+
+        <app-popover [id]="_profilePopoverId">
+          <div class="header__popover-header" app-popover-header>
+            <h2 class="text-2xl">{{ _data.profilePopover.title }}</h2>
+
+            <div class="header__popover-header-links">
+              <app-router-link [routerLink]="_routes.signIn" [size]="'s'">
+                {{ _data.profilePopover.signIn }}
+              </app-router-link>
+
+              <app-router-link [routerLink]="_routes.signUp" [size]="'s'" [color]="'dark'">{{
+                _data.profilePopover.signUp
+              }}</app-router-link>
+            </div>
+          </div>
+
+          <div class="header__popover-body" app-popover-body>
+            <app-router-link
+              [routerLink]="_routes.profile"
+              [size]="'s'"
+              [icon]="'person'"
+              [iconPlacement]="'start'"
+              [variant]="'text'"
+              [color]="'dark'"
+              >{{ _data.profilePopover.profile }}</app-router-link
+            >
+          </div>
+        </app-popover>
+      </div>
+
+      <app-logo class="header__logo" />
+
+      <div class="header__actions">
+        <div class="header__action">
+          <app-icon-button
+            class="header__search-button"
+            [icon]="searchWidgetToggleButtonData.icon"
+            [label]="searchWidgetToggleButtonData.label"
+            [tooltipPosition]="'block-end'"
+            [tooltipColor]="'light'"
+            [ariaPressed]="isSearchWidgetOpen"
+            (click)="_toggleSearchWidget()"
+          />
+        </div>
+
+        <div class="header__action">
+          <app-cart-button [productsCount]="_productsCount" />
+        </div>
+      </div>
+    </div>
+
+    <nav class="header__nav">
+      <ul class="header__nav-list">
+        @for (navLink of _data.nav; track $index) {
+          <li class="header__nav-list-item">
+            <app-router-link
+              class="header__nav-list-link"
+              [routerLink]="navLink.href"
+              [variant]="'text'"
+              [size]="'l'"
+              [color]="'light'"
+              >{{ navLink.name }}</app-router-link
+            >
+          </li>
+        }
+      </ul>
+    </nav>
+  </div>
+
+  <app-search-widget [open]="isSearchWidgetOpen" />
+</header>
