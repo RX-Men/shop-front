@@ -7,7 +7,6 @@ const ROUTES = {
   cart: 'cart',
   uiKit: 'ui-kit',
   notFound: '**',
-  signUp: 'sign-up',
   about: 'about',
 } as const;
 
