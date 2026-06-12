@@ -1,0 +1,23 @@
+<div class="about-banner">
+  <h1 class="about-title text-7xl">About us</h1>
+</div>
+<div class="container">
+  <div class="about-card">
+    @for (card of info.developmentTeam; track card.id) {
+      <app-teammate-card
+        [name]="card.name"
+        [description]="card.description"
+        [role]="card.role"
+        [promoCode]="card.promoCode"
+        [imgSrc]="card.imgSrc"
+        [linkHref]="card.linkHref"
+      />
+    }
+  </div>
+
+  <div class="company-info">
+    <app-about-company [data]="info.companyInfo" [year]="currentYear" />
+    <app-about-headquarters [data]="info.headquarters" />
+    <app-about-inquiries [data]="info.inquiries" />
+  </div>
+</div>

@@ -1,0 +1,9 @@
+<article class="company-info__block">
+  <h3 class="company-info__title company-info__title--sub">{{ data().title }}</h3>
+  <p class="company-info__text">
+    {{ data().label }}
+    <app-external-link [variant]="'text'" [href]="'tel:' + data().phone">
+      {{ data().phone }}
+    </app-external-link>
+  </p>
+</article>
