@@ -10,7 +10,7 @@
   background-position: center top;
   background-size: cover;
   background-repeat: no-repeat;
-  margin-bottom: 100px;
+  margin-bottom: var(--spacing-x20);
 
   .about-title {
     color: var(--neutral-100);
@@ -27,22 +27,4 @@
   @include mixins.media(m) {
     padding: 0 var(--spacing-x3);
   }
-}
-
-.about-card {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  justify-content: space-between;
-  gap: var(--spacing-x5);
-  margin: 0 auto;
-  max-width: 1200px;
-  padding-bottom: 100px;
-}
-
-.company-info {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-x6);
-  margin-bottom: 100px;
 }

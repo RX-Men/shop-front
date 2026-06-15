@@ -109,7 +109,6 @@
     width: fit-content;
     color: var(--brand-600);
     margin-inline: auto;
-    padding-right: var(--spacing-x5);
 
     @include mix.transition(color);
 
@@ -126,10 +125,6 @@
   &__description {
     overflow: hidden;
     color: var(--neutral-900);
-
-    &--collapsed {
-      @include mix.line-clamp(10);
-    }
   }
 
   &__promo {

@@ -19,12 +19,10 @@
           <strong class="card__promocode text-sm">{{ promoCode() }}</strong>
         </span>
       </div>
-      <p class="card__description text-base" [class.card__description--collapsed]="isCollapsed">
+      <p class="card__description text-base">
         {{ description() }}
       </p>
-      @if (isCollapsed) {
-        <app-button [variant]="'text'" (click)="isCollapsed = false">Read more... </app-button>
-      }
+
       <app-external-link
         class="card__link"
         [variant]="'text'"
