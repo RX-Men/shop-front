@@ -1,0 +1,17 @@
+.development-team {
+  display: block;
+
+  &__title {
+    padding-bottom: var(--spacing-x4);
+  }
+
+  &__card {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    justify-content: space-between;
+    gap: var(--spacing-x5);
+    margin: 0 auto;
+    max-width: 1200px;
+    padding-bottom: var(--spacing-x20);
+  }
+}

@@ -12,23 +12,26 @@
     </div>
 
     <div class="card__face card__face_back" aria-label="Card details">
-      <p class="card__description text-lg">
+      <div class="card__promo">
+        <span class="card__promo-label text-xm"
+          >Promo code:
+
+          <strong class="card__promocode text-sm">{{ promoCode() }}</strong>
+        </span>
+      </div>
+      <p class="card__description text-base">
         {{ description() }}
-        <app-external-link
-          class="card__link"
-          [variant]="'text'"
-          [href]="linkHref()"
-          [icon]="'github'"
-          [iconPlacement]="'start'"
-        >
-          {{ linkHref() }}
-        </app-external-link>
       </p>
 
-      <div class="card__promo">
-        <span class="card__promo-label text-xs">Promo code</span>
-        <strong class="card__promocode text-2xl">{{ promoCode() }}</strong>
-      </div>
+      <app-external-link
+        class="card__link"
+        [variant]="'text'"
+        [href]="linkHref()"
+        [icon]="'github'"
+        [iconPlacement]="'start'"
+      >
+        {{ linkHref() }}
+      </app-external-link>
     </div>
   </div>
 </article>

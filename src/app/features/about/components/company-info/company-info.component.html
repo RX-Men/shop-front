@@ -1,0 +1,28 @@
+<section class="company-info">
+  <div>
+    <h2>{{ data.companyInfo.title }}</h2>
+    <p>
+      {{ data.companyInfo.description }}
+      <span>© {{ year }} {{ data.companyInfo.copyright }}</span>
+    </p>
+  </div>
+
+  <div>
+    <h3>{{ data.headquarters.title }}</h3>
+    <address>
+      {{ data.headquarters.address.company }}<br />
+      {{ data.headquarters.address.street }}<br />
+      {{ data.headquarters.address.city }}
+    </address>
+  </div>
+
+  <div>
+    <h3>{{ data.inquiries.title }}</h3>
+    <p>
+      {{ data.inquiries.label }}
+      <app-external-link [variant]="'text'" [href]="'tel:' + data.inquiries.phone">
+        {{ data.inquiries.phone }}
+      </app-external-link>
+    </p>
+  </div>
+</section>

@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
-
 import { unsavedChangesGuard } from './core/guards/unsaved-changes.guard';
+
 import { ROUTES } from './core/constants/routes';
 
 export const routes: Routes = [
@@ -17,6 +17,10 @@ export const routes: Routes = [
   {
     path: ROUTES.uiKit,
     loadComponent: () => import('./features/ui-kit/ui-kit.component').then((m) => m.UiKitComponent),
+  },
+  {
+    path: ROUTES.about,
+    loadComponent: () => import('./features/about/about.component').then((m) => m.AboutComponent),
   },
   {
     path: ROUTES.notFound,

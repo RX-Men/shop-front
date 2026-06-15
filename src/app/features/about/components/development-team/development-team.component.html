@@ -1,0 +1,15 @@
+<section>
+  <h2 class="development-team__title">Meet Our Development Team</h2>
+  <div class="development-team__card">
+    @for (card of info.developmentTeam; track card.id) {
+      <app-teammate-card
+        [name]="card.name"
+        [description]="card.description"
+        [role]="card.role"
+        [promoCode]="card.promoCode"
+        [imgSrc]="card.imgSrc"
+        [linkHref]="card.linkHref"
+      />
+    }
+  </div>
+</section>
