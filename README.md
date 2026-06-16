@@ -42,10 +42,27 @@ nvm use
 ```bash
 git clone https://github.com/RX-Men/shop-front.git
 npm ci
+```
+
+Before starting the app, create a local `.env` file based on `.env.example`:
+
+```bash
+cp .env.example .env
+```
+
+Then copy the variable names from `.env.example` into `.env` and fill them with actual values.
+
+If you don't have the required commercetools credentials, request them from the team lead.
+
+After that, start the development server:
+
+```bash
 npm run start
 ```
 
 After that, open `http://localhost:4200/` in your browser.
+
+The `.env` file is local-only and must not be committed to the repository.
 
 ### Useful Commands
 
