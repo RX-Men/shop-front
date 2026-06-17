@@ -20,6 +20,11 @@ export const routes: Routes = [
     canDeactivate: [unsavedChangesGuard],
   },
   {
+    path: ROUTES.signIn,
+    loadComponent: () =>
+      import('./core/auth/sign-in/sign-in.component').then((m) => m.SignInComponent),
+  },
+  {
     path: ROUTES.about,
     loadComponent: () => import('./features/about/about.component').then((m) => m.AboutComponent),
   },
