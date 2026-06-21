@@ -20,6 +20,10 @@
     "password": {
       "required": "Password is required",
       "minlength": "Password must contain 8 or more characters"
+    },
+    "auth": {
+      "invalidCredentials": "Invalid email or password",
+      "generic": "Something went wrong. Please try again."
     }
   }
 }
