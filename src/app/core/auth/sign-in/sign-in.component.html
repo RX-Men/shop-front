@@ -1,13 +1,34 @@
 <h1 class="sign-in__title">{{ content.title }}</h1>
 
-<form class="sign-in__form">
+<form class="sign-in__form" [formGroup]="signInForm" (ngSubmit)="onSubmit()">
   <div class="sign-in__fields">
     <app-input
       type="email"
       [label]="content.fields.email.label"
       [placeholder]="content.fields.email.placeholder"
+      [value]="signInForm.controls.email.value ?? ''"
+      (valueChange)="
+        signInForm.controls.email.setValue($event); signInForm.controls.email.markAsDirty()
+      "
+      (blurred)="signInForm.controls.email.markAsTouched()"
     />
-    <app-input type="password" [label]="content.fields.password.label" />
+    <app-input
+      type="password"
+      [label]="content.fields.password.label"
+      [value]="signInForm.controls.password.value ?? ''"
+      (valueChange)="
+        signInForm.controls.password.setValue($event); signInForm.controls.password.markAsDirty()
+      "
+      (blurred)="signInForm.controls.password.markAsTouched()"
+    />
+  </div>
+
+  <div class="sign-in__remember-me">
+    <app-checkbox
+      [checked]="signInForm.controls.rememberMe.value ?? false"
+      (checkedChange)="signInForm.controls.rememberMe.setValue($event)"
+      >{{ content.fields.rememberMe.label }}</app-checkbox
+    >
   </div>
 
   <div class="sign-in__actions">
