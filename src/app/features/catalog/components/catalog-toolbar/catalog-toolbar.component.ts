@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -7,4 +7,6 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   templateUrl: './catalog-toolbar.component.html',
   styleUrl: './catalog-toolbar.component.scss',
 })
-export class CatalogToolbarComponent {}
+export class CatalogToolbarComponent {
+  readonly productsCount = input.required<number>();
+}

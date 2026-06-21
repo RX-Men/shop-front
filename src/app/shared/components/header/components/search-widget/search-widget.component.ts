@@ -7,7 +7,7 @@ import { ProductCardComponent } from '../../../product-card';
 import { SpinComponent } from '../../../spin';
 
 import headerContent from '@/app/content/layout/header/header.json' with { type: 'json' };
-import mock from '../../../../../features/home/mock/home.json' with { type: 'json' };
+import productsMock from '@/app/core/mocks/products.json' with { type: 'json' };
 
 import type { ProductCard } from '../../../product-card';
 
@@ -42,7 +42,7 @@ export class SearchWidgetComponent {
 
       // TODO: mocks before API integration
       setTimeout(() => {
-        const result = mock.products.filter((product) =>
+        const result = productsMock.filter((product) =>
           product.heading.toLowerCase().includes(text.toLowerCase()),
         );
 

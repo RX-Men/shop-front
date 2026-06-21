@@ -10,12 +10,14 @@
 >
   <header class="product-card__header">
     <a
-      class="product-card__heading"
+      class="product-card__heading-link"
       [routerLink]="`${_routes.catalog}/${id()}`"
       [attr.tabindex]="computedTabIndex"
       [attr.data-testid]="_testIds.headingLink"
     >
-      <h3 class="text-2xl" [attr.data-testid]="_testIds.heading">{{ heading() }}</h3>
+      <h3 class="product-card__heading text-2xl" [attr.data-testid]="_testIds.heading">
+        {{ heading() }}
+      </h3>
     </a>
 
     <p class="product-card__subheading" [attr.data-testid]="_testIds.subheading">

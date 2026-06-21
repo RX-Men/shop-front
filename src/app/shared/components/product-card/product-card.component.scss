@@ -54,7 +54,7 @@
     margin-block: var(--spacing-x3);
   }
 
-  &__heading {
+  &__heading-link {
     order: 2;
     min-height: 48px;
     margin-block-start: var(--spacing-x1);
@@ -68,6 +68,10 @@
     &:focus {
       outline-color: var(--brand-500);
     }
+  }
+
+  &__heading {
+    @include mix.line-clamp(2);
   }
 
   &__subheading {

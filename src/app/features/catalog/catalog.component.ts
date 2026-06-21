@@ -1,8 +1,10 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 
 import { CatalogFiltersComponent } from './components/catalog-filters';
 import { CatalogGridComponent } from './components/catalog-grid';
 import { CatalogToolbarComponent } from './components/catalog-toolbar';
+
+import { CatalogService } from '@/app/core/services/catalog';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -11,4 +13,6 @@ import { CatalogToolbarComponent } from './components/catalog-toolbar';
   templateUrl: './catalog.component.html',
   styleUrl: './catalog.component.scss',
 })
-export class CatalogComponent {}
+export class CatalogComponent {
+  protected readonly _catalogService = inject(CatalogService);
+}
