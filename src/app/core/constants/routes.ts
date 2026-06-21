@@ -5,9 +5,9 @@ const ROUTES = {
   signIn: 'sign-in',
   profile: 'profile',
   cart: 'cart',
+  about: 'about',
   uiKit: 'ui-kit',
   notFound: '**',
-  about: 'about',
 } as const;
 
 export { ROUTES };
