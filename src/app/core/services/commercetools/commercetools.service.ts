@@ -12,9 +12,9 @@ import { COMMERCETOOLS_CONFIG } from './commercetools.config';
   providedIn: 'root',
 })
 export class CommercetoolsService {
-  apiRoot!: ApiRoot;
-
   private readonly _config = inject(COMMERCETOOLS_CONFIG);
+
+  apiRoot!: ApiRoot;
 
   constructor() {
     this._initClient();
