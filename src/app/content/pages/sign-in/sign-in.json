@@ -1,0 +1,14 @@
+{
+  "title": "Sign In",
+  "fields": {
+    "email": { "label": "Email", "placeholder": "me@ilovecomics.com" },
+    "password": { "label": "Password" }
+  },
+  "actions": {
+    "submit": "Sign In"
+  },
+  "signUp": {
+    "prompt": "Don't have an account?",
+    "label": "Sign Up"
+  }
+}

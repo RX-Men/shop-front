@@ -1,1 +1,23 @@
-<h1 class="sign-up__title">sign in page</h1>
+<h1 class="sign-in__title">{{ content.title }}</h1>
+
+<form class="sign-in__form">
+  <div class="sign-in__fields">
+    <app-input
+      type="email"
+      [label]="content.fields.email.label"
+      [placeholder]="content.fields.email.placeholder"
+    />
+    <app-input type="password" [label]="content.fields.password.label" />
+  </div>
+
+  <div class="sign-in__actions">
+    <app-button type="submit" [size]="'l'">{{ content.actions.submit }}</app-button>
+  </div>
+
+  <p class="sign-in__sign-up">
+    {{ content.signUp.prompt }}
+    <app-router-link [routerLink]="'/' + _routes.signUp">{{
+      content.signUp.label
+    }}</app-router-link>
+  </p>
+</form>
