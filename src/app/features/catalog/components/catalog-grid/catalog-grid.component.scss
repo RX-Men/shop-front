@@ -1,0 +1,26 @@
+@use 'assets/styles/mixins' as mix;
+
+:host {
+  display: grid;
+}
+
+.catalog-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--spacing-x4);
+  min-height: 450px;
+
+  @include mix.media('l') {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-x3);
+  }
+
+  @include mix.media('s') {
+    grid-template-columns: 1fr;
+  }
+
+  &__item {
+    min-height: 450px;
+    border: 2px solid var(--neutral-900);
+  }
+}
