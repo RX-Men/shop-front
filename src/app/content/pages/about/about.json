@@ -24,7 +24,7 @@
       "description": "I am a serene presence driven by hidden, unseen energies. My everyday superpower is flexibility: whether I am centering divs with the magic of flexbox or doing mind-bending yoga stretches like the splits. Life is a game of chance, and just like Gambit, I’m here to bend reality, build and play it with style and grace.",
       "role": "Team Lead",
       "promoCode": "MYSTICFLEX",
-      "imgSrc": "/assets/images/Boris.jpg",
+      "imgSrc": "/shop-front/assets/images/Boris.jpg",
       "linkHref": "https://github.com/elrouss"
     },
     {
@@ -33,7 +33,7 @@
       "description": "I am an engineering genius encased in high-tech armor and powered by an unstoppable arc reactor. My everyday superpower is precision and automation: whether I am structuring flawless layouts with clean code or instantly solving complex technical bugs. Life is a continuous upgrade, and I am here to engineer reality.",
       "role": "Frontend Developer",
       "promoCode": "JARVIS",
-      "imgSrc": "/assets/images/Denis.jpg",
+      "imgSrc": "/shop-front/assets/images/Denis.jpg",
       "linkHref": "https://github.com/den987655"
     },
     {
@@ -42,7 +42,7 @@
       "description": "I am a living spark powered by pure speed. My everyday superpower is instant reaction: I optimize page load speeds faster than light and render UI in microseconds. Life moves fast, and I deploy bulletproof code in a flash.",
       "role": "Frontend Developer",
       "promoCode": "FLASHCODE",
-      "imgSrc": "/assets/images/Dmitry.jpg",
+      "imgSrc": "/shop-front/assets/images/Dmitry.jpg",
       "linkHref": "https://github.com/prokhorovd"
     },
     {
@@ -51,7 +51,7 @@
       "description": "I am a mental guide unlocking hidden potential. My everyday superpower is knowledge architecture: I read junior devs' minds, spot logic bugs instantly, and build perfect career tracks. Life is evolution, and I am here to guide your growth.",
       "role": "Mentor",
       "promoCode": "MINDMENTOR",
-      "imgSrc": "/assets/images/DmitryM.png",
+      "imgSrc": "/shop-front/assets/images/DmitryM.png",
       "linkHref": "https://github.com/mummick"
     }
   ]
