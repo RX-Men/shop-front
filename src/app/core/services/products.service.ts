@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import homeContent from '@/app/features/home/mock/home.json' with { type: 'json' };
+import productsMock from '@/app/core/mocks/products.json' with { type: 'json' };
 
 import type { HeroCarouselBanner } from '@/app/features/home/components/hero/hero.types';
 import type { ProductCard } from '@/app/shared/components/product-card';
@@ -26,6 +27,6 @@ export class ProductsService {
   }
 
   getHomeProducts(): ProductCard[] {
-    return homeContent.products;
+    return productsMock;
   }
 }

@@ -1,5 +1,18 @@
+@let computedProducts = products();
+
 <ul class="catalog-grid">
-  @for (product of products; track $index) {
-    <li class="catalog-grid__item">{{ product }}</li>
+  @for (product of computedProducts; track product.id) {
+    <li class="catalog-grid__item">
+      <app-product-card
+        [id]="product.id"
+        [heading]="product.heading"
+        [subheading]="product.subheading"
+        [img]="product.img"
+        [currentPrice]="product.currentPrice"
+        [oldPrice]="product.oldPrice"
+        [discount]="product.discount"
+        [count]="product.count"
+      />
+    </li>
   }
 </ul>

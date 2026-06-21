@@ -50,7 +50,7 @@ describe('ProductCardComponent', () => {
       `[data-testid="${APP_TEST_IDS.productCard.heading}"]`,
     );
 
-    expect(headingEl?.textContent).toBe('Batman (2002) #608');
+    expect(headingEl?.textContent?.trim()).toBe('Batman (2002) #608');
   });
 
   it('should have provided subheading', () => {
