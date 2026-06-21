@@ -11,5 +11,15 @@
   "signUp": {
     "prompt": "Don't have an account?",
     "label": "Sign Up"
+  },
+  "errors": {
+    "email": {
+      "required": "Email is required",
+      "email": "Enter a valid email"
+    },
+    "password": {
+      "required": "Password is required",
+      "minlength": "Password must contain 8 or more characters"
+    }
   }
 }

@@ -1,7 +1,7 @@
 import { ButtonComponent } from '@/app/shared/components/button';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { CheckboxComponent } from '@/app/shared/components/checkbox';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { InputComponent } from '@/app/shared/components/input';
 import { RouterLinkComponent } from '@/app/shared/components/router-link';
 import { ROUTES } from '@/app/core/constants/routes';
@@ -25,10 +25,36 @@ export class SignInComponent {
   protected readonly _routes = ROUTES;
 
   readonly signInForm = new FormGroup({
-    email: new FormControl(''),
-    password: new FormControl(''),
+    email: new FormControl('', [Validators.required, Validators.email]),
+    password: new FormControl('', [Validators.required, Validators.minLength(8)]),
     rememberMe: new FormControl(false),
   });
+
+  getEmailErrorText(): string {
+    const errors = this.signInForm.controls.email.errors;
+
+    if (errors?.['required']) {
+      return this.content.errors.email.required;
+    }
+    if (errors?.['email']) {
+      return this.content.errors.email.email;
+    }
+
+    return '';
+  }
+
+  getPasswordErrorText(): string {
+    const errors = this.signInForm.controls.password.errors;
+
+    if (errors?.['required']) {
+      return this.content.errors.password.required;
+    }
+    if (errors?.['minlength']) {
+      return this.content.errors.password.minlength;
+    }
+
+    return '';
+  }
 
   onSubmit(): void {
     if (this.signInForm.invalid) {
