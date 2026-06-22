@@ -4,10 +4,12 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CheckboxComponent } from '@/app/shared/components/checkbox';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { catchError, EMPTY, Subject, switchMap } from 'rxjs';
 import { InputComponent } from '@/app/shared/components/input';
 import { RouterLinkComponent } from '@/app/shared/components/router-link';
 import { AuthService } from '@/app/core/services/auth.service';
 import { ROUTES } from '@/app/core/constants/routes';
+import type { LoginCredentials } from './sign-in.types';
 import signInContent from '@/app/content/pages/sign-in/sign-in.json' with { type: 'json' };
 
 @Component({
@@ -33,11 +35,34 @@ export class SignInComponent {
 
   readonly authError = signal('');
 
+  private readonly _submit$ = new Subject<LoginCredentials>();
+
   readonly signInForm = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [Validators.required, Validators.minLength(8)]),
     rememberMe: new FormControl(false),
   });
+
+  constructor() {
+    this._submit$
+      .pipe(
+        switchMap((credentials) =>
+          this._authService.login(credentials).pipe(
+            catchError((error: unknown) => {
+              const message = error instanceof Error ? error.message : '';
+              this.authError.set(
+                message === 'INVALID_CREDENTIALS'
+                  ? this.content.errors.auth.invalidCredentials
+                  : this.content.errors.auth.generic,
+              );
+              return EMPTY;
+            }),
+          ),
+        ),
+        takeUntilDestroyed(this._destroyRef),
+      )
+      .subscribe(() => this._router.navigate(['/']));
+  }
 
   getEmailErrorText(): string {
     const errors = this.signInForm.controls.email.errors;
@@ -70,24 +95,8 @@ export class SignInComponent {
       this.signInForm.markAllAsTouched();
       return;
     }
-
     this.authError.set('');
-
     const { email, password } = this.signInForm.getRawValue();
-
-    this._authService
-      .login({ email: email!, password: password! })
-      .pipe(takeUntilDestroyed(this._destroyRef))
-      .subscribe({
-        next: () => this._router.navigate(['/']),
-        error: (err: unknown) => {
-          const message = err instanceof Error ? err.message : '';
-          if (message === 'INVALID_CREDENTIALS') {
-            this.authError.set(this.content.errors.auth.invalidCredentials);
-          } else {
-            this.authError.set(this.content.errors.auth.generic);
-          }
-        },
-      });
+    this._submit$.next({ email: email!, password: password! });
   }
 }
