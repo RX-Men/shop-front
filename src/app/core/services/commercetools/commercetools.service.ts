@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import {
   type AuthMiddlewareOptions,
   ClientBuilder,
@@ -6,32 +6,36 @@ import {
 } from '@commercetools/ts-client';
 import { type ApiRoot, createApiBuilderFromCtpClient } from '@commercetools/platform-sdk';
 
+import { COMMERCETOOLS_CONFIG } from './commercetools.config';
+
 @Injectable({
   providedIn: 'root',
 })
 export class CommercetoolsService {
   apiRoot!: ApiRoot;
 
+  private readonly _config = inject(COMMERCETOOLS_CONFIG);
+
   constructor() {
     this._initClient();
   }
 
   private readonly _initClient = (): void => {
-    const projectKey = import.meta.env['VITE_CTP_PROJECT_KEY'];
+    const { projectKey, clientId, clientSecret, authUrl, apiUrl, scopes } = this._config;
 
     const authMiddlewareOptions: AuthMiddlewareOptions = {
-      host: import.meta.env['VITE_CTP_AUTH_URL'],
+      host: authUrl,
       projectKey,
       credentials: {
-        clientId: import.meta.env['VITE_CTP_CLIENT_ID'],
-        clientSecret: import.meta.env['VITE_CTP_CLIENT_SECRET'],
+        clientId,
+        clientSecret,
       },
-      scopes: import.meta.env['VITE_CTP_SCOPES'].split(' '),
+      scopes,
       httpClient: fetch,
     };
 
     const httpMiddlewareOptions: HttpMiddlewareOptions = {
-      host: import.meta.env['VITE_CTP_API_URL'],
+      host: apiUrl,
       httpClient: fetch,
     };
 
