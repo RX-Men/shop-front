@@ -1,4 +1,5 @@
 import { CommercetoolsService } from '@/app/core/services/commercetools/commercetools.service';
+import { LocalStorageService } from '@/app/core/services/local-storage.service';
 import { computed, inject, Injectable, signal } from '@angular/core';
 import type {
   ByProjectKeyRequestBuilder,
@@ -11,12 +12,8 @@ import type {
 })
 export class CartService {
   private readonly _ctp = inject(CommercetoolsService);
-
-  private readonly _cart = signal<Cart | null>(
-    localStorage.getItem('cachedCart')
-      ? (JSON.parse(localStorage.getItem('cachedCart')!) as Cart)
-      : null,
-  );
+  private readonly _storage = inject(LocalStorageService);
+  private readonly _cart = signal<Cart | null>(this._storage.getItem<Cart>('cachedCart'));
 
   readonly cart = this._cart.asReadonly();
   readonly items = computed(() => this._cart()?.lineItems ?? []);
@@ -32,7 +29,7 @@ export class CartService {
       const { body } = await this._project().me().activeCart().get().execute();
 
       this._cart.set(body);
-      localStorage.setItem('cachedCart', JSON.stringify(body));
+      this._storage.setItem('cachedCart', body);
     } catch (error: unknown) {
       if (typeof error === 'object' && error !== null && 'status' in error) {
         const err = error as { status: number };
@@ -62,8 +59,7 @@ export class CartService {
         .execute();
 
       this._cart.set(body);
-      localStorage.setItem('cachedCart', JSON.stringify(body));
-
+      this._storage.setItem('cachedCart', body);
       return;
     }
 
@@ -99,7 +95,7 @@ export class CartService {
         .execute();
 
       this._cart.set(body);
-      localStorage.setItem('cachedCart', JSON.stringify(body));
+      this._storage.setItem('cachedCart', body);
     } catch (error: unknown) {
       if (typeof error === 'object' && error !== null && 'status' in error) {
         const err = error as { status: number };
@@ -113,7 +109,7 @@ export class CartService {
           for (const act of actions) {
             if (act.action === 'addLineItem') {
               itemsToCreate.push({
-                sku: act.sku!,
+                sku: act.sku,
                 quantity: act.quantity ?? 1,
               });
             }
@@ -131,7 +127,7 @@ export class CartService {
             .execute();
 
           this._cart.set(body);
-          localStorage.setItem('cachedCart', JSON.stringify(body));
+          this._storage.setItem('cachedCart', body);
         }
       }
     }
