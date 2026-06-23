@@ -28,6 +28,10 @@ export const routes: Routes = [
     loadComponent: () => import('./features/ui-kit/ui-kit.component').then((m) => m.UiKitComponent),
   },
   {
+    path: ROUTES.cart,
+    loadComponent: () => import('./features/cart/cart.component').then((m) => m.CartComponent),
+  },
+  {
     path: ROUTES.notFound,
     loadComponent: () =>
       import('./features/not-found/not-found.component').then((m) => m.NotFoundComponent),

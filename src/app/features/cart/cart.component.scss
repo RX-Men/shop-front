@@ -1,0 +1,41 @@
+@use 'assets/styles/mixins' as mix;
+
+.cart {
+  padding-block: var(--spacing-x12);
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    margin-block-end: var(--spacing-x8);
+  }
+
+  &__layout {
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: var(--spacing-x8);
+
+    @include mix.media('l') {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  &__item {
+    display: grid;
+    grid-template-columns: var(--spacing-x20) 1fr auto auto auto;
+    gap: var(--spacing-x8);
+    align-items: center;
+    padding-block: var(--spacing-x4);
+    border-block-end: 1px solid var(--neutral-300);
+
+    @include mix.media('m') {
+      grid-template-columns: 72px 1fr auto;
+    }
+  }
+
+  &__quantity {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-x2);
+  }
+}
