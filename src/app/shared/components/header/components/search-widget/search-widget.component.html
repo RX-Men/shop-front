@@ -1,46 +1,44 @@
 @let resultList = _resultList();
 
-<div class="search-widget" [class.search-widget_open]="open()">
-  <div class="search-widget__wrapper">
-    <div class="search-widget__header">
-      <form class="search-widget__form" role="search">
-        <app-input
-          [autofocus]="_shouldAutofocus()"
-          [placeholder]="_data.placeholder"
-          [size]="'l'"
-          [formField]="_searchForm.query"
-        />
-      </form>
-    </div>
+<div class="search-widget">
+  <div class="search-widget__header">
+    <form class="search-widget__form" role="search">
+      <app-input
+        [autofocus]="_shouldAutofocus()"
+        [placeholder]="_data.placeholder"
+        [size]="'l'"
+        [formField]="_searchForm.query"
+      />
+    </form>
+  </div>
 
-    <div class="search-widget__body">
-      @if (_isSearching()) {
-        <app-spin class="search-widget__spin" [size]="'l'" [withDescription]="true" />
-      } @else if (resultList !== null && resultList.length > 0) {
-        <ul class="search-widget__product-list">
-          @for (product of resultList; track product.id) {
-            <li>
-              <app-product-card
-                [id]="product.id"
-                [orientation]="'horizontal'"
-                [heading]="product.heading"
-                [subheading]="product.subheading"
-                [img]="product.img"
-                [currentPrice]="product.currentPrice"
-                [oldPrice]="product.oldPrice"
-                [discount]="product.discount"
-                [count]="product.count"
-              />
-            </li>
-          }
-        </ul>
-      } @else if (resultList !== null && resultList.length === 0) {
-        <app-empty
-          class="search-widget__empty"
-          [title]="_data.emptyState.title"
-          [description]="_data.emptyState.description"
-        />
-      }
-    </div>
+  <div class="search-widget__body">
+    @if (_isSearching()) {
+      <app-spin class="search-widget__spin" [size]="'l'" [withDescription]="true" />
+    } @else if (resultList !== null && resultList.length > 0) {
+      <ul class="search-widget__product-list">
+        @for (product of resultList; track product.id) {
+          <li>
+            <app-product-card
+              [id]="product.id"
+              [orientation]="'horizontal'"
+              [heading]="product.heading"
+              [subheading]="product.subheading"
+              [img]="product.img"
+              [currentPrice]="product.currentPrice"
+              [oldPrice]="product.oldPrice"
+              [discount]="product.discount"
+              [count]="product.count"
+            />
+          </li>
+        }
+      </ul>
+    } @else if (resultList !== null && resultList.length === 0) {
+      <app-empty
+        class="search-widget__empty"
+        [title]="_data.emptyState.title"
+        [description]="_data.emptyState.description"
+      />
+    }
   </div>
 </div>

@@ -1,5 +1,5 @@
-@let isSearchWidgetOpen = _isSearchWidgetOpen();
 @let searchWidgetToggleButtonData = searchWidgetToggleButton();
+@let isDrawerOpen = _isDrawerOpen();
 
 <header class="header" [attr.data-testid]="_testIds.root">
   <div class="header__wrapper">
@@ -53,8 +53,8 @@
             [label]="searchWidgetToggleButtonData.label"
             [tooltipPosition]="'block-end'"
             [tooltipColor]="'light'"
-            [ariaPressed]="isSearchWidgetOpen"
-            (click)="_toggleSearchWidget()"
+            [ariaPressed]="isDrawerOpen"
+            (click)="_toggleDrawer()"
           />
         </div>
 
@@ -82,5 +82,7 @@
     </nav>
   </div>
 
-  <app-search-widget [open]="isSearchWidgetOpen" />
+  <app-drawer [isOpen]="_isDrawerOpen()" (closed)="_uiService.closeDrawer()">
+    <app-search-widget />
+  </app-drawer>
 </header>

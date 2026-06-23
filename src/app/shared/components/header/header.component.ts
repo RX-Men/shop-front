@@ -1,7 +1,8 @@
-import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
 
 import headerContent from '@/app/content/layout/header/header.json' with { type: 'json' };
 
+import { DrawerComponent } from '../drawer';
 import { IconButtonComponent } from '../icon-button';
 import { LogoComponent } from '../logo';
 import { PopoverComponent } from '../popover';
@@ -10,16 +11,20 @@ import { RouterLinkComponent } from '../router-link';
 import { CartButtonComponent } from './components/cart-button';
 import { SearchWidgetComponent } from './components/search-widget';
 
+import { UiService } from '@/app/core/services/ui';
+
 import { getSearchWidgetData } from './header.utils';
 
 import { APP_TEST_IDS } from '@/app/app.test-ids';
 import { ROUTES } from '@/app/core/constants/routes';
+import { DRAWER_KEY } from '@/app/core/services/ui';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-header',
   imports: [
     CartButtonComponent,
+    DrawerComponent,
     IconButtonComponent,
     LogoComponent,
     PopoverComponent,
@@ -28,12 +33,10 @@ import { ROUTES } from '@/app/core/constants/routes';
   ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
-  host: {
-    '(click)': '_closeWidgetOnBackdropClick($event)',
-    '(keydown)': '_closeWidgetOnBackdropKeydown($event)',
-  },
 })
 export class HeaderComponent {
+  protected readonly _uiService = inject(UiService);
+
   protected readonly _data = headerContent;
 
   protected readonly _productsCount = 10;
@@ -43,31 +46,21 @@ export class HeaderComponent {
   protected readonly _routes = ROUTES;
 
   protected readonly searchWidgetToggleButton = computed(() =>
-    getSearchWidgetData(this._isSearchWidgetOpen(), this._data.search.toggleButton),
+    getSearchWidgetData(
+      this._uiService.isDrawerOpen(DRAWER_KEY.search),
+      this._data.search.toggleButton,
+    ),
   );
-  protected readonly _isSearchWidgetOpen = signal<boolean>(false);
 
-  protected readonly _toggleSearchWidget = (): void => {
-    this._isSearchWidgetOpen.update((prevState) => !prevState);
-  };
+  protected readonly _isDrawerOpen = computed(() =>
+    this._uiService.isDrawerOpen(DRAWER_KEY.search),
+  );
 
-  protected readonly _closeWidgetOnBackdropClick = ({ target }: Event): void => {
-    if (
-      !this._isSearchWidgetOpen() ||
-      !(target instanceof HTMLElement) ||
-      !target.classList.contains('search-widget')
-    ) {
-      return;
+  protected readonly _toggleDrawer = (): void => {
+    if (this._uiService.isDrawerOpen(DRAWER_KEY.search)) {
+      this._uiService.closeDrawer();
+    } else {
+      this._uiService.openDrawer(DRAWER_KEY.search);
     }
-
-    this._isSearchWidgetOpen.set(false);
-  };
-
-  protected readonly _closeWidgetOnBackdropKeydown = (event: KeyboardEvent): void => {
-    if (!this._isSearchWidgetOpen() || event.key !== 'Escape') {
-      return;
-    }
-
-    this._isSearchWidgetOpen.set(false);
   };
 }

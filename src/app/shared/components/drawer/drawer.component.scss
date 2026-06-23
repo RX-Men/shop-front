@@ -1,0 +1,46 @@
+@use 'assets/styles/placeholders';
+@use 'assets/styles/mixins' as mix;
+
+.drawer {
+  $this: &;
+
+  position: fixed;
+  z-index: 1;
+  inset-block-start: calc(var(--spacing-x15) * 2);
+  inset-inline-end: 0;
+  display: flex;
+  flex-direction: row-reverse;
+  width: 100%;
+  height: 100%;
+  background-color: rgb(var(--neutral-900-rgb), 0.4);
+
+  @extend %hidden;
+  @include mix.transition((opacity, visibility));
+
+  @include mix.media('m') {
+    inset-block-start: calc(var(--spacing-x20) + var(--spacing-x4));
+  }
+
+  &_open {
+    @extend %visible;
+
+    #{$this}__wrapper {
+      transform: translateX(0);
+    }
+  }
+
+  &__wrapper {
+    width: 500px;
+    height: 100%;
+    padding: var(--spacing-x6) var(--spacing-x7);
+    background-color: var(--neutral-900);
+    transform: translateX(100%);
+
+    @include mix.transition(transform);
+
+    @include mix.media('m') {
+      width: 100%;
+      padding: var(--spacing-x3) var(--spacing-x4);
+    }
+  }
+}

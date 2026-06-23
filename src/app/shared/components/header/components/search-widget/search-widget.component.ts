@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, effect, input, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, signal } from '@angular/core';
 import { debounce, form, FormField } from '@angular/forms/signals';
 
 import { EmptyComponent } from '../../../empty';
@@ -24,7 +24,6 @@ import type { ProductCard } from '../../../product-card';
 export class SearchWidgetComponent {
   // TODO: change to input from header?
   readonly _resultList = signal<ProductCard[] | null>(null);
-  readonly open = input<boolean>(false);
 
   protected readonly _data = headerContent.search;
 
