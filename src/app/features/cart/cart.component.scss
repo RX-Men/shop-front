@@ -12,7 +12,7 @@
 
   &__layout {
     display: grid;
-    grid-template-columns: 1fr 320px;
+    grid-template-columns: 1fr;
     gap: var(--spacing-x8);
 
     @include mix.media('l') {
