@@ -9,6 +9,8 @@ import type { CheckboxSize } from './checkbox.types';
   styleUrl: './checkbox.component.scss',
 })
 export class CheckboxComponent {
+  readonly name = input<string>();
+  readonly value = input<string>();
   readonly checked = input<boolean>(false);
   readonly required = input<boolean>(false);
   readonly disabled = input<boolean>(false);
