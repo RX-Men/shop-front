@@ -19,6 +19,27 @@
     }
   }
 
+  &__grid-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--spacing-x4);
+  }
+
+  &__toolbar-wrapper {
+    @include mix.media('l') {
+      display: none;
+    }
+  }
+
+  &__toggle-button {
+    display: none;
+
+    @include mix.media('l') {
+      display: block;
+    }
+  }
+
   &__grid {
     margin-block-start: var(--spacing-x4);
   }
@@ -31,5 +52,51 @@
     @include mix.media('l') {
       grid-column: auto;
     }
+  }
+
+  &__drawer {
+    $drawer: drawer;
+    $catalog-filters: catalog-filters;
+
+    display: none;
+
+    ::ng-deep {
+      .#{$drawer}__wrapper {
+        display: flex;
+        flex-direction: column;
+        gap: var(--spacing-x6);
+        padding-block-start: var(--spacing-x8);
+        color: var(--neutral-100);
+      }
+
+      .#{$catalog-filters} {
+        padding: 0;
+      }
+
+      .#{$catalog-filters}__list {
+        max-height: calc(100% - var(--spacing-x12));
+        overflow-y: auto;
+      }
+
+      .catalog-toolbar {
+        flex-direction: column;
+        align-items: start;
+      }
+    }
+
+    @include mix.media('l') {
+      display: block;
+    }
+  }
+
+  &__filters {
+    height: 100%;
+    max-height: calc(100% - 240px);
+  }
+
+  &__drawer-close-button {
+    position: absolute;
+    inset-block-start: var(--spacing-x4);
+    inset-inline-end: var(--spacing-x4);
   }
 }

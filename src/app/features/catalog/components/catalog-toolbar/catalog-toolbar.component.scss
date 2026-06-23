@@ -1,3 +1,26 @@
 .catalog-toolbar {
-  min-height: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--spacing-x3);
+
+  &__sort {
+    $select: select;
+
+    ::ng-deep {
+      .#{$select}__wrapper {
+        min-width: 200px;
+      }
+    }
+  }
+
+  &__per-page {
+    $select: select;
+
+    ::ng-deep {
+      .#{$select}__wrapper {
+        min-width: 76px;
+      }
+    }
+  }
 }
