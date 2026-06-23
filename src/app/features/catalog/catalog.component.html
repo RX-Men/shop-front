@@ -1,11 +1,63 @@
+<ng-template #toolbar>
+  <app-catalog-toolbar
+    [selectedSortValue]="_selectedSortValue()"
+    [selectedPerPageValue]="_selectedPerPageValue()"
+    (changeSelectedSortValue)="_onChangeSelectedSortValue($event)"
+    (changeSelectedPerPageValue)="_onChangeSelectedPerPageValue($event)"
+  />
+</ng-template>
+
+<ng-template #filters>
+  <app-catalog-filters
+    class="catalog__filters"
+    [checkedByGroup]="_checkedFiltersByGroup()"
+    (checkedChange)="_onFiltersCheckedChange($event)"
+  />
+</ng-template>
+
 <div class="catalog container">
-  <aside class="catalog__aside"><app-catalog-filters /></aside>
+  <aside class="catalog__aside">
+    <ng-container [ngTemplateOutlet]="filters" />
+  </aside>
 
   <div>
-    <app-catalog-toolbar [productsCount]="_catalogService.getProductsCount()" />
+    <div class="catalog__grid-header">
+      <p>{{ _catalogService.getProductsCount() }} {{ _content.toolbar.productsCountLabel }}</p>
+
+      <div class="catalog__toolbar-wrapper">
+        <ng-container [ngTemplateOutlet]="toolbar" />
+      </div>
+
+      <app-button
+        class="catalog__toggle-button"
+        [variant]="'text'"
+        [size]="'s'"
+        [color]="'dark'"
+        [icon]="'page-info'"
+        [iconPlacement]="'start'"
+        (click)="_toggleDrawer()"
+      >
+        {{ _content.drawer.toggleButton }}
+      </app-button>
+    </div>
 
     <app-catalog-grid class="catalog__grid" [products]="_catalogService.getProducts()" />
   </div>
 
-  <div class="catalog__pagination">pagination works!</div>
+  <div class="catalog__pagination">{{ _content.pagination.placeholder }}</div>
 </div>
+
+<app-drawer class="catalog__drawer" [isOpen]="_isDrawerOpen()" (closed)="_uiService.closeDrawer()">
+  <ng-container [ngTemplateOutlet]="toolbar" />
+
+  <ng-container [ngTemplateOutlet]="filters" />
+
+  <app-icon-button
+    class="catalog__drawer-close-button"
+    [label]="_content.drawer.closeButtonLabel"
+    [icon]="'close'"
+    [tooltipColor]="'light'"
+    [tooltipPosition]="'inline-start'"
+    (click)="_toggleDrawer()"
+  />
+</app-drawer>

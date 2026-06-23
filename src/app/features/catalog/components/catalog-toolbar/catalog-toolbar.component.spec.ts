@@ -17,7 +17,8 @@ describe('CatalogToolbarComponent', () => {
     component = fixture.componentInstance;
     componentRef = fixture.componentRef;
 
-    componentRef.setInput('productsCount', 20);
+    componentRef.setInput('selectedSortValue', ['titleAsc']);
+    componentRef.setInput('selectedPerPageValue', ['24']);
 
     await fixture.whenStable();
   });

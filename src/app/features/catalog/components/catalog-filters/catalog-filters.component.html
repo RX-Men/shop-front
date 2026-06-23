@@ -1,1 +1,17 @@
-<div class="catalog-filters">catalog-filters works!</div>
+<div class="catalog-filters">
+  <h2 class="text-2xl">{{ _content.title }}</h2>
+
+  <ul class="catalog-filters__list">
+    @for (group of _content.groups; track group.name) {
+      <li>
+        <app-checkbox-group
+          [label]="group.label"
+          [name]="group.name"
+          [items]="group.items"
+          [checked]="_getCheckedSet()(group.name)"
+          (checkedChange)="_onCheckedChange(group.name, $event)"
+        />
+      </li>
+    }
+  </ul>
+</div>

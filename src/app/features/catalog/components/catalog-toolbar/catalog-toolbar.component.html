@@ -1,3 +1,23 @@
-<div class="catalog-toolbar">
-  <p>{{ productsCount() }} products</p>
-</div>
+<ul class="catalog-toolbar">
+  <li>
+    <app-select
+      class="catalog-toolbar__sort"
+      [label]="_content.sort.label"
+      [placeholder]="_content.sort.placeholder"
+      [options]="_content.sort.options"
+      [selectedOptionValues]="selectedSortValue()"
+      (selectedOptionValuesChange)="_onChangeSelectedSortValue($event)"
+    />
+  </li>
+
+  <li>
+    <app-select
+      class="catalog-toolbar__per-page"
+      [label]="_content.perPage.label"
+      [placeholder]="_content.perPage.placeholder"
+      [options]="_content.perPage.options"
+      [selectedOptionValues]="selectedPerPageValue()"
+      (selectedOptionValuesChange)="_onChangeSelectedPerPageValue($event)"
+    />
+  </li>
+</ul>
