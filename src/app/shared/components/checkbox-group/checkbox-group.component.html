@@ -1,0 +1,22 @@
+@let computedItems = items();
+@let computedName = name();
+@let computedChecked = checked();
+
+<div class="checkbox-group">
+  <span class="checkbox-group__label">{{ label() }}</span>
+
+  <ul class="checkbox-group__list">
+    @for (item of computedItems; track item.value) {
+      <li class="checkbox-group__list-item">
+        <app-checkbox
+          [name]="computedName"
+          [value]="item.value"
+          [checked]="computedChecked.has(item.value)"
+          (checkedChange)="onInputChange(item.value)"
+        >
+          {{ item.label }}
+        </app-checkbox>
+      </li>
+    }
+  </ul>
+</div>

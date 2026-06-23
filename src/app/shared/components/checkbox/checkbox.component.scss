@@ -1,5 +1,9 @@
 @use 'assets/styles/mixins' as mixins;
 
+:host {
+  display: inline-flex;
+}
+
 .checkbox {
   --cb-size: var(--spacing-x5); // 20px
   --cb-radius: var(--radius-sm); // 4px
@@ -40,7 +44,9 @@
     height: var(--cb-size);
     border: 1.5px solid var(--neutral-300);
     border-radius: var(--cb-radius);
+    margin: 0;
     background: transparent;
+    color: currentcolor;
     cursor: pointer;
 
     @include mixins.transition((background, border-color));

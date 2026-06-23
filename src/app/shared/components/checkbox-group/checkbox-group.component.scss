@@ -1,0 +1,16 @@
+.checkbox-group {
+  &__label {
+    font-weight: 600;
+  }
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-x2);
+    margin-block-start: var(--spacing-x2);
+  }
+
+  &__list-item {
+    display: flex;
+  }
+}
