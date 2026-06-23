@@ -1,0 +1,67 @@
+<section class="cart container">
+  <header class="cart__header">
+    <h1 class="text-6xl">Cart</h1>
+    <p>{{ cart.itemsCount() }} items</p>
+  </header>
+
+  @if (cart.items().length) {
+    <div class="cart__layout">
+      @for (item of cart.items(); track item.id) {
+        <ul class="cart__items">
+          <li class="cart__item">
+            <img
+              width="96"
+              height="128"
+              alt="Cover"
+              [ngSrc]="
+                item.variant.images && item.variant.images[0]
+                  ? item.variant.images[0].url
+                  : 'path/to/default-image.jpg'
+              "
+            />
+
+            <div>
+              <h2>{{ item.name['en-US'] || item.name['en'] }}</h2>
+              <p>{{ item.variant.sku }}</p>
+              <p>{{ item.totalPrice.centAmount | price }}</p>
+            </div>
+
+            <div class="cart__quantity">
+              <app-icon-button
+                [icon]="'keyboard-arrow-left'"
+                [label]="'Decrease quantity'"
+                (click)="cart.changeQuantity(item.id, item.quantity - 1)"
+              />
+
+              <span>{{ item.quantity }}</span>
+
+              <app-icon-button
+                [icon]="'keyboard-arrow-right'"
+                [label]="'Increase quantity'"
+                (click)="cart.changeQuantity(item.id, item.quantity + 1)"
+              />
+
+              <app-icon-button
+                [icon]="'delete'"
+                [label]="'Remove item'"
+                (click)="cart.removeLineItem(item.id)"
+              />
+            </div>
+          </li>
+        </ul>
+      }
+
+      <div class="cart__summary">
+        <p>Total: {{ cart.totalCentAmount() | price }}</p>
+        <app-button>Checkout</app-button>
+      </div>
+    </div>
+  } @else {
+    <app-empty
+      [icon]="'shopping-cart'"
+      [title]="'Your cart is empty'"
+      [description]="'Add comics from the catalog to see them here.'"
+    />
+    <app-router-link [routerLink]="'/'" [icon]="'arrow-forward'">Go shopping</app-router-link>
+  }
+</section>
