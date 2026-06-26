@@ -1,0 +1,22 @@
+@use 'assets/styles/mixins' as mix;
+
+.cart {
+  padding-block: var(--spacing-x12);
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    margin-block-end: var(--spacing-x8);
+  }
+
+  &__layout {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--spacing-x8);
+
+    @include mix.media('l') {
+      grid-template-columns: 1fr;
+    }
+  }
+}

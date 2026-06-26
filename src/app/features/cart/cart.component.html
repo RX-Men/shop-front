@@ -1,0 +1,31 @@
+<section class="cart container">
+  <header class="cart__header">
+    <h1 class="text-6xl">Cart</h1>
+    <p>{{ cart.itemsCount() }} items</p>
+  </header>
+
+  @if (cart.items().length) {
+    <div class="cart__layout">
+      @for (item of cart.items(); track item.id) {
+        <app-cart-item
+          [item]="item"
+          (increase)="cart.changeQuantity(item.id, item.quantity + 1)"
+          (decrease)="cart.changeQuantity(item.id, item.quantity - 1)"
+          (remove)="cart.removeLineItem(item.id)"
+        />
+      }
+
+      <div class="cart__summary">
+        <p>Total: {{ cart.totalCentAmount() | price }}</p>
+        <app-button>Checkout</app-button>
+      </div>
+    </div>
+  } @else {
+    <app-empty
+      [icon]="'shopping-cart'"
+      [title]="'Your cart is empty'"
+      [description]="'Add comics from the catalog to see them here.'"
+    />
+    <app-router-link [routerLink]="'/'" [icon]="'arrow-forward'">Go shopping</app-router-link>
+  }
+</section>
