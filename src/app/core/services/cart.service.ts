@@ -24,12 +24,16 @@ export class CartService {
     this.loadCart();
   }
 
+  private _saveCart(body: Cart): void {
+    this._cart.set(body);
+    this._storage.setItem('cachedCart', body);
+  }
+
   async loadCart(): Promise<void> {
     try {
       const { body } = await this._project().me().activeCart().get().execute();
 
-      this._cart.set(body);
-      this._storage.setItem('cachedCart', body);
+      this._saveCart(body);
     } catch (error: unknown) {
       if (typeof error === 'object' && error !== null && 'status' in error) {
         const err = error as { status: number };
@@ -47,19 +51,7 @@ export class CartService {
     const cart = this._cart();
 
     if (!cart) {
-      const { body } = await this._project()
-        .me()
-        .carts()
-        .post({
-          body: {
-            currency: 'USD',
-            lineItems: [{ sku, quantity }],
-          },
-        })
-        .execute();
-
-      this._cart.set(body);
-      this._storage.setItem('cachedCart', body);
+      await this._createCart([{ sku, quantity }]);
       return;
     }
 
@@ -73,61 +65,72 @@ export class CartService {
   async removeLineItem(lineItemId: string): Promise<void> {
     await this._update([{ action: 'removeLineItem', lineItemId }]);
   }
+  private async _updateCart(cart: Cart, actions: MyCartUpdateAction[]): Promise<void> {
+    const { body } = await this._project()
+      .me()
+      .carts()
+      .withId({ ID: cart.id })
+      .post({
+        body: {
+          version: cart.version,
+          actions,
+        },
+      })
+      .execute();
 
+    this._saveCart(body);
+  }
+  private _buildLineItems(
+    cart: Cart,
+    actions: MyCartUpdateAction[],
+  ): { sku: string | undefined; quantity: number }[] {
+    const itemsToCreate = cart.lineItems.map((item) => ({
+      sku: item.variant.sku,
+      quantity: item.quantity,
+    }));
+
+    for (const act of actions) {
+      if (act.action === 'addLineItem') {
+        itemsToCreate.push({
+          sku: act.sku,
+          quantity: act.quantity ?? 1,
+        });
+      }
+    }
+    return itemsToCreate;
+  }
+
+  private async _createCart(
+    lineItems: { sku: string | undefined; quantity: number }[],
+  ): Promise<void> {
+    const { body } = await this._project()
+      .me()
+      .carts()
+      .post({
+        body: {
+          currency: 'USD',
+          lineItems: lineItems,
+        },
+      })
+      .execute();
+
+    this._saveCart(body);
+  }
   private async _update(actions: MyCartUpdateAction[]): Promise<void> {
     const cart = this._cart();
 
     if (!cart) {
       return;
     }
-
     try {
-      const { body } = await this._project()
-        .me()
-        .carts()
-        .withId({ ID: cart.id })
-        .post({
-          body: {
-            version: cart.version,
-            actions,
-          },
-        })
-        .execute();
-
-      this._cart.set(body);
-      this._storage.setItem('cachedCart', body);
+      await this._updateCart(cart, actions);
     } catch (error: unknown) {
       if (typeof error === 'object' && error !== null && 'status' in error) {
         const err = error as { status: number };
 
         if ((err.status === 404 || err.status === 403) && cart.lineItems.length > 0) {
-          const itemsToCreate = cart.lineItems.map((item) => ({
-            sku: item.variant.sku,
-            quantity: item.quantity,
-          }));
-
-          for (const act of actions) {
-            if (act.action === 'addLineItem') {
-              itemsToCreate.push({
-                sku: act.sku,
-                quantity: act.quantity ?? 1,
-              });
-            }
-          }
-
-          const { body } = await this._project()
-            .me()
-            .carts()
-            .post({
-              body: {
-                currency: 'USD',
-                lineItems: itemsToCreate,
-              },
-            })
-            .execute();
-
-          this._cart.set(body);
-          this._storage.setItem('cachedCart', body);
+          const itemsToCreate = this._buildLineItems(cart, actions);
+          await this._createCart(itemsToCreate);
         }
       }
     }
