@@ -84,6 +84,16 @@ export class SignInComponent implements OnInit {
     return '';
   }
 
+  onEmailChange(value: string): void {
+    this.signInForm.controls.email.setValue(value);
+    this.signInForm.controls.email.markAsDirty();
+  }
+
+  onPasswordChange(value: string): void {
+    this.signInForm.controls.password.setValue(value);
+    this.signInForm.controls.password.markAsDirty();
+  }
+
   onSubmit(): void {
     if (this.signInForm.invalid) {
       this.signInForm.markAllAsTouched();

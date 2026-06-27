@@ -13,9 +13,7 @@
         (signInForm.controls.email.touched || signInForm.controls.email.dirty)
       "
       [errorText]="getEmailErrorText()"
-      (valueChange)="
-        signInForm.controls.email.setValue($event); signInForm.controls.email.markAsDirty()
-      "
+      (valueChange)="onEmailChange($event)"
       (blurred)="signInForm.controls.email.markAsTouched()"
     />
     <app-input
@@ -28,9 +26,7 @@
         (signInForm.controls.password.touched || signInForm.controls.password.dirty)
       "
       [errorText]="getPasswordErrorText()"
-      (valueChange)="
-        signInForm.controls.password.setValue($event); signInForm.controls.password.markAsDirty()
-      "
+      (valueChange)="onPasswordChange($event)"
       (blurred)="signInForm.controls.password.markAsTouched()"
     />
   </div>
