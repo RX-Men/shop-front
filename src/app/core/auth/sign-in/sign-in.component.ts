@@ -1,10 +1,17 @@
 import { AlertComponent } from '@/app/shared/components/alert';
 import { ButtonComponent } from '@/app/shared/components/button';
-import { ChangeDetectionStrategy, Component, DestroyRef, inject, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  DestroyRef,
+  inject,
+  OnInit,
+  signal,
+} from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { catchError, EMPTY, Subject, switchMap } from 'rxjs';
+import { catchError, EMPTY, Observable, Subject, switchMap } from 'rxjs';
 import { InputComponent } from '@/app/shared/components/input';
 import { RouterLinkComponent } from '@/app/shared/components/router-link';
 import { AuthService } from '@/app/core/services/auth.service';
@@ -25,7 +32,7 @@ import signInContent from '@/app/content/pages/sign-in/sign-in.json' with { type
   templateUrl: './sign-in.component.html',
   styleUrl: './sign-in.component.scss',
 })
-export class SignInComponent {
+export class SignInComponent implements OnInit {
   readonly content = signInContent;
   protected readonly _routes = ROUTES;
 
@@ -42,22 +49,10 @@ export class SignInComponent {
     password: new FormControl('', [Validators.required, Validators.minLength(8)]),
   });
 
-  constructor() {
+  ngOnInit(): void {
     this._submit$
       .pipe(
-        switchMap((credentials) =>
-          this._authService.login(credentials).pipe(
-            catchError((error: unknown) => {
-              const message = error instanceof Error ? error.message : '';
-              this.authError.set(
-                message === 'INVALID_CREDENTIALS'
-                  ? this.content.errors.auth.invalidCredentials
-                  : this.content.errors.auth.generic,
-              );
-              return EMPTY;
-            }),
-          ),
-        ),
+        switchMap((credentials) => this._login(credentials)),
         takeUntilDestroyed(this._destroyRef),
       )
       .subscribe(() => this._router.navigate(['/']));
@@ -97,5 +92,19 @@ export class SignInComponent {
     this.authError.set('');
     const { email, password } = this.signInForm.getRawValue();
     this._submit$.next({ email: email!, password: password! });
+  }
+
+  private _login(credentials: LoginCredentials): Observable<unknown> {
+    return this._authService.login(credentials).pipe(catchError((e) => this._handleLoginError(e)));
+  }
+
+  private _handleLoginError(error: unknown): Observable<never> {
+    const message = error instanceof Error ? error.message : '';
+    this.authError.set(
+      message === 'INVALID_CREDENTIALS'
+        ? this.content.errors.auth.invalidCredentials
+        : this.content.errors.auth.generic,
+    );
+    return EMPTY;
   }
 }
