@@ -5,7 +5,6 @@ import {
   COMMERCETOOLS_CONFIG,
   commercetoolsConfigFactory,
 } from '@/app/core/services/commercetools/commercetools.config';
-
 import { routes } from './app.routes';
 
 export const appConfig: ApplicationConfig = {

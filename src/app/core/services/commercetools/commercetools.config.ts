@@ -1,5 +1,4 @@
 import { InjectionToken } from '@angular/core';
-
 import type { AuthMiddlewareOptions, HttpMiddlewareOptions } from '@commercetools/ts-client';
 
 export interface CommercetoolsConfig {
