@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 
-export type AlertType = 'error' | 'success' | 'warning';
+export type AlertType = 'error';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
