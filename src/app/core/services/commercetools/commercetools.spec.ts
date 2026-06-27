@@ -1,9 +1,9 @@
 import { TestBed } from '@angular/core/testing';
 
-import { COMMERCETOOLS_CONFIG } from './commercetools.config';
+import { COMMERCETOOLS_CONFIG, CommercetoolsConfig } from './commercetools.config';
 import { CommercetoolsService } from './commercetools.service';
 
-const mockConfig = {
+const mockConfig: CommercetoolsConfig = {
   projectKey: 'test-project',
   clientId: 'test-client-id',
   clientSecret: 'test-client-secret',
