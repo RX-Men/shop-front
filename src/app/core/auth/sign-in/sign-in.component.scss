@@ -31,15 +31,6 @@
     gap: var(--spacing-x4);
   }
 
-  &__auth-error {
-    padding: var(--spacing-x4) var(--spacing-x5);
-    background: color-mix(in srgb, var(--error) 10%, transparent);
-    border: 1px solid var(--error);
-    border-radius: var(--radius-lg);
-    color: var(--error);
-    font-size: var(--text-sm);
-  }
-
   &__actions {
     display: flex;
     justify-content: flex-end;

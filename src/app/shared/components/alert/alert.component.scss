@@ -1,0 +1,12 @@
+.alert {
+  padding: var(--spacing-x4) var(--spacing-x5);
+  border: 1px solid;
+  border-radius: var(--radius-lg);
+  font-size: var(--text-sm);
+
+  &--error {
+    background: color-mix(in srgb, var(--error) 10%, transparent);
+    border-color: var(--error);
+    color: var(--error);
+  }
+}

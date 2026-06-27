@@ -35,9 +35,7 @@
     />
   </div>
 
-  @if (authError()) {
-    <div class="sign-in__auth-error" role="alert">{{ authError() }}</div>
-  }
+  <app-alert [message]="authError()" />
 
   <div class="sign-in__actions">
     <app-button type="submit" [size]="'l'">{{ content.actions.submit }}</app-button>

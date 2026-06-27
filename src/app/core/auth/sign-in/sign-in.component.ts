@@ -1,3 +1,4 @@
+import { AlertComponent } from '@/app/shared/components/alert';
 import { ButtonComponent } from '@/app/shared/components/button';
 import { ChangeDetectionStrategy, Component, DestroyRef, inject, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -13,7 +14,13 @@ import signInContent from '@/app/content/pages/sign-in/sign-in.json' with { type
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [ButtonComponent, InputComponent, ReactiveFormsModule, RouterLinkComponent],
+  imports: [
+    AlertComponent,
+    ButtonComponent,
+    InputComponent,
+    ReactiveFormsModule,
+    RouterLinkComponent,
+  ],
   selector: 'app-sign-in',
   templateUrl: './sign-in.component.html',
   styleUrl: './sign-in.component.scss',
