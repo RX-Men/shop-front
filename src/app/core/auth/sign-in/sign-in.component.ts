@@ -1,7 +1,6 @@
 import { ButtonComponent } from '@/app/shared/components/button';
 import { ChangeDetectionStrategy, Component, DestroyRef, inject, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { CheckboxComponent } from '@/app/shared/components/checkbox';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { catchError, EMPTY, Subject, switchMap } from 'rxjs';
@@ -14,13 +13,7 @@ import signInContent from '@/app/content/pages/sign-in/sign-in.json' with { type
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [
-    ButtonComponent,
-    CheckboxComponent,
-    InputComponent,
-    ReactiveFormsModule,
-    RouterLinkComponent,
-  ],
+  imports: [ButtonComponent, InputComponent, ReactiveFormsModule, RouterLinkComponent],
   selector: 'app-sign-in',
   templateUrl: './sign-in.component.html',
   styleUrl: './sign-in.component.scss',
@@ -40,7 +33,6 @@ export class SignInComponent {
   readonly signInForm = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [Validators.required, Validators.minLength(8)]),
-    rememberMe: new FormControl(false),
   });
 
   constructor() {

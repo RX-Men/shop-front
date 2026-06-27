@@ -31,11 +31,6 @@
     gap: var(--spacing-x4);
   }
 
-  &__remember-me {
-    display: flex;
-    align-items: center;
-  }
-
   &__auth-error {
     padding: var(--spacing-x4) var(--spacing-x5);
     background: color-mix(in srgb, var(--error) 10%, transparent);

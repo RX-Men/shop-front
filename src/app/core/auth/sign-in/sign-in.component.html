@@ -35,14 +35,6 @@
     />
   </div>
 
-  <div class="sign-in__remember-me">
-    <app-checkbox
-      [checked]="signInForm.controls.rememberMe.value ?? false"
-      (checkedChange)="signInForm.controls.rememberMe.setValue($event)"
-      >{{ content.fields.rememberMe.label }}</app-checkbox
-    >
-  </div>
-
   @if (authError()) {
     <div class="sign-in__auth-error" role="alert">{{ authError() }}</div>
   }

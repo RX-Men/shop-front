@@ -2,8 +2,7 @@
   "title": "Sign In",
   "fields": {
     "email": { "label": "Email", "placeholder": "me@ilovecomics.com" },
-    "password": { "label": "Password" },
-    "rememberMe": { "label": "Remember me" }
+    "password": { "label": "Password" }
   },
   "actions": {
     "submit": "Sign In"
