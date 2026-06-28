@@ -1,4 +1,4 @@
-import { CATALOG_LIMIT, CATALOG_SORT, SORT_ORDER } from './catalog.constants';
+import { CATALOG_SORT, DEFAULT_CATALOG_LIMIT, SORT_ORDER } from './catalog.constants';
 
 import type {
   GetCatalogFiltersQuery,
@@ -28,17 +28,19 @@ interface ToBackendCatalogInitial {
   filter: CatalogState['data']['selectedFilters'];
   sort: CatalogState['data']['sort'];
   limit: CatalogState['data']['limit'];
+  page: CatalogState['data']['page'];
 }
 
 interface ToBackendCatalogTarget {
   filter: SearchQueryInput | null;
   sort: SearchSortingInput | null;
   limit: number;
+  offset: number;
 }
 
 interface ToFrontendCatalogTarget {
   products: ProductCard[];
-  offset: number;
+  page: number;
   total: number;
 }
 
@@ -48,6 +50,7 @@ class CatalogAdapter {
       filter: this._toBackendFilter(rawData.filter),
       sort: this._toBackendSort(rawData.sort),
       limit: this._toBackendLimit(rawData.limit),
+      offset: this._toBackendOffset({ page: rawData.page, limit: rawData.limit }),
     };
   }
 
@@ -56,7 +59,7 @@ class CatalogAdapter {
     if (!productsSearch) {
       return {
         products: [],
-        offset: 0,
+        page: 0,
         total: 0,
       };
     }
@@ -129,7 +132,7 @@ class CatalogAdapter {
 
     return {
       products,
-      offset: productsSearch.offset ?? 0,
+      page: Math.trunc(Number(productsSearch.offset) / (productsSearch.limit || 1)),
       total: typeof productsSearch.total === 'number' ? productsSearch.total : 0,
     };
   }
@@ -296,7 +299,13 @@ class CatalogAdapter {
   private static _toBackendLimit(
     rawData: ToBackendCatalogInitial['limit'],
   ): ToBackendCatalogTarget['limit'] {
-    return Number(rawData || CATALOG_LIMIT[24]);
+    return Number(rawData || DEFAULT_CATALOG_LIMIT);
+  }
+
+  private static _toBackendOffset(
+    rawData: Pick<ToBackendCatalogInitial, 'page' | 'limit'>,
+  ): ToBackendCatalogTarget['offset'] {
+    return rawData.page * Number(rawData.limit || DEFAULT_CATALOG_LIMIT);
   }
 }
 

@@ -47,9 +47,15 @@
     </div>
 
     <app-catalog-grid class="catalog__grid" [products]="_catalogService.products()" />
-  </div>
 
-  <div class="catalog__pagination">{{ _content.pagination.placeholder }}</div>
+    <app-pagination
+      class="catalog__pagination"
+      [current]="_catalogService.page()"
+      [pageSize]="_pageSize()"
+      [total]="_catalogService.total()"
+      (pageChange)="_catalogService.changePage($event)"
+    />
+  </div>
 </div>
 
 <app-drawer class="catalog__drawer" [isOpen]="_isDrawerOpen()" (closed)="_uiService.closeDrawer()">

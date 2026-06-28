@@ -3,9 +3,6 @@
     "toggleButton": "Filters & sort",
     "closeButtonLabel": "Close drawer with filters and sort"
   },
-  "pagination": {
-    "placeholder": "pagination works!"
-  },
   "filters": {
     "title": "Filters",
     "reset": "Reset all"

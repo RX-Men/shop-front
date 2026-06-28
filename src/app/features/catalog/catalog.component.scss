@@ -45,9 +45,7 @@
   }
 
   &__pagination {
-    grid-column: 2 / -1;
-    min-height: 40px;
-    border: 2px solid var(--neutral-900);
+    margin-block-start: var(--spacing-x6);
 
     @include mix.media('l') {
       grid-column: auto;
