@@ -1,0 +1,28 @@
+{
+  "title": "Sign In",
+  "fields": {
+    "email": { "label": "Email", "placeholder": "me@ilovecomics.com" },
+    "password": { "label": "Password" }
+  },
+  "actions": {
+    "submit": "Sign In"
+  },
+  "signUp": {
+    "prompt": "Don't have an account?",
+    "label": "Sign Up"
+  },
+  "errors": {
+    "email": {
+      "required": "Email is required",
+      "email": "Enter a valid email"
+    },
+    "password": {
+      "required": "Password is required",
+      "minlength": "Password must contain 8 or more characters"
+    },
+    "auth": {
+      "invalidCredentials": "Invalid email or password",
+      "generic": "Something went wrong. Please try again."
+    }
+  }
+}

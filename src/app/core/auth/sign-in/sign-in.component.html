@@ -1,0 +1,48 @@
+<h1 class="sign-in__title">{{ content.title }}</h1>
+
+<form class="sign-in__form" [formGroup]="signInForm" (ngSubmit)="onSubmit()">
+  <div class="sign-in__fields">
+    <app-input
+      type="email"
+      [label]="content.fields.email.label"
+      [placeholder]="content.fields.email.placeholder"
+      [required]="true"
+      [value]="signInForm.controls.email.value ?? ''"
+      [error]="
+        signInForm.controls.email.invalid &&
+        (signInForm.controls.email.touched || signInForm.controls.email.dirty)
+      "
+      [errorText]="getEmailErrorText()"
+      (valueChange)="onEmailChange($event)"
+      (blurred)="signInForm.controls.email.markAsTouched()"
+    />
+    <app-input
+      type="password"
+      [label]="content.fields.password.label"
+      [required]="true"
+      [value]="signInForm.controls.password.value ?? ''"
+      [error]="
+        signInForm.controls.password.invalid &&
+        (signInForm.controls.password.touched || signInForm.controls.password.dirty)
+      "
+      [errorText]="getPasswordErrorText()"
+      (valueChange)="onPasswordChange($event)"
+      (blurred)="signInForm.controls.password.markAsTouched()"
+    />
+  </div>
+
+  @if (authError()) {
+    <app-alert [message]="authError()" />
+  }
+
+  <div class="sign-in__actions">
+    <app-button type="submit" [size]="'l'">{{ content.actions.submit }}</app-button>
+  </div>
+
+  <p class="sign-in__sign-up">
+    {{ content.signUp.prompt }}
+    <app-router-link [routerLink]="'/' + _routes.signUp">{{
+      content.signUp.label
+    }}</app-router-link>
+  </p>
+</form>
