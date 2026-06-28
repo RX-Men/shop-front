@@ -1,0 +1,15 @@
+<div class="quantity-counter">
+  <app-icon-button
+    [icon]="'keyboard-arrow-left'"
+    [label]="'Decrease quantity'"
+    (click)="decrease.emit()"
+  />
+
+  <span>{{ value() }}</span>
+
+  <app-icon-button
+    [icon]="'keyboard-arrow-right'"
+    [label]="'Increase quantity'"
+    (click)="increase.emit()"
+  />
+</div>
