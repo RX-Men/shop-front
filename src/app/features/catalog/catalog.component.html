@@ -1,17 +1,22 @@
+@let sort = _catalogService.sort();
+@let limit = _catalogService.limit();
+
 <ng-template #toolbar>
   <app-catalog-toolbar
-    [selectedSortValue]="_selectedSortValue()"
-    [selectedPerPageValue]="_selectedPerPageValue()"
-    (changeSelectedSortValue)="_onChangeSelectedSortValue($event)"
-    (changeSelectedPerPageValue)="_onChangeSelectedPerPageValue($event)"
+    [selectedSortValue]="sort ? [sort] : []"
+    [selectedPerPageValue]="limit ? [limit] : []"
+    (changeSelectedSortValue)="_catalogService.changeSort($event)"
+    (changeSelectedPerPageValue)="_catalogService.changeLimit($event)"
   />
 </ng-template>
 
 <ng-template #filters>
   <app-catalog-filters
     class="catalog__filters"
-    [checkedByGroup]="_checkedFiltersByGroup()"
-    (checkedChange)="_onFiltersCheckedChange($event)"
+    [groups]="_catalogService.filters()"
+    [checkedByGroup]="_catalogService.selectedFilters()"
+    (checkedChange)="_catalogService.changeFilters($event)"
+    (resetClick)="_catalogService.resetFilters()"
   />
 </ng-template>
 
@@ -22,7 +27,7 @@
 
   <div>
     <div class="catalog__grid-header">
-      <p>{{ _catalogService.getProductsCount() }} {{ _content.toolbar.productsCountLabel }}</p>
+      <p>{{ _totalCountLabel() }}</p>
 
       <div class="catalog__toolbar-wrapper">
         <ng-container [ngTemplateOutlet]="toolbar" />
@@ -41,7 +46,7 @@
       </app-button>
     </div>
 
-    <app-catalog-grid class="catalog__grid" [products]="_catalogService.getProducts()" />
+    <app-catalog-grid class="catalog__grid" [products]="_catalogService.products()" />
   </div>
 
   <div class="catalog__pagination">{{ _content.pagination.placeholder }}</div>

@@ -33,6 +33,7 @@ describe('ProductCardComponent', () => {
     componentRef.setInput('oldPrice', 2500);
     componentRef.setInput('discount', 0);
     componentRef.setInput('count', 15);
+    componentRef.setInput('detailsLink', 'catalog/1');
 
     await fixture.whenStable();
 

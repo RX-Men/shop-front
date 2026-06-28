@@ -18,18 +18,19 @@ export class CatalogToolbarComponent {
   readonly selectedPerPageValue =
     input.required<ReturnType<SelectComponent['selectedOptionValues']>>();
 
-  readonly changeSelectedSortValue = output<ReturnType<SelectComponent['selectedOptionValues']>>();
-  readonly changeSelectedPerPageValue =
-    output<ReturnType<SelectComponent['selectedOptionValues']>>();
+  readonly changeSelectedSortValue = output<string | null>();
+  readonly changeSelectedPerPageValue = output<string | null>();
 
   protected readonly _onChangeSelectedSortValue = (
     selected: ReturnType<SelectComponent['selectedOptionValues']>,
   ): void => {
-    this.changeSelectedSortValue.emit(selected);
+    const value = selected?.at(0);
+    this.changeSelectedSortValue.emit(value || null);
   };
   protected readonly _onChangeSelectedPerPageValue = (
     selected: ReturnType<SelectComponent['selectedOptionValues']>,
   ): void => {
-    this.changeSelectedPerPageValue.emit(selected);
+    const value = selected?.at(0);
+    this.changeSelectedPerPageValue.emit(value || null);
   };
 }

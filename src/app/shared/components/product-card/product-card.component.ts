@@ -10,7 +10,6 @@ import { getBadgeLabel, getPriceAriaLabel } from './product-card.utils';
 import { PRODUCT_CARD_ORIENTATION } from './product-card.constants';
 
 import { APP_TEST_IDS } from '@/app/app.test-ids';
-import { ROUTES } from '@/app/core/constants/routes';
 
 import { PricePipe } from '@/app/shared/pipes/price';
 
@@ -34,10 +33,10 @@ export class ProductCardComponent {
   readonly oldPrice = input.required<ProductCard['oldPrice']>();
   readonly discount = input.required<ProductCard['discount']>();
   readonly count = input.required<ProductCard['count']>();
+  readonly detailsLink = input.required<string>();
   readonly tabIndex = input<number>();
 
   protected readonly _testIds = APP_TEST_IDS.productCard;
-  protected readonly _routes = ROUTES;
 
   protected readonly _badge = computed(() => getBadgeLabel(this.count(), this.discount()));
   protected readonly _priceAriaLabel = computed(() =>
