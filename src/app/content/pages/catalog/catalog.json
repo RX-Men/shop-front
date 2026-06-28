@@ -8,74 +8,11 @@
   },
   "filters": {
     "title": "Filters",
-    "groups": [
-      {
-        "label": "Publisher",
-        "name": "publisher",
-        "items": [
-          { "label": "DC", "value": "dc" },
-          { "label": "Dark Horse", "value": "darkHorse" },
-          { "label": "Image", "value": "image" },
-          { "label": "Marvel", "value": "marvel" }
-        ]
-      },
-      {
-        "label": "Genre",
-        "name": "genre",
-        "items": [
-          { "label": "Horror", "value": "horror" },
-          { "label": "Noir", "value": "noir" },
-          { "label": "Sci-fi", "value": "sci-fi" },
-          { "label": "Superhero", "value": "superhero" }
-        ]
-      },
-      {
-        "label": "Writer",
-        "name": "writer",
-        "items": [
-          { "label": "Condon, Christopher", "value": "christopher-condon" },
-          { "label": "Duggan, Gerry", "value": "gerry-duggan" },
-          { "label": "Ewing, Al", "value": "al-ewing" },
-          { "label": "Foxe, Steve", "value": "steve-foxe" },
-          { "label": "Gronbekk, Torunn", "value": "torunn-gronbekk" },
-          { "label": "Lee, Stan", "value": "stan-lee" },
-          { "label": "Moore, Alan", "value": "alan-moore" },
-          { "label": "Percy, Benjamin", "value": "benjamin-percy" },
-          { "label": "Sacks, Ethan", "value": "ethan-sacks" },
-          { "label": "Simone, Gail", "value": "gail-simone" },
-          { "label": "Snyder, Scott", "value": "scott-snyder" }
-        ]
-      },
-      {
-        "label": "Penciller",
-        "name": "penciller",
-        "items": [
-          { "label": "Bazaldua, Jan", "value": "jan-bazaldua" },
-          { "label": "Caselli, Stefano", "value": "stefano-caselli" },
-          { "label": "Davila, Sergio", "value": "sergio-davila" },
-          { "label": "Espin, Salva", "value": "salva-espin" },
-          { "label": "Gomez, Carlos", "value": "carlos-gomez" },
-          { "label": "Rosanas, Ramon", "value": "ramon-rosanas" },
-          { "label": "Shaw, Geoff", "value": "geoff-shaw" }
-        ]
-      },
-      {
-        "label": "Cover artist",
-        "name": "coverArtist",
-        "items": [
-          { "label": "Gomez, Carlos", "value": "carlos-gomez" },
-          { "label": "Harvey, Ben", "value": "ben-harvey" },
-          { "label": "Marquez, David", "value": "david-marquez" },
-          { "label": "Panosian, Dan", "value": "dan-panosian" },
-          { "label": "Shaw, Geoff", "value": "geoff-shaw" },
-          { "label": "Vecchio, Luciano", "value": "luciano-vecchio" },
-          { "label": "Werneck, Lucas", "value": "lucas-werneck" }
-        ]
-      }
-    ]
+    "reset": "Reset all"
   },
   "toolbar": {
-    "productsCountLabel": "products",
+    "productCountLabelSingular": "product",
+    "productCountLabelPlural": "products",
     "sort": {
       "label": "Sort by:",
       "placeholder": "Choose value",
@@ -91,7 +28,6 @@
     "perPage": {
       "label": "Per page:",
       "placeholder": "Choose value",
-      "defaultValue": "24",
       "options": [
         { "text": "24", "value": "24" },
         { "text": "48", "value": "48" },

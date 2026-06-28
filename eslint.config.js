@@ -5,7 +5,13 @@ const eslintPluginPrettierRecommended = require('eslint-plugin-prettier/recommen
 
 module.exports = tseslint.config(
   {
-    ignores: ['.angular/**', '.nx/**', 'coverage/**', 'dist/**'],
+    ignores: [
+      '.angular/**',
+      '.nx/**',
+      'coverage/**',
+      'dist/**',
+      'src/app/core/graphql/generated.types.ts',
+    ],
     files: ['**/*.ts'],
     extends: [
       eslint.configs.recommended,

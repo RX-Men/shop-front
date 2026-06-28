@@ -1,8 +1,8 @@
 type LabelOrientation = 'horizontal' | 'vertical';
 
-interface Option {
+interface Option<TValue extends string> {
   text: string;
-  value: string;
+  value: TValue;
 }
 
 export type { LabelOrientation, Option };

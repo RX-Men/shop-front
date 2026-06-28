@@ -17,6 +17,7 @@ describe('CatalogFiltersComponent', () => {
     component = fixture.componentInstance;
     componentRef = fixture.componentRef;
 
+    componentRef.setInput('groups', {});
     componentRef.setInput('checkedByGroup', { publisher: new Set(['marvel', 'dc']) });
 
     await fixture.whenStable();

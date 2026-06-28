@@ -9,6 +9,8 @@ import { SpinComponent } from '../../../spin';
 import headerContent from '@/app/content/layout/header/header.json' with { type: 'json' };
 import productsMock from '@/app/core/mocks/products.json' with { type: 'json' };
 
+import { ROUTES } from '@/app/core/constants/routes';
+
 import type { ProductCard } from '../../../product-card';
 
 @Component({
@@ -26,6 +28,7 @@ export class SearchWidgetComponent {
   readonly _resultList = signal<ProductCard[] | null>(null);
 
   protected readonly _data = headerContent.search;
+  protected readonly _routes = ROUTES;
 
   constructor() {
     effect(() => {

@@ -26,15 +26,15 @@ import type { LabelOrientation, Option } from './select.types';
     '(document:keydown.escape)': '_onEscapePressed()',
   },
 })
-export class SelectComponent {
+export class SelectComponent<TValue extends string = string> {
   readonly label = input<string>();
   readonly labelOrientation = input<LabelOrientation>('horizontal');
   readonly placeholder = input<string>();
-  readonly options = input<Option[]>([]);
-  readonly selectedOptionValues = input<Option['value'][]>([]);
+  readonly options = input<Option<TValue>[]>([]);
+  readonly selectedOptionValues = input<Option<TValue>['value'][]>([]);
   readonly multiple = input<boolean>();
 
-  readonly selectedOptionValuesChange = output<Option['value'][]>();
+  readonly selectedOptionValuesChange = output<Option<TValue>['value'][]>();
 
   readonly isOpen = signal(false);
 
@@ -42,7 +42,7 @@ export class SelectComponent {
   protected readonly _listboxId = crypto.randomUUID();
   protected readonly _isOptionSelected = computed(
     () =>
-      (value: Option['value']): boolean =>
+      (value: Option<TValue>['value']): boolean =>
         this.selectedOptionValues().includes(value),
   );
 
@@ -105,9 +105,9 @@ export class SelectComponent {
   }
 
   private _onSingleOptionChange({ value }: HTMLInputElement): void {
-    this.selectedOptionValuesChange.emit(
-      this.selectedOptionValues().includes(value) ? [] : [value],
-    );
+    const v = value as TValue;
+
+    this.selectedOptionValuesChange.emit(this.selectedOptionValues().includes(v) ? [] : [v]);
     this.isOpen.set(false);
   }
 
@@ -117,6 +117,6 @@ export class SelectComponent {
       ? [...selectedOptionValues, value]
       : selectedOptionValues.filter((v) => v !== value);
 
-    this.selectedOptionValuesChange.emit(nextSelectedOptionValues);
+    this.selectedOptionValuesChange.emit(nextSelectedOptionValues as TValue[]);
   }
 }

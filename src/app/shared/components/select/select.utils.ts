@@ -1,12 +1,13 @@
 import type { Option } from './select.types';
 
-const getFirstSelectedOption = (
-  options: Option[],
+const getFirstSelectedOption = <TValue extends string = string>(
+  options: Option<TValue>[],
   selectedOptionValues: string[],
-): Option | undefined => options.find((option) => option.value === selectedOptionValues.at(0));
+): Option<TValue> | undefined =>
+  options.find((option) => option.value === selectedOptionValues.at(0));
 
-const getPlaceholder = (
-  options: Option[],
+const getPlaceholder = <TValue extends string = string>(
+  options: Option<TValue>[],
   selectedOptionValues: string[],
   placeholder = '',
 ): string => {
