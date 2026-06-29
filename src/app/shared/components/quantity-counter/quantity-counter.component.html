@@ -2,7 +2,7 @@
   <app-icon-button
     [icon]="'remove'"
     [label]="'Decrease quantity'"
-    [disabled]="disabled() || value() <= 1"
+    [disabled]="isDecreaseDisabled()"
     (click)="decrease()"
   />
 
@@ -11,7 +11,7 @@
   <app-icon-button
     [icon]="'add'"
     [label]="'Increase quantity'"
-    [disabled]="disabled() || value() >= max()"
+    [disabled]="isIncreaseDisabled()"
     (click)="increase()"
   />
 </div>

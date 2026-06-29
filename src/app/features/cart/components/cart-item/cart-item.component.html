@@ -12,6 +12,7 @@
 </div>
 
 <app-quantity-counter
+  [max]="10"
   [value]="item().quantity"
   [disabled]="disabled()"
   (quantityChange)="quantityChange.emit($event)"
