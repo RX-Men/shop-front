@@ -1,0 +1,19 @@
+<div class="product-detail container">
+  <div class="product-detail__inner">
+    <div class="product-detail__img">img</div>
+
+    <div class="product-detail__content">content</div>
+  </div>
+
+  <app-router-link
+    class="product-detail__back-button"
+    [variant]="'text'"
+    [routerLink]="`/${_routes.catalog}`"
+    [icon]="'arrow-back'"
+    [iconPlacement]="'start'"
+    [size]="'s'"
+    [color]="'dark'"
+  >
+    Back to catalog
+  </app-router-link>
+</div>
