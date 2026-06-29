@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, OnInit } from '@angular/core';
 import { NgTemplateOutlet } from '@angular/common';
 
 import { ButtonComponent } from '@/app/shared/components/button';
@@ -30,53 +30,24 @@ import { DRAWER_KEY } from '@/app/core/services/ui';
   templateUrl: './catalog.component.html',
   styleUrl: './catalog.component.scss',
 })
-export class CatalogComponent {
+export class CatalogComponent implements OnInit {
+  ngOnInit(): void {
+    Promise.allSettled([this._catalogService.fetchProducts(), this._catalogService.fetchFilters()]);
+  }
+
   protected readonly _catalogService = inject(CatalogService);
   protected readonly _uiService = inject(UiService);
 
   protected readonly _content = catalogContent;
 
-  protected readonly _checkedFiltersByGroup = signal<Record<string, Set<string>>>({});
-
-  protected readonly _selectedSortValue = signal<string[]>([]);
-  protected readonly _selectedPerPageValue = signal<string[]>([
-    this._content.toolbar.perPage.defaultValue,
-  ]);
+  protected readonly _totalCountLabel = computed(() => {
+    const total = this._catalogService.total();
+    return `${total} ${total === 1 ? this._content.toolbar.productCountLabelSingular : this._content.toolbar.productCountLabelPlural}`;
+  });
 
   protected readonly _isDrawerOpen = computed(() =>
     this._uiService.isDrawerOpen(DRAWER_KEY.filters),
   );
-
-  protected readonly _onFiltersCheckedChange = ({
-    groupName,
-    value,
-  }: {
-    groupName: string;
-    value: string;
-  }): void => {
-    this._checkedFiltersByGroup.update((state) => {
-      const next = new Set(state[groupName]);
-
-      if (next.has(value)) {
-        next.delete(value);
-      } else {
-        next.add(value);
-      }
-
-      return {
-        ...state,
-        [groupName]: next,
-      };
-    });
-  };
-
-  protected readonly _onChangeSelectedSortValue = (selected: string[]): void => {
-    this._selectedSortValue.set(selected);
-  };
-
-  protected readonly _onChangeSelectedPerPageValue = (selected: string[]): void => {
-    this._selectedPerPageValue.set(selected);
-  };
 
   protected readonly _toggleDrawer = (): void => {
     if (this._uiService.isDrawerOpen(DRAWER_KEY.filters)) {

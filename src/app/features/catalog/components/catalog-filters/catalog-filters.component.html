@@ -1,17 +1,32 @@
+@let groupsComputed = groups();
+
 <div class="catalog-filters">
   <h2 class="text-2xl">{{ _content.title }}</h2>
 
-  <ul class="catalog-filters__list">
-    @for (group of _content.groups; track group.name) {
-      <li>
-        <app-checkbox-group
-          [label]="group.label"
-          [name]="group.name"
-          [items]="group.items"
-          [checked]="_getCheckedSet()(group.name)"
-          (checkedChange)="_onCheckedChange(group.name, $event)"
-        />
-      </li>
+  <div class="catalog-filters__body">
+    @if (groupsComputed && groupsComputed.length > 0) {
+      <ul class="catalog-filters__list">
+        @for (group of groupsComputed; track group.value) {
+          <li>
+            <app-checkbox-group
+              [label]="group.label"
+              [name]="group.value"
+              [items]="group.items"
+              [checked]="_getCheckedSet()(group.value)"
+              (checkedChange)="_onCheckedChange(group.value, $event)"
+            />
+          </li>
+        }
+      </ul>
     }
-  </ul>
+  </div>
+
+  <app-button
+    class="catalog-filters__reset-button"
+    [variant]="'text'"
+    [size]="'s'"
+    [disabled]="!_isResetButtonEnabled()"
+    (click)="_onResetClick()"
+    >{{ _content.reset }}</app-button
+  >
 </div>

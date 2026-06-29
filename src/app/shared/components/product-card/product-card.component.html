@@ -11,7 +11,7 @@
   <header class="product-card__header">
     <a
       class="product-card__heading-link"
-      [routerLink]="`${_routes.catalog}/${id()}`"
+      [routerLink]="detailsLink()"
       [attr.tabindex]="computedTabIndex"
       [attr.data-testid]="_testIds.headingLink"
     >
