@@ -1,4 +1,5 @@
 const ICON_NAME = {
+  add: 'add',
   'arrow-back': 'arrow-back',
   'arrow-forward': 'arrow-forward',
   'calendar-month': 'calendar-month',
@@ -23,6 +24,7 @@ const ICON_NAME = {
   person: 'person',
   pinterest: 'pinterest',
   'play-circle': 'play-circle',
+  remove: 'remove',
   'rs-school': 'rs-school',
   search: 'search',
   'search-off': 'search-off',
