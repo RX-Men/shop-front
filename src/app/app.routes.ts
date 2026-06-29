@@ -14,6 +14,13 @@ export const routes: Routes = [
       import('./features/catalog/catalog.component').then((m) => m.CatalogComponent),
   },
   {
+    path: `${ROUTES.catalog}/:productId`,
+    loadComponent: () =>
+      import('./features/product-detail/product-detail.component').then(
+        (m) => m.ProductDetailComponent,
+      ),
+  },
+  {
     path: ROUTES.signUp,
     loadComponent: () =>
       import('./core/auth/sign-up/sign-up.component').then((m) => m.SignUpComponent),
