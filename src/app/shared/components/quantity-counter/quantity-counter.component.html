@@ -1,0 +1,17 @@
+<div class="quantity-counter">
+  <app-icon-button
+    [icon]="'remove'"
+    [label]="'Decrease quantity'"
+    [disabled]="isDecreaseDisabled()"
+    (click)="decrease()"
+  />
+
+  <span class="text-xl">{{ value() }}</span>
+
+  <app-icon-button
+    [icon]="'add'"
+    [label]="'Increase quantity'"
+    [disabled]="isIncreaseDisabled()"
+    (click)="increase()"
+  />
+</div>

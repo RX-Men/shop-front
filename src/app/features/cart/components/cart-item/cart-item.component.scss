@@ -1,0 +1,14 @@
+@use 'assets/styles/mixins' as mix;
+
+:host {
+  display: grid;
+  grid-template-columns: var(--spacing-x20) 1fr auto auto auto;
+  gap: var(--spacing-x8);
+  align-items: center;
+  padding-block: var(--spacing-x4);
+  border-block-end: 1px solid var(--neutral-300);
+
+  @include mix.media('m') {
+    grid-template-columns: 72px 1fr auto;
+  }
+}
