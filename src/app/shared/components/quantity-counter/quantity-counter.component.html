@@ -1,15 +1,17 @@
 <div class="quantity-counter">
   <app-icon-button
-    [icon]="'keyboard-arrow-left'"
+    [icon]="'remove'"
     [label]="'Decrease quantity'"
-    (click)="decrease.emit()"
+    [disabled]="disabled() || value() <= 1"
+    (click)="decrease()"
   />
 
-  <span>{{ value() }}</span>
+  <span class="text-xl">{{ value() }}</span>
 
   <app-icon-button
-    [icon]="'keyboard-arrow-right'"
+    [icon]="'add'"
     [label]="'Increase quantity'"
-    (click)="increase.emit()"
+    [disabled]="disabled() || value() >= max()"
+    (click)="increase()"
   />
 </div>

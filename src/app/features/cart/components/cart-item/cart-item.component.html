@@ -1,22 +1,20 @@
-<li class="cart-item">
-  <img
-    width="96"
-    height="128"
-    alt="Cover"
-    [ngSrc]="item().variant.images?.[0]?.url ?? 'path/to/default-image.jpg'"
-  />
+<img
+  width="96"
+  height="128"
+  alt="Cover"
+  [ngSrc]="item().variant.images?.[0]?.url ?? 'path/to/default-image.jpg'"
+/>
 
-  <div>
-    <h2>{{ item().name['en-US'] || item().name['en'] }}</h2>
-    <p>{{ item().variant.sku }}</p>
-    <p>{{ item().totalPrice.centAmount | price }}</p>
-  </div>
+<div>
+  <h2>{{ item().name['en-US'] || item().name['en'] }}</h2>
+  <p>{{ item().variant.sku }}</p>
+  <p>{{ item().totalPrice.centAmount | price }}</p>
+</div>
 
-  <app-quantity-counter
-    [value]="item().quantity"
-    (increase)="increase.emit()"
-    (decrease)="decrease.emit()"
-  />
+<app-quantity-counter
+  [value]="item().quantity"
+  [disabled]="disabled()"
+  (quantityChange)="quantityChange.emit($event)"
+/>
 
-  <app-icon-button [icon]="'delete'" [label]="'Remove item'" (click)="remove.emit()" />
-</li>
+<app-icon-button [icon]="'delete'" [label]="'Remove item'" (click)="remove.emit()" />

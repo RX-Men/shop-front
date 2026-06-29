@@ -11,6 +11,22 @@ import { ChangeDetectionStrategy, Component, input, output } from '@angular/core
 export class QuantityCounterComponent {
   readonly value = input.required<number>();
 
-  readonly increase = output<void>();
-  readonly decrease = output<void>();
+  readonly quantityChange = output<number>();
+  readonly max = input<number>(10);
+  readonly disabled = input(false);
+  increase(): void {
+    const value = this.value();
+    if (value >= this.max()) {
+      return;
+    }
+    this.quantityChange.emit(value + 1);
+  }
+
+  decrease(): void {
+    const value = this.value();
+    if (value <= 1) {
+      return;
+    }
+    this.quantityChange.emit(value - 1);
+  }
 }

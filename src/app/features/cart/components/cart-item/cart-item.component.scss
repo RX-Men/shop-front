@@ -1,6 +1,6 @@
 @use 'assets/styles/mixins' as mix;
 
-.cart-item {
+:host {
   display: grid;
   grid-template-columns: var(--spacing-x20) 1fr auto auto auto;
   gap: var(--spacing-x8);
