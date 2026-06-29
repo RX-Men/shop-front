@@ -6,7 +6,7 @@
   "scripts": {
     "ng": "ng",
     "start": "node --env-file=.env ./node_modules/@angular/cli/bin/ng serve",
-    "build": "ng build",
+    "build": "node --env-file-if-exists=.env scripts/build-with-env.mjs",
     "deploy": "ng deploy --base-href=/shop-front/",
     "watch": "ng build --watch --configuration development",
     "tsc": "npx tsc -p tsconfig.app.json --noEmit",
