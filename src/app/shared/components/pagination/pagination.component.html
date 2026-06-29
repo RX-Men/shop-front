@@ -1,0 +1,43 @@
+@let computedCount = _count();
+@let computedCurrent = current();
+
+<nav class="pagination" [aria-labelledby]="_id">
+  <h2 class="pagination__heading" [id]="_id">Pagination</h2>
+
+  <ul class="pagination__list">
+    <li class="pagination__list-item">
+      <app-icon-button
+        [icon]="'arrow-back'"
+        [label]="'Previous'"
+        [disabled]="_isPreviousDisabled()"
+        (click)="_onPageChange(computedCurrent - 1)"
+      />
+    </li>
+
+    @for (item of computedCount; track item) {
+      @let isCurrent = _isCurrent()(item);
+
+      <li>
+        <app-button
+          [class.pagination__current]="isCurrent"
+          [variant]="'text'"
+          [color]="'dark'"
+          [ariaCurrent]="isCurrent ? 'page' : undefined"
+          [disabled]="isCurrent"
+          (click)="_onPageChange(item)"
+        >
+          {{ item + 1 }}
+        </app-button>
+      </li>
+    }
+
+    <li class="pagination__list-item">
+      <app-icon-button
+        [icon]="'arrow-forward'"
+        [label]="'Next'"
+        [disabled]="_isNextDisabled()"
+        (click)="_onPageChange(computedCurrent + 1)"
+      />
+    </li>
+  </ul>
+</nav>

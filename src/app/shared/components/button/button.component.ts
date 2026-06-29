@@ -34,6 +34,7 @@ export class ButtonComponent {
   readonly loading = input<boolean>();
   readonly disabled = input<boolean>();
   readonly tabIndex = input<number>();
+  readonly ariaCurrent = input<string>();
 
   protected readonly _testIds = APP_TEST_IDS.button;
 
