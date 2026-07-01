@@ -1,4 +1,4 @@
-import type { IconName } from '../icon/icon.types';
+import type { IconName } from '@/app/shared/components/icon/icon.types';
 
 interface SearchToggleButtonData {
   openLabel: string;

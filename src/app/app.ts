@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
-import { FooterComponent } from './shared/components/footer';
-import { HeaderComponent } from './shared/components/header';
+import { FooterComponent } from './core/layout/footer';
+import { HeaderComponent } from './core/layout/header';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,

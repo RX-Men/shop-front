@@ -2,11 +2,11 @@ import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/c
 
 import headerContent from '@/app/content/layout/header/header.json' with { type: 'json' };
 
-import { DrawerComponent } from '../drawer';
-import { IconButtonComponent } from '../icon-button';
-import { LogoComponent } from '../logo';
-import { PopoverComponent } from '../popover';
-import { RouterLinkComponent } from '../router-link';
+import { DrawerComponent } from '@/app/shared/components/drawer';
+import { IconButtonComponent } from '@/app/shared/components/icon-button';
+import { LogoComponent } from '@/app/shared/components/logo';
+import { PopoverComponent } from '@/app/shared/components/popover';
+import { RouterLinkComponent } from '@/app/shared/components/router-link';
 
 import { CartButtonComponent } from './components/cart-button';
 import { SearchWidgetComponent } from './components/search-widget';
