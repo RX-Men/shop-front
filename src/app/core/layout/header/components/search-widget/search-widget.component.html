@@ -37,7 +37,9 @@
               [sku]="product.sku"
               [detailsLink]="`${_routes.catalog}/${product.id}`"
               [skeletonTheme]="'light'"
+              [sku]="product.sku"
               [loading]="_isSearching()"
+              (addToCart)="addToCart.emit($event)"
             />
           </li>
         }

@@ -15,7 +15,9 @@
           [count]="product.count"
           [sku]="product.sku"
           [detailsLink]="product.id"
+          [sku]="product.sku"
           [loading]="loading()"
+          (addToCart)="addToCart.emit($event)"
         />
       </li>
     }

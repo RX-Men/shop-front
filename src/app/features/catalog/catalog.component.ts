@@ -18,6 +18,7 @@ import { CatalogFiltersComponent } from './components/catalog-filters';
 import { CatalogGridComponent } from './components/catalog-grid';
 import { CatalogToolbarComponent } from './components/catalog-toolbar';
 
+import { CartService } from '@/app/core/services/cart.service';
 import { CatalogService } from '@/app/core/services/catalog';
 import { UiService } from '@/app/core/services/ui';
 
@@ -56,6 +57,7 @@ export class CatalogComponent implements OnInit {
   protected readonly _catalogService = inject(CatalogService);
   protected readonly _uiService = inject(UiService);
   private readonly _viewportScroller = inject(ViewportScroller);
+  protected readonly _cartService = inject(CartService);
 
   protected readonly _content = catalogContent;
 

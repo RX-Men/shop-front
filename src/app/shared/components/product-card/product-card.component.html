@@ -49,8 +49,9 @@
         <app-product-badge
           class="product-card__badge"
           [status]="`${isOut ? 'disabled' : 'active'}`"
-          >{{ badge }}</app-product-badge
         >
+          {{ badge }}
+        </app-product-badge>
       }
 
       <div class="product-card__img-inner">
@@ -76,9 +77,14 @@
 
   <footer class="product-card__footer">
     <app-skeleton [theme]="skeletonThemeComputed" [loading]="isLoading">
-      <app-button class="product-card__button" [tabIndex]="computedTabIndex" [disabled]="isOut">{{
-        _content.actions.addToCart
-      }}</app-button>
+      <app-button
+        class="product-card__button"
+        [tabIndex]="computedTabIndex"
+        [disabled]="isOut"
+        (click)="addToCart.emit(sku())"
+      >
+        {{ _content.actions.addToCart }}
+      </app-button>
     </app-skeleton>
   </footer>
 </article>

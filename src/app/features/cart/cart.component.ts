@@ -13,12 +13,13 @@ import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
   imports: [PricePipe, ButtonComponent, EmptyComponent, RouterLinkComponent, CartItemComponent],
   templateUrl: './cart.component.html',
   styleUrl: './cart.component.scss',
-  providers: [
-    {
-      provide: CartService,
-      useClass: MockCartService,
-    },
-  ],
+  // TODO mock cart
+  // providers: [
+  //   {
+  //     provide: CartService,
+  //     useClass: MockCartService,
+  //   },
+  // ],
 })
 export class CartComponent {
   readonly cart = inject(CartService);

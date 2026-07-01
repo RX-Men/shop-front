@@ -8,9 +8,9 @@
       </h2>
 
       <div class="product-list__nav">
-        <app-router-link [routerLink]="`/${_routes.catalog}`" [variant]="'text'" [color]="'dark'">{{
-          _content.viewAllLink
-        }}</app-router-link>
+        <app-router-link [routerLink]="`/${_routes.catalog}`" [variant]="'text'" [color]="'dark'">
+          {{ _content.viewAllLink }}
+        </app-router-link>
 
         <div class="product-list__carousel-buttons">
           <app-icon-button
@@ -50,7 +50,9 @@
           [sku]="slide.sku"
           [detailsLink]="`${_routes.catalog}/${slide.id}`"
           [tabIndex]="hidden ? -1 : undefined"
+          [sku]="slide.sku"
           [loading]="loading()"
+          (addToCart)="handleAddToCart($event)"
         />
       </ng-template>
     </app-carousel>
