@@ -2,8 +2,8 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 import { footerContent } from '@/app/content/layout/footer/footer.model';
 
+import { LogoComponent } from '@/app/shared/components/logo';
 import { FooterNavColComponent } from './components/footer-nav-col';
-import { LogoComponent } from '../logo';
 
 import { APP_TEST_IDS } from '@/app/app.test-ids';
 

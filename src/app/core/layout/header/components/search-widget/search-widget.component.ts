@@ -1,17 +1,17 @@
 import { ChangeDetectionStrategy, Component, effect, signal } from '@angular/core';
 import { debounce, form, FormField } from '@angular/forms/signals';
 
-import { EmptyComponent } from '../../../empty';
-import { InputComponent } from '../../../input';
-import { ProductCardComponent } from '../../../product-card';
-import { SpinComponent } from '../../../spin';
+import { EmptyComponent } from '@/app/shared/components/empty';
+import { InputComponent } from '@/app/shared/components/input';
+import { ProductCardComponent } from '@/app/shared/components/product-card';
+import { SpinComponent } from '@/app/shared/components/spin';
 
 import headerContent from '@/app/content/layout/header/header.json' with { type: 'json' };
 import productsMock from '@/app/core/mocks/products.json' with { type: 'json' };
 
 import { ROUTES } from '@/app/core/constants/routes';
 
-import type { ProductCard } from '../../../product-card';
+import type { ProductCard } from '@/app/shared/components/product-card';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,

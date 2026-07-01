@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { NgTemplateOutlet } from '@angular/common';
 
-import { ExternalLinkComponent } from '../../../external-link';
-import { IconExternalLinkComponent } from '../../../icon-external-link';
-import { RouterLinkComponent } from '../../../router-link';
+import { ExternalLinkComponent } from '@/app/shared/components/external-link';
+import { IconExternalLinkComponent } from '@/app/shared/components/icon-external-link';
+import { RouterLinkComponent } from '@/app/shared/components/router-link';
 
 import { FOOTER_LINK_VARIANT } from '@/app/content/layout/footer/footer.model';
 
