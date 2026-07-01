@@ -13,6 +13,8 @@
         [discount]="product.discount"
         [count]="product.count"
         [detailsLink]="product.id"
+        [sku]="product.sku"
+        (addToCart)="addToCart.emit($event)"
       />
     </li>
   }

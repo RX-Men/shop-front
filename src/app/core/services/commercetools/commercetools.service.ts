@@ -1,3 +1,4 @@
+import { LocalStorageService } from '@/app/core/services/local-storage.service';
 import { inject, Injectable } from '@angular/core';
 import {
   type AuthMiddlewareOptions,
@@ -15,13 +16,19 @@ export class CommercetoolsService {
   apiRoot!: ApiRoot;
 
   private readonly _config = inject(COMMERCETOOLS_CONFIG);
+  private readonly _storage = inject(LocalStorageService);
 
   constructor() {
+    console.log('CommercetoolsService created');
     this._initClient();
   }
 
   private readonly _initClient = (): void => {
     const { projectKey, clientId, clientSecret, authUrl, apiUrl, scopes } = this._config;
+    const anonymousId = this._storage.getItem<string>('anonymousId') ?? crypto.randomUUID();
+    this._storage.setItem('anonymousId', anonymousId);
+
+    console.log('anonymousId:', anonymousId);
 
     const authMiddlewareOptions: AuthMiddlewareOptions = {
       host: authUrl,
@@ -29,6 +36,7 @@ export class CommercetoolsService {
       credentials: {
         clientId,
         clientSecret,
+        anonymousId,
       },
       scopes,
       httpClient: fetch,
@@ -41,7 +49,9 @@ export class CommercetoolsService {
 
     const client = new ClientBuilder()
       .withProjectKey(projectKey)
-      .withClientCredentialsFlow(authMiddlewareOptions)
+      //TODO auth token
+      // .withClientCredentialsFlow(authMiddlewareOptions)
+      .withAnonymousSessionFlow(authMiddlewareOptions)
       .withHttpMiddleware(httpMiddlewareOptions)
       .withLoggerMiddleware()
       .build();

@@ -27,11 +27,9 @@
 
   <div class="product-card__img-wrapper">
     @if (badge) {
-      <app-product-badge
-        class="product-card__badge"
-        [status]="`${isOut ? 'disabled' : 'active'}`"
-        >{{ badge }}</app-product-badge
-      >
+      <app-product-badge class="product-card__badge" [status]="`${isOut ? 'disabled' : 'active'}`"
+        >{{ badge }}
+      </app-product-badge>
     }
 
     <div class="product-card__img-inner">
@@ -67,8 +65,12 @@
   </div>
 
   <footer class="product-card__footer">
-    <app-button class="product-card__button" [tabIndex]="computedTabIndex" [disabled]="isOut"
-      >Add to cart</app-button
-    >
+    <app-button
+      class="product-card__button"
+      [tabIndex]="computedTabIndex"
+      [disabled]="isOut"
+      (click)="addToCart.emit(sku())"
+      >Add to cart
+    </app-button>
   </footer>
 </article>

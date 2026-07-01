@@ -30,6 +30,8 @@
               [discount]="product.discount"
               [count]="product.count"
               [detailsLink]="`${_routes.catalog}/${product.id}`"
+              [sku]="product.sku"
+              (addToCart)="addToCart.emit($event)"
             />
           </li>
         }

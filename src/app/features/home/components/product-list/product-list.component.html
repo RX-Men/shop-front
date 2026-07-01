@@ -9,8 +9,8 @@
 
       <div class="product-list__nav">
         <app-router-link [routerLink]="`/${_routes.catalog}`" [variant]="'text'" [color]="'dark'"
-          >View all</app-router-link
-        >
+          >View all
+        </app-router-link>
 
         <div class="product-list__carousel-buttons">
           <app-icon-button
@@ -49,6 +49,8 @@
           [count]="slide.count"
           [detailsLink]="`${_routes.catalog}/${slide.id}`"
           [tabIndex]="hidden ? -1 : undefined"
+          [sku]="slide.sku"
+          (addToCart)="handleAddToCart($event)"
         />
       </ng-template>
     </app-carousel>
