@@ -160,7 +160,7 @@ describe('ProductCardComponent', () => {
       `[data-testid="${APP_TEST_IDS.productBadge.root}"]`,
     );
 
-    expect(badgeEl?.textContent).toBe('Sold out');
+    expect(badgeEl?.textContent?.trim()).toBe('Sold out');
   });
 
   it('should show badge with warning of small product amount, if count is less than 6', () => {
@@ -171,7 +171,7 @@ describe('ProductCardComponent', () => {
       `[data-testid="${APP_TEST_IDS.productBadge.root}"]`,
     );
 
-    expect(badgeEl?.textContent).toBe('5 left');
+    expect(badgeEl?.textContent?.trim()).toBe('5 left');
   });
 
   it('should show badge with "discount" text, if there is a discount', () => {
@@ -182,7 +182,7 @@ describe('ProductCardComponent', () => {
       `[data-testid="${APP_TEST_IDS.productBadge.root}"]`,
     );
 
-    expect(badgeEl?.textContent).toBe('50% off');
+    expect(badgeEl?.textContent?.trim()).toBe('50% off');
   });
 
   it('should disable cart button, if product is out', () => {
