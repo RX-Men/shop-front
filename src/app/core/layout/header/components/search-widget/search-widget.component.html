@@ -9,6 +9,13 @@
         [size]="'l'"
         [formField]="_searchForm.query"
       />
+
+      <p
+        class="search-widget__total-count text-sm"
+        [class.search-widget__total-count_visible]="_totalCount() > 0"
+      >
+        {{ _totalCountLabel() }}
+      </p>
     </form>
   </div>
 

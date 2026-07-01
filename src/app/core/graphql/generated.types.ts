@@ -242,3 +242,13 @@ export type GetProductDetailQuery = { product: { id: string, masterData: { curre
               | { centAmount: unknown }
               | { centAmount: unknown }
              }> | null }> } | null } } | null };
+
+export type GetProductsSearchByTextQueryVariables = Exact<{
+  searchQuery: unknown;
+}>;
+
+
+export type GetProductsSearchByTextQuery = { productsSearch: { total: unknown, results: Array<{ product: { id: string, masterData: { current: { name: string | null, description: string | null, attributesRaw: Array<{ name: string, value: unknown }>, masterVariant: { price: { value:
+                  | { centAmount: unknown }
+                  | { centAmount: unknown }
+                 } | null, images: Array<{ url: string }> } } | null } } }> } | null };
