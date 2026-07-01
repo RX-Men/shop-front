@@ -27,6 +27,9 @@ export class ProductsService {
   }
 
   getHomeProducts(): ProductCard[] {
-    return productsMock;
+    return productsMock.map((product) => ({
+      ...product,
+      sku: product.sku ?? product.id,
+    }));
   }
 }

@@ -72,6 +72,11 @@ class CatalogAdapter {
         return [];
       }
 
+      const sku = 'sku' in meta && typeof meta.sku === 'string' ? meta.sku : '';
+      if (!sku) {
+        return [];
+      }
+
       const price = meta.prices?.at(0)?.value;
       if (typeof price === 'undefined' || typeof price.centAmount !== 'number') {
         return [];
@@ -124,6 +129,7 @@ class CatalogAdapter {
         oldPrice: price.centAmount,
         discount: 0, // TODO: mock; need to update Commercetools
         count: 10, // TODO: mock; need to update Commercetools
+        sku,
       };
     });
 

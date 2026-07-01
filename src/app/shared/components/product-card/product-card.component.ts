@@ -1,19 +1,18 @@
-import { ChangeDetectionStrategy, Component, computed, inject, input } from '@angular/core';
-import { NgOptimizedImage } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { APP_TEST_IDS } from '@/app/app.test-ids';
 
 import { ButtonComponent } from '@/app/shared/components/button';
-import { ProductBadgeComponent } from './components/product-badge';
 
-import { getBadgeLabel, getPriceAriaLabel } from './product-card.utils';
+import { PricePipe } from '@/app/shared/pipes/price';
+import { NgOptimizedImage } from '@angular/common';
+import { ChangeDetectionStrategy, Component, computed, inject, input, output } from '@angular/core';
+import { RouterLink } from '@angular/router';
+import { ProductBadgeComponent } from './components/product-badge';
 
 import { PRODUCT_CARD_ORIENTATION } from './product-card.constants';
 
-import { APP_TEST_IDS } from '@/app/app.test-ids';
-
-import { PricePipe } from '@/app/shared/pipes/price';
-
 import type { ProductCard, ProductCardOrientation } from './product-card.types';
+
+import { getBadgeLabel, getPriceAriaLabel } from './product-card.utils';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -35,6 +34,9 @@ export class ProductCardComponent {
   readonly count = input.required<ProductCard['count']>();
   readonly detailsLink = input.required<string>();
   readonly tabIndex = input<number>();
+
+  readonly addToCart = output<string>();
+  readonly sku = input.required<string>();
 
   protected readonly _testIds = APP_TEST_IDS.productCard;
 

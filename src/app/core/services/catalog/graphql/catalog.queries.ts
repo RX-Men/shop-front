@@ -17,6 +17,7 @@ export const GET_CATALOG = gql`
                 value
               }
               allVariants {
+                sku
                 images {
                   url
                 }

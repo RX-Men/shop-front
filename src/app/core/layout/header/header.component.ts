@@ -1,3 +1,4 @@
+import { CartService } from '@/app/core/services/cart.service';
 import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
 
 import headerContent from '@/app/content/layout/header/header.json' with { type: 'json' };
@@ -36,10 +37,11 @@ import { DRAWER_KEY } from '@/app/core/services/ui';
 })
 export class HeaderComponent {
   protected readonly _uiService = inject(UiService);
+  protected readonly _cartService = inject(CartService);
 
   protected readonly _data = headerContent;
 
-  protected readonly _productsCount = 10;
+  protected readonly _productsCount = this._cartService.itemsCount;
   protected readonly _profilePopoverId = crypto.randomUUID();
 
   protected readonly _testIds = APP_TEST_IDS.header;

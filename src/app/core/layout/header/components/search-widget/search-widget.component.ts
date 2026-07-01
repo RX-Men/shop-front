@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, effect, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, output, signal } from '@angular/core';
 import { debounce, form, FormField } from '@angular/forms/signals';
 
 import { EmptyComponent } from '@/app/shared/components/empty';
@@ -44,9 +44,12 @@ export class SearchWidgetComponent {
 
       // TODO: mocks before API integration
       setTimeout(() => {
-        const result = productsMock.filter((product) =>
-          product.heading.toLowerCase().includes(text.toLowerCase()),
-        );
+        const result: ProductCard[] = productsMock
+          .filter((product) => product.heading.toLowerCase().includes(text.toLowerCase()))
+          .map((product) => ({
+            ...product,
+            sku: product.sku ?? product.id,
+          }));
 
         this._resultList.set(result);
         this._isSearching.set(false);
@@ -72,4 +75,5 @@ export class SearchWidgetComponent {
 
     this._shouldAutofocus.update((prevState) => !prevState);
   };
+  readonly addToCart = output<string>();
 }

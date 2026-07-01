@@ -46,7 +46,11 @@
       </app-button>
     </div>
 
-    <app-catalog-grid class="catalog__grid" [products]="_catalogService.products()" />
+    <app-catalog-grid
+      class="catalog__grid"
+      [products]="_catalogService.products()"
+      (addToCart)="_cartService.addLineItem($event)"
+    />
   </div>
 
   <div class="catalog__pagination">{{ _content.pagination.placeholder }}</div>

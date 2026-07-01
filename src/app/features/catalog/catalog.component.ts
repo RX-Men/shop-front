@@ -1,3 +1,4 @@
+import { CartService } from '@/app/core/services/cart.service';
 import { ChangeDetectionStrategy, Component, computed, inject, OnInit } from '@angular/core';
 import { NgTemplateOutlet } from '@angular/common';
 
@@ -37,6 +38,7 @@ export class CatalogComponent implements OnInit {
 
   protected readonly _catalogService = inject(CatalogService);
   protected readonly _uiService = inject(UiService);
+  protected readonly _cartService = inject(CartService);
 
   protected readonly _content = catalogContent;
 

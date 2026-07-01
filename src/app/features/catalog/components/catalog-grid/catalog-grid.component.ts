@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 
 import { type ProductCard, ProductCardComponent } from '@/app/shared/components/product-card';
 
@@ -11,4 +11,5 @@ import { type ProductCard, ProductCardComponent } from '@/app/shared/components/
 })
 export class CatalogGridComponent {
   readonly products = input.required<ProductCard[]>();
+  readonly addToCart = output<string>();
 }

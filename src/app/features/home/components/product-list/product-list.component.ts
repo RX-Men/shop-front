@@ -1,3 +1,4 @@
+import { CartService } from '@/app/core/services/cart.service';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -5,6 +6,7 @@ import {
   input,
   OnDestroy,
   OnInit,
+  output,
   signal,
   viewChild,
 } from '@angular/core';
@@ -31,9 +33,9 @@ import type { ProductCard } from '@/app/shared/components/product-card';
   styleUrl: './product-list.component.scss',
 })
 export class ProductListComponent implements OnInit, OnDestroy {
+  readonly cartService = inject(CartService);
   readonly title = input.required<string>();
   readonly products = input.required<ProductCard[]>();
-
   protected readonly _carouselEl = viewChild.required(CarouselComponent);
   protected readonly _perViewCardsCount = signal<number>(5);
 
@@ -55,5 +57,10 @@ export class ProductListComponent implements OnInit, OnDestroy {
     if (this._breakpointSubscription) {
       this._breakpointSubscription.unsubscribe();
     }
+  }
+
+  handleAddToCart(sku: string): void {
+    console.log(sku);
+    this.cartService.addLineItem(sku);
   }
 }
