@@ -1,3 +1,9 @@
+import {
+  buildProductHeading,
+  getProductAttributes,
+} from '@/app/shared/utils/get-product-attributes';
+
+import { PRODUCT_ATTRIBUTES_DTO } from '@/app/shared/constants/product';
 import { CATALOG_SORT, DEFAULT_CATALOG_LIMIT, SORT_ORDER } from './catalog.constants';
 
 import type {
@@ -10,19 +16,6 @@ import type {
 import type { CatalogState } from './catalog.types';
 import type { ProductCard } from '@/app/shared/components/product-card';
 import type { GroupFilters } from '@/app/features/catalog/components/catalog-filters/catalog-filters.types';
-
-const PRODUCT_ATTRIBUTES_DTO = {
-  coverArtist: 'cover-artist',
-  editionType: 'edition-type',
-  genre: 'genre',
-  issueNumber: 'issue-number',
-  penciller: 'penciller',
-  publisher: 'publisher',
-  releaseDate: 'release-date',
-  series: 'series',
-  seriesYear: 'series-year',
-  writer: 'writer',
-} as const;
 
 interface ToBackendCatalogInitial {
   filter: CatalogState['data']['selectedFilters'];
@@ -70,7 +63,12 @@ class CatalogAdapter {
         return [];
       }
 
-      const meta = current?.allVariants.at(0);
+      const { allVariants } = current;
+      if (!allVariants) {
+        return [];
+      }
+
+      const meta = allVariants.at(0);
       if (!meta) {
         return [];
       }
@@ -80,49 +78,13 @@ class CatalogAdapter {
         return [];
       }
 
-      const { publisher, issue, releaseDate } = current.attributesRaw.reduce<{
-        publisher: string;
-        issue: number | null;
-        releaseDate: number | null;
-      }>(
-        (acc, attr) => {
-          const { name } = attr;
-
-          if (
-            name === PRODUCT_ATTRIBUTES_DTO.publisher &&
-            typeof attr.value === 'object' &&
-            attr.value !== null &&
-            'label' in attr.value &&
-            typeof attr.value.label === 'string'
-          ) {
-            acc.publisher = attr.value.label;
-            return acc;
-          }
-
-          if (name === PRODUCT_ATTRIBUTES_DTO.issueNumber && typeof attr.value === 'number') {
-            acc.issue = attr.value;
-            return acc;
-          }
-
-          if (name === PRODUCT_ATTRIBUTES_DTO.releaseDate && typeof attr.value === 'string') {
-            acc.releaseDate = new Date(attr.value).getUTCFullYear();
-            return acc;
-          }
-
-          return acc;
-        },
-        {
-          publisher: '',
-          issue: null,
-          releaseDate: null,
-        },
-      );
+      const { publisher, issue, releaseYear } = getProductAttributes(current.attributesRaw);
 
       return {
         id: product.id,
-        heading: `${current.name} (${releaseDate}) #${issue}`,
-        subheading: publisher,
-        img: meta.images.at(0)?.url ?? '',
+        heading: buildProductHeading(current.name, releaseYear, issue),
+        subheading: publisher || '',
+        img: meta.images.at(0)?.url || '',
         currentPrice: price.centAmount,
         oldPrice: price.centAmount,
         discount: 0, // TODO: mock; need to update Commercetools
