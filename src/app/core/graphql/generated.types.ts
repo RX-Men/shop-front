@@ -216,6 +216,7 @@ export type GetCatalogQueryVariables = Exact<{
   postFilter?: SearchQueryInput | null | undefined;
   sort?: Array<SearchSortingInput> | SearchSortingInput | null | undefined;
   limit?: number | null | undefined;
+  offset?: number | null | undefined;
 }>;
 
 

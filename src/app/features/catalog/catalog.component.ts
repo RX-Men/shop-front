@@ -4,6 +4,7 @@ import { NgTemplateOutlet } from '@angular/common';
 import { ButtonComponent } from '@/app/shared/components/button';
 import { DrawerComponent } from '@/app/shared/components/drawer';
 import { IconButtonComponent } from '@/app/shared/components/icon-button';
+import { PaginationComponent } from '@/app/shared/components/pagination';
 
 import { CatalogFiltersComponent } from './components/catalog-filters';
 import { CatalogGridComponent } from './components/catalog-grid';
@@ -26,6 +27,7 @@ import { DRAWER_KEY } from '@/app/core/services/ui';
     DrawerComponent,
     IconButtonComponent,
     NgTemplateOutlet,
+    PaginationComponent,
   ],
   templateUrl: './catalog.component.html',
   styleUrl: './catalog.component.scss',
@@ -39,6 +41,8 @@ export class CatalogComponent implements OnInit {
   protected readonly _uiService = inject(UiService);
 
   protected readonly _content = catalogContent;
+
+  protected readonly _pageSize = computed(() => Number(this._catalogService.limit()));
 
   protected readonly _totalCountLabel = computed(() => {
     const total = this._catalogService.total();

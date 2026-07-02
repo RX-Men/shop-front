@@ -8,7 +8,7 @@ import { GET_CATALOG_FILTERS } from './graphql/filters.queries';
 
 import CatalogAdapter from './catalog.adapter';
 
-import { CATALOG_LIMIT } from './catalog.constants';
+import { DEFAULT_CATALOG_LIMIT } from './catalog.constants';
 
 import type { GetCatalogFiltersQuery, GetCatalogQuery } from '../../graphql/generated.types';
 import type { CatalogState } from './catalog.types';
@@ -26,8 +26,8 @@ export class CatalogService {
       filters: null,
       selectedFilters: {},
       sort: null,
-      limit: CATALOG_LIMIT[24],
-      offset: 0,
+      limit: DEFAULT_CATALOG_LIMIT,
+      page: 0,
       total: 0,
     },
   });
@@ -36,8 +36,8 @@ export class CatalogService {
   readonly filters = computed(() => this._state().data.filters);
   readonly selectedFilters = computed(() => this._state().data.selectedFilters);
   readonly sort = computed(() => this._state().data.sort);
-  readonly limit = computed(() => this._state().data.limit);
-  readonly offset = computed(() => this._state().data.offset);
+  readonly limit = computed(() => this._state().data.limit || DEFAULT_CATALOG_LIMIT);
+  readonly page = computed(() => this._state().data.page);
   readonly total = computed(() => this._state().data.total);
 
   changeFilters({ groupName, value }: { groupName: string; value: string }): void {
@@ -56,6 +56,7 @@ export class CatalogService {
           ...prevState.data.selectedFilters,
           [groupName]: next,
         },
+        page: 0,
       },
     }));
 
@@ -68,6 +69,7 @@ export class CatalogService {
       data: {
         ...prevState.data,
         selectedFilters: {},
+        page: 0,
       },
     }));
 
@@ -80,6 +82,7 @@ export class CatalogService {
       data: {
         ...prevState.data,
         sort,
+        page: 0,
       },
     }));
 
@@ -92,6 +95,19 @@ export class CatalogService {
       data: {
         ...prevState.data,
         limit,
+        page: 0,
+      },
+    }));
+
+    this.fetchProducts();
+  }
+
+  changePage(page: number): void {
+    this._state.update((prevState) => ({
+      ...prevState,
+      data: {
+        ...prevState.data,
+        page,
       },
     }));
 
@@ -102,10 +118,11 @@ export class CatalogService {
     const { projectKey } = this._ctpConfig;
 
     const queryText = GET_CATALOG.loc?.source.body || '';
-    const { filter, sort, limit } = CatalogAdapter.toBackendCatalog({
+    const { filter, sort, limit, offset } = CatalogAdapter.toBackendCatalog({
       filter: this.selectedFilters(),
       sort: this.sort(),
       limit: this.limit(),
+      page: this.page(),
     });
 
     try {
@@ -120,6 +137,7 @@ export class CatalogService {
               postFilter: filter,
               sort: sort || null,
               limit,
+              offset,
             },
           },
         })
@@ -127,10 +145,10 @@ export class CatalogService {
 
       const rawDto = response.body.data as GetCatalogQuery;
 
-      const { products, offset, total } = CatalogAdapter.toFrontendCatalog(rawDto);
+      const { products, page, total } = CatalogAdapter.toFrontendCatalog(rawDto);
       this._state.update((prevState) => ({
         ...prevState,
-        data: { ...prevState.data, products, offset, total },
+        data: { ...prevState.data, products, page, total },
       }));
     } catch (error) {
       console.error(error);

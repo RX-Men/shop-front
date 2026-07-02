@@ -1,7 +1,13 @@
 @use 'assets/styles/placeholders';
 
+:host {
+  display: block;
+}
+
 .pagination {
   position: relative;
+  display: flex;
+  justify-content: center;
 
   &__heading {
     @extend %visually-hidden;

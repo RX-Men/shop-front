@@ -2,7 +2,7 @@ import type { GroupFilters } from '@/app/features/catalog/components/catalog-fil
 import type { ProductCard } from '@/app/shared/components/product-card';
 
 type CatalogSelectedFiltersState = Record<string, Set<string>>;
-type CatalogOffsetState = number;
+type CatalogPageState = number;
 
 interface CatalogState {
   data: {
@@ -11,9 +11,9 @@ interface CatalogState {
     selectedFilters: CatalogSelectedFiltersState;
     sort: string | null;
     limit: string | null;
-    offset: CatalogOffsetState;
+    page: number;
     total: number;
   };
 }
 
-export type { CatalogState, CatalogOffsetState };
+export type { CatalogState, CatalogPageState };
