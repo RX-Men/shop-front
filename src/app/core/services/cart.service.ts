@@ -24,6 +24,15 @@ export class CartService {
     this.loadCart();
   }
 
+  setCart(cart: Cart): void {
+    this._saveCart(cart);
+  }
+
+  clearLocalCart(): void {
+    this._cart.set(null);
+    this._storage.removeItem('cachedCart');
+  }
+
   private _saveCart(body: Cart): void {
     this._cart.set(body);
     this._storage.setItem('cachedCart', body);
@@ -137,8 +146,6 @@ export class CartService {
   }
 
   private _project(): ByProjectKeyRequestBuilder {
-    return this._ctp.apiRoot.withProjectKey({
-      projectKey: import.meta.env['VITE_CTP_PROJECT_KEY'],
-    });
+    return this._ctp.project();
   }
 }

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 
-export type StorageKey = 'anonymousId' | 'cachedCart';
+export type StorageKey =
+  'anonymousId' | 'cachedCart' | 'customer' | 'customerToken' | 'refreshToken';
 
 @Injectable({
   providedIn: 'root',

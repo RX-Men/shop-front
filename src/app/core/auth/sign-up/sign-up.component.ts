@@ -192,8 +192,11 @@ export class SignUpComponent {
       defaultBillingAddress: 0,
     };
 
-    this._authService.register(payload);
-    this.submitted.set(true);
+    this._authService.register(payload).subscribe({
+      next: () => {
+        this.submitted.set(true);
+      },
+    });
   }
 
   canDeactivate(): boolean {
