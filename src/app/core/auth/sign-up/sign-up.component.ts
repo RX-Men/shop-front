@@ -142,7 +142,6 @@ export class SignUpComponent {
             this.serverError.set('Something went wrong. Please try again.');
           }
         },
-        complete() {},
       });
   }
 
