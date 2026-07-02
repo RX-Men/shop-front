@@ -2,15 +2,17 @@ import signUpContent from '@/app/content/pages/sign-up/sign-up.json' with { type
 import { AuthService } from '@/app/core/services/auth.service';
 import { ButtonComponent } from '@/app/shared/components/button';
 import { InputComponent } from '@/app/shared/components/input';
+import { SpinComponent } from '@/app/shared/components/spin';
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { finalize } from 'rxjs';
 import { NAME_PATTERN } from './sign-up.constants';
 import { SignUpPayload } from './sign-up.types';
 import { passwordMatchValidator } from './sign-up.utils';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [ButtonComponent, InputComponent, ReactiveFormsModule],
+  imports: [ButtonComponent, InputComponent, ReactiveFormsModule, SpinComponent],
   selector: 'app-sign-up',
   templateUrl: './sign-up.component.html',
   styleUrl: './sign-up.component.scss',
@@ -18,6 +20,8 @@ import { passwordMatchValidator } from './sign-up.utils';
 export class SignUpComponent {
   readonly content = signUpContent;
   private readonly _authService = inject(AuthService);
+  readonly isLoading = signal(false);
+  readonly serverError = signal('');
 
   readonly signUpForm = new FormGroup(
     {
@@ -116,26 +120,30 @@ export class SignUpComponent {
       firstName: firstName!,
       lastName: lastName!,
     };
+    this.isLoading.set(true);
+    this.serverError.set('');
 
-    this._authService.register(payload).subscribe({
-      next: () => {
-        this.submitted.set(true);
-      },
-      error: (error: Error) => {
-        console.log(error);
-        console.log(error.message);
-        if (error.message === 'EMAIL_ALREADY_EXISTS') {
-          this.signUpForm.controls.email.setErrors({
-            duplicate: true,
-          });
-          console.log(this.signUpForm.controls.email.errors);
-          this.signUpForm.controls.email.markAsTouched();
-
-          console.log(this.signUpForm.controls.email.errors);
-          console.log(this.getEmailErrorText());
-        }
-      },
-    });
+    this._authService
+      .register(payload)
+      .pipe(finalize(() => this.isLoading.set(false)))
+      .subscribe({
+        next: () => {
+          this.submitted.set(true);
+          this.isLoading.set(false);
+        },
+        error: (error: Error) => {
+          this.isLoading.set(false);
+          if (error.message === 'EMAIL_ALREADY_EXISTS') {
+            this.signUpForm.controls.email.setErrors({
+              duplicate: true,
+            });
+            this.signUpForm.controls.email.markAsTouched();
+          } else {
+            this.serverError.set('Something went wrong. Please try again.');
+          }
+        },
+        complete() {},
+      });
   }
 
   canDeactivate(): boolean {

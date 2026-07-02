@@ -106,7 +106,6 @@ export class AuthService {
       map(() => ({ email: payload.email })),
       catchError((error) => {
         if (this._isDuplicateCustomerError(error)) {
-          console.log('Duplicate email');
           return throwError(() => new Error('EMAIL_ALREADY_EXISTS'));
         }
 

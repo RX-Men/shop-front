@@ -76,4 +76,10 @@
     padding-block-start: var(--spacing-x2);
     border-block-start: 1px solid var(--neutral-300);
   }
+
+  &__loading {
+    display: flex;
+    justify-content: center;
+    padding: var(--spacing-x8);
+  }
 }
