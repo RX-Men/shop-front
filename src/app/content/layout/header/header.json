@@ -14,9 +14,11 @@
       "closeLabel": "Close product search"
     },
     "placeholder": "What are you looking for?",
+    "singleResultLabel": "result",
+    "multipleResultLabel": "results",
     "emptyState": {
       "title": "Nothing found",
-      "description": "We couldn't find any comics matching your search. Try checking the spelling or search for a different title"
+      "description": "We couldn't find any comics matching your search. Try checking the spelling or search for a different term"
     }
   },
   "cartButton": {

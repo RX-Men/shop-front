@@ -1,4 +1,11 @@
-import { ChangeDetectionStrategy, Component, effect, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  effect,
+  inject,
+  signal,
+} from '@angular/core';
 import { debounce, form, FormField } from '@angular/forms/signals';
 
 import { EmptyComponent } from '@/app/shared/components/empty';
@@ -6,8 +13,9 @@ import { InputComponent } from '@/app/shared/components/input';
 import { ProductCardComponent } from '@/app/shared/components/product-card';
 import { SpinComponent } from '@/app/shared/components/spin';
 
+import { SearchService } from '@/app/core/services/search';
+
 import headerContent from '@/app/content/layout/header/header.json' with { type: 'json' };
-import productsMock from '@/app/core/mocks/products.json' with { type: 'json' };
 
 import { ROUTES } from '@/app/core/constants/routes';
 
@@ -24,17 +32,27 @@ import type { ProductCard } from '@/app/shared/components/product-card';
   },
 })
 export class SearchWidgetComponent {
-  // TODO: change to input from header?
-  readonly _resultList = signal<ProductCard[] | null>(null);
+  private readonly _searchService = inject(SearchService);
+
+  protected readonly _resultList = signal<ProductCard[] | null>(null);
+  protected readonly _totalCount = signal<number>(0);
+
+  protected readonly _totalCountLabel = computed(() => {
+    const totalCount = this._totalCount();
+    return totalCount === 1
+      ? `${totalCount} ${this._data.singleResultLabel}`
+      : `${totalCount} ${this._data.multipleResultLabel}`;
+  });
 
   protected readonly _data = headerContent.search;
   protected readonly _routes = ROUTES;
 
   constructor() {
     effect(() => {
-      const text = this._searchForm.query().value();
+      this._totalCount.set(0);
+      const query = this._searchForm.query().value().trim();
 
-      if (!text || text.trim().length === 0) {
+      if (!query || query.length === 0) {
         this._resultList.set(null);
         this._isSearching.set(false);
         return;
@@ -42,15 +60,15 @@ export class SearchWidgetComponent {
 
       this._isSearching.set(true);
 
-      // TODO: mocks before API integration
-      setTimeout(() => {
-        const result = productsMock.filter((product) =>
-          product.heading.toLowerCase().includes(text.toLowerCase()),
-        );
-
-        this._resultList.set(result);
-        this._isSearching.set(false);
-      }, 300);
+      this._searchService
+        .fetchProductsByText(query)
+        .then((data) => {
+          this._resultList.set(data.results);
+          this._totalCount.set(data.total);
+        })
+        .finally(() => {
+          this._isSearching.set(false);
+        });
     });
   }
 

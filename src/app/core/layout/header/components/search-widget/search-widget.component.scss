@@ -1,18 +1,32 @@
+@use 'assets/styles/placeholders';
+
 .search-widget {
+  height: 100%;
+
   &__header {
     display: flex;
   }
 
   &__form {
     display: flex;
+    flex-direction: column;
+    gap: var(--spacing-x2);
     width: 100%;
+  }
+
+  &__total-count {
+    @extend %hidden;
+
+    &_visible {
+      @extend %visible;
+    }
   }
 
   &__body {
     overflow-y: auto;
     display: flex;
     flex-direction: column;
-    max-height: calc(100% - 96px - 100px);
+    max-height: calc(100% - 96px - 100px - 28px);
     height: 100%;
     padding-inline-end: var(--spacing-x4);
     margin-block-start: var(--spacing-x6);
