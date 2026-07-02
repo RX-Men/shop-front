@@ -80,11 +80,6 @@ export class AuthService {
             password: payload.password,
             firstName: payload.firstName,
             lastName: payload.lastName,
-            dateOfBirth: payload.dateOfBirth,
-            addresses: payload.addresses,
-            defaultShippingAddress: payload.defaultShippingAddress,
-            defaultBillingAddress: payload.defaultBillingAddress,
-
             ...(currentCart
               ? {
                   anonymousCartId: currentCart.id,
@@ -111,6 +106,7 @@ export class AuthService {
       map(() => ({ email: payload.email })),
       catchError((error) => {
         if (this._isDuplicateCustomerError(error)) {
+          console.log('Duplicate email');
           return throwError(() => new Error('EMAIL_ALREADY_EXISTS'));
         }
 
@@ -118,16 +114,14 @@ export class AuthService {
       }),
     );
   }
-
   private _isDuplicateCustomerError(error: unknown): boolean {
     return (
       typeof error === 'object' &&
       error !== null &&
-      'statusCode' in error &&
-      error.statusCode === 400
+      'code' in error &&
+      (error as { code: string }).code === 'DuplicateField'
     );
   }
-
   logout(): void {
     this._customer.set(null);
 
