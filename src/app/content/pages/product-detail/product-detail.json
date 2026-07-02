@@ -1,0 +1,20 @@
+{
+  "backButton": "Back to catalog",
+  "image": {
+    "alt": "Cover"
+  },
+  "attributes": {
+    "genre": "Genre:",
+    "writer": "Writer:",
+    "penciller": "Penciller:",
+    "coverArtist": "Cover artist:",
+    "pageCount": "Page count:",
+    "releaseDate": "Release date:",
+    "sku": "SKU:"
+  },
+  "quantity": {
+    "label": "Quantity:"
+  },
+  "addToCartButton": "Add to cart",
+  "fallbackValue": "—"
+}

@@ -5,7 +5,7 @@
   flex-direction: column;
   gap: var(--spacing-x3);
   height: 100%;
-  padding-block-start: var(--spacing-x20);
+  padding-block: var(--spacing-x20);
 
   &__inner {
     order: 2;
@@ -19,12 +19,79 @@
     }
   }
 
-  &__img,
-  &__content {
-    border: 2px solid var(--neutral-900);
+  &__img-wrapper {
+    position: relative;
+    height: 100%;
+    aspect-ratio: 2 / 3;
+  }
+
+  &__img {
+    object-fit: cover;
   }
 
   &__back-button {
     order: 1;
+  }
+
+  &__header {
+    display: flex;
+    flex-direction: column;
+    padding-block-end: var(--spacing-x4);
+    border-block-end: 1px solid var(--neutral-600);
+  }
+
+  &__heading {
+    order: 2;
+    margin-block-start: var(--spacing-x3);
+  }
+
+  &__subheading {
+    order: 1;
+  }
+
+  &__price {
+    order: 3;
+    margin-block-start: var(--spacing-x4);
+  }
+
+  &__sku {
+    order: 4;
+    margin-block-start: var(--spacing-x2);
+    color: var(--neutral-600);
+  }
+
+  &__body {
+    margin-block-start: var(--spacing-x6);
+  }
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-x2);
+    margin-block-start: var(--spacing-x6);
+  }
+
+  &__strong {
+    font-weight: 600;
+  }
+
+  &__quantity {
+    margin-block-start: var(--spacing-x6);
+  }
+
+  &__quantity-counter {
+    margin-block-start: var(--spacing-x1);
+  }
+
+  &__cart-button {
+    max-width: 50%;
+    width: 100%;
+    margin-block-start: var(--spacing-x3);
+
+    ::ng-deep {
+      .button {
+        width: 100%;
+      }
+    }
   }
 }

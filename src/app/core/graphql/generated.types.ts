@@ -232,3 +232,13 @@ export type GetCatalogFiltersQuery = { productType: { id: string, key: string | 
           | { __typename: 'EnumAttributeDefinitionType', values: { results: Array<{ key: string, label: string }> } }
           | Record<PropertyKey, never>
          }> } } | null };
+
+export type GetProductDetailQueryVariables = Exact<{
+  productId: string;
+}>;
+
+
+export type GetProductDetailQuery = { product: { id: string, masterData: { current: { description: string | null, name: string | null, attributesRaw: Array<{ name: string, value: unknown }>, allVariants: Array<{ sku: string | null, images: Array<{ url: string }>, prices: Array<{ value:
+              | { centAmount: unknown }
+              | { centAmount: unknown }
+             }> | null }> } | null } } | null };

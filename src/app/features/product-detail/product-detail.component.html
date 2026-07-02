@@ -1,8 +1,70 @@
+@let product = _productDetailService.product();
+
 <div class="product-detail container">
   <div class="product-detail__inner">
-    <div class="product-detail__img">img</div>
+    <div class="product-detail__img-wrapper">
+      @if (product?.img) {
+        <img
+          class="product-detail__img"
+          fill
+          [alt]="_content.image.alt"
+          [ngSrc]="product?.img || ''"
+        />
+      }
+    </div>
 
-    <div class="product-detail__content">content</div>
+    <div class="product-detail__content">
+      <div class="product-detail__header">
+        <h1 class="product-detail__heading text-4xl">
+          {{ product?.heading || _content.fallbackValue }}
+        </h1>
+
+        <p class="product-detail__subheading">
+          {{ product?.subheading || _content.fallbackValue }}
+        </p>
+
+        <p class="product-detail__price text-xl">
+          {{
+            product?.currentPrice ? (product?.currentPrice || 0 | price) : _content.fallbackValue
+          }}
+        </p>
+
+        <p class="product-detail__sku text-sm">
+          {{ _content.attributes.sku }} {{ product?.sku || _content.fallbackValue }}
+        </p>
+      </div>
+
+      <div class="product-detail__body">
+        <p>{{ product?.description || _content.fallbackValue }}</p>
+
+        <ul class="product-detail__list">
+          @for (attribute of _attributes; track attribute) {
+            <li>
+              <strong class="product-detail__strong">{{ _content.attributes[attribute] }} </strong>
+              {{ product?.[attribute] || _content.fallbackValue }}
+            </li>
+          }
+        </ul>
+
+        <div class="product-detail__quantity">
+          {{ _content.quantity.label }}
+
+          <app-quantity-counter
+            class="product-detail__quantity-counter"
+            [value]="_productDetailService.quantity()"
+            (quantityChange)="_productDetailService.changeQuantity($event)"
+          />
+        </div>
+
+        <app-button
+          class="product-detail__cart-button"
+          [size]="'l'"
+          [disabled]="!product?.sku"
+          (click)="_addToCart()"
+          >{{ _content.addToCartButton }}</app-button
+        >
+      </div>
+    </div>
   </div>
 
   <app-router-link
@@ -14,6 +76,6 @@
     [size]="'s'"
     [color]="'dark'"
   >
-    Back to catalog
+    {{ _content.backButton }}
   </app-router-link>
 </div>
