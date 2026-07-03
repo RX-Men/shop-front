@@ -233,6 +233,24 @@ export type GetCatalogFiltersQuery = { productType: { id: string, key: string | 
           | Record<PropertyKey, never>
          }> } } | null };
 
+export type GetNewProductsQueryVariables = Exact<{
+  limit: number;
+}>;
+
+
+export type GetNewProductsQuery = { productsSearch: { limit: number | null, results: Array<{ product: { id: string, masterData: { current: { name: string | null, masterVariant: { sku: string | null, images: Array<{ url: string }>, price: { value:
+                  | { centAmount: unknown }
+                  | { centAmount: unknown }
+                 } | null }, attributesRaw: Array<{ name: string, value: unknown }> } | null } } }> } | null };
+
+export type GetTrendingProductsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetTrendingProductsQuery = { productSelection: { productRefs: { results: Array<{ product: { id: string, masterData: { current: { name: string | null, masterVariant: { sku: string | null, price: { value:
+                    | { centAmount: unknown }
+                    | { centAmount: unknown }
+                   } | null, images: Array<{ url: string }> }, attributesRaw: Array<{ name: string, value: unknown }> } | null } } | null }> } } | null };
+
 export type GetProductDetailQueryVariables = Exact<{
   productId: string;
 }>;
