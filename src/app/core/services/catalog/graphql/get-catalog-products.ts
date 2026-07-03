@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 
-export const GET_CATALOG = gql`
-  query GetCatalog(
+export const GET_CATALOG_PRODUCTS = gql`
+  query GetCatalogProducts(
     $postFilter: SearchQueryInput
     $sort: [SearchSortingInput!]
     $limit: Int
@@ -21,13 +21,32 @@ export const GET_CATALOG = gql`
                 name
                 value
               }
-              allVariants {
+              masterVariant {
                 images {
                   url
                 }
-                prices {
+                sku
+                price(currency: "USD") {
+                  discounted {
+                    value {
+                      centAmount
+                    }
+                    discount {
+                      value {
+                        ... on RelativeDiscountValue {
+                          __typename
+                          permyriad
+                        }
+                      }
+                    }
+                  }
                   value {
                     centAmount
+                  }
+                }
+                availability {
+                  noChannel {
+                    availableQuantity
                   }
                 }
               }

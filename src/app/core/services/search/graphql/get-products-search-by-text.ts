@@ -86,9 +86,28 @@ export const GET_PRODUCTS_SEARCH_BY_TEXT = gql`
                   value {
                     centAmount
                   }
+                  discounted {
+                    value {
+                      centAmount
+                    }
+                    discount {
+                      value {
+                        ... on RelativeDiscountValue {
+                          __typename
+                          permyriad
+                        }
+                      }
+                    }
+                  }
                 }
                 images {
                   url
+                }
+                sku
+                availability {
+                  noChannel {
+                    availableQuantity
+                  }
                 }
               }
             }

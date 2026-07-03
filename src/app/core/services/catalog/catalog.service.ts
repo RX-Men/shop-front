@@ -1,16 +1,20 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
+import { print } from 'graphql';
 
 import { COMMERCETOOLS_CONFIG } from '../commercetools/commercetools.config';
 import { CommercetoolsService } from '../commercetools';
 
-import { GET_CATALOG } from './graphql/catalog.queries';
-import { GET_CATALOG_FILTERS } from './graphql/filters.queries';
+import { GET_CATALOG_PRODUCTS } from './graphql/get-catalog-products';
+import { GET_CATALOG_FILTERS } from './graphql/get-catalog-filters';
 
 import CatalogAdapter from './catalog.adapter';
 
 import { DEFAULT_CATALOG_LIMIT } from './catalog.constants';
 
-import type { GetCatalogFiltersQuery, GetCatalogQuery } from '../../graphql/generated.types';
+import type {
+  GetCatalogFiltersQuery,
+  GetCatalogProductsQuery,
+} from '../../graphql/generated.types';
 import type { CatalogState } from './catalog.types';
 
 @Injectable({
@@ -117,7 +121,7 @@ export class CatalogService {
   async fetchProducts(): Promise<void> {
     const { projectKey } = this._ctpConfig;
 
-    const queryText = GET_CATALOG.loc?.source.body || '';
+    const queryText = print(GET_CATALOG_PRODUCTS);
     const { filter, sort, limit, offset } = CatalogAdapter.toBackendCatalog({
       filter: this.selectedFilters(),
       sort: this.sort(),
@@ -132,7 +136,7 @@ export class CatalogService {
         .post({
           body: {
             query: queryText,
-            operationName: 'GetCatalog',
+            operationName: 'GetCatalogProducts',
             variables: {
               postFilter: filter,
               sort: sort || null,
@@ -143,9 +147,14 @@ export class CatalogService {
         })
         .execute();
 
-      const rawDto = response.body.data as GetCatalogQuery;
+      const rawDto = response.body.data;
+      if (!rawDto) {
+        throw new Error('Commercetools GraphQL response returned empty data');
+      }
 
-      const { products, page, total } = CatalogAdapter.toFrontendCatalog(rawDto);
+      const { products, page, total } = CatalogAdapter.toFrontendCatalog(
+        rawDto as GetCatalogProductsQuery,
+      );
       this._state.update((prevState) => ({
         ...prevState,
         data: { ...prevState.data, products, page, total },
@@ -159,7 +168,7 @@ export class CatalogService {
     const { projectKey } = this._ctpConfig;
 
     try {
-      const queryText = GET_CATALOG_FILTERS.loc?.source.body || '';
+      const queryText = print(GET_CATALOG_FILTERS);
       const response = await this._commercetoolsService.apiRoot
         .withProjectKey({ projectKey })
         .graphql()
@@ -171,9 +180,12 @@ export class CatalogService {
         })
         .execute();
 
-      const rawDto = response.body.data as GetCatalogFiltersQuery;
+      const rawDto = response.body.data;
+      if (!rawDto) {
+        throw new Error('Commercetools GraphQL response returned empty data');
+      }
 
-      const data = CatalogAdapter.toFrontendCatalogFilters(rawDto);
+      const data = CatalogAdapter.toFrontendCatalogFilters(rawDto as GetCatalogFiltersQuery);
       this._state.update((prevState) => ({
         ...prevState,
         data: { ...prevState.data, filters: data },

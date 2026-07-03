@@ -1,6 +1,7 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  computed,
   effect,
   inject,
   input,
@@ -9,6 +10,7 @@ import {
 import { NgOptimizedImage } from '@angular/common';
 
 import { ButtonComponent } from '@/app/shared/components/button';
+import { PriceComponent } from '@/app/shared/components/price';
 import { QuantityCounterComponent } from '@/app/shared/components/quantity-counter/quantity-counter.component';
 import { RouterLinkComponent } from '@/app/shared/components/router-link';
 
@@ -17,15 +19,13 @@ import { ProductDetailService } from '@/app/core/services/product-detail/product
 import productDetailContent from '@/app/content/pages/product-detail/product-detail.json' with { type: 'json' };
 import { ROUTES } from '@/app/core/constants/routes';
 
-import { PricePipe } from '@/app/shared/pipes/price';
-
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-product-detail',
   imports: [
     ButtonComponent,
     NgOptimizedImage,
-    PricePipe,
+    PriceComponent,
     QuantityCounterComponent,
     RouterLinkComponent,
   ],
@@ -54,6 +54,15 @@ export class ProductDetailComponent implements OnDestroy {
       this._productDetailService.fetchProduct(productId);
     });
   }
+
+  protected readonly _isCartButtonDisabled = computed((): boolean => {
+    const product = this._productDetailService.product();
+    if (!product) {
+      return true;
+    }
+
+    return !product.sku || product.count <= 0;
+  });
 
   protected readonly _addToCart = (): void => {
     const sku = this._productDetailService.product()?.sku;

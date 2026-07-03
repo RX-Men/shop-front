@@ -1,0 +1,19 @@
+@let withDiscount = _withDiscount();
+@let priceAriaLabel = _priceAriaLabel();
+
+<div class="price" [attr.aria-label]="priceAriaLabel" [attr.data-testid]="_testIds.root">
+  <p
+    class="price__current text-xl"
+    aria-hidden="true"
+    [class.price__current_discount]="withDiscount"
+    [attr.data-testid]="_testIds.currentPrice"
+  >
+    {{ currentPrice() | price }}
+  </p>
+
+  @if (withDiscount) {
+    <p class="price__old" aria-hidden="true" [attr.data-testid]="_testIds.oldPrice">
+      {{ oldPrice() | price }}
+    </p>
+  }
+</div>

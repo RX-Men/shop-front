@@ -1,7 +1,8 @@
 /** Internal type. DO NOT USE DIRECTLY. */
 type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 /** Internal type. DO NOT USE DIRECTLY. */
-export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
+export type Incremental<T> =
+  T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
 export type SearchAnyValueExpressionInput = {
   boost?: number | null | undefined;
   caseInsensitive?: boolean | null | undefined;
@@ -212,61 +213,210 @@ export type SearchTimeRangeExpressionInput = {
   lte?: unknown;
 };
 
-export type GetCatalogQueryVariables = Exact<{
+export type GetCatalogFiltersQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetCatalogFiltersQuery = {
+  productType: {
+    id: string;
+    key: string | null;
+    name: string;
+    attributeDefinitions: {
+      results: Array<{
+        name: string;
+        label: string | null;
+        type:
+          | {
+              __typename: 'EnumAttributeDefinitionType';
+              values: { results: Array<{ key: string; label: string }> };
+            }
+          | Record<PropertyKey, never>;
+      }>;
+    };
+  } | null;
+};
+
+export type GetCatalogProductsQueryVariables = Exact<{
   postFilter?: SearchQueryInput | null | undefined;
   sort?: Array<SearchSortingInput> | SearchSortingInput | null | undefined;
   limit?: number | null | undefined;
   offset?: number | null | undefined;
 }>;
 
-
-export type GetCatalogQuery = { productsSearch: { offset: number | null, limit: number | null, total: unknown, results: Array<{ product: { id: string, masterData: { current: { name: string | null, attributesRaw: Array<{ name: string, value: unknown }>, allVariants: Array<{ images: Array<{ url: string }>, prices: Array<{ value:
-                  | { centAmount: unknown }
-                  | { centAmount: unknown }
-                 }> | null }> } | null } } }> } | null };
-
-export type GetCatalogFiltersQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type GetCatalogFiltersQuery = { productType: { id: string, key: string | null, name: string, attributeDefinitions: { results: Array<{ name: string, label: string | null, type:
-          | { __typename: 'EnumAttributeDefinitionType', values: { results: Array<{ key: string, label: string }> } }
-          | Record<PropertyKey, never>
-         }> } } | null };
+export type GetCatalogProductsQuery = {
+  productsSearch: {
+    offset: number | null;
+    limit: number | null;
+    total: unknown;
+    results: Array<{
+      product: {
+        id: string;
+        masterData: {
+          current: {
+            name: string | null;
+            attributesRaw: Array<{ name: string; value: unknown }>;
+            masterVariant: {
+              sku: string | null;
+              images: Array<{ url: string }>;
+              price: {
+                discounted: {
+                  value: { centAmount: unknown } | { centAmount: unknown };
+                  discount: {
+                    value:
+                      | { __typename: 'RelativeDiscountValue'; permyriad: number }
+                      | Record<PropertyKey, never>;
+                  } | null;
+                } | null;
+                value: { centAmount: unknown } | { centAmount: unknown };
+              } | null;
+              availability: { noChannel: { availableQuantity: unknown } | null } | null;
+            };
+          } | null;
+        };
+      };
+    }>;
+  } | null;
+};
 
 export type GetNewProductsQueryVariables = Exact<{
   limit: number;
 }>;
 
+export type GetNewProductsQuery = {
+  productsSearch: {
+    limit: number | null;
+    results: Array<{
+      product: {
+        id: string;
+        masterData: {
+          current: {
+            name: string | null;
+            masterVariant: {
+              sku: string | null;
+              images: Array<{ url: string }>;
+              price: {
+                value: { centAmount: unknown } | { centAmount: unknown };
+                discounted: {
+                  value: { centAmount: unknown } | { centAmount: unknown };
+                  discount: {
+                    value:
+                      | { __typename: 'RelativeDiscountValue'; permyriad: number }
+                      | Record<PropertyKey, never>;
+                  } | null;
+                } | null;
+              } | null;
+              availability: { noChannel: { availableQuantity: unknown } | null } | null;
+            };
+            attributesRaw: Array<{ name: string; value: unknown }>;
+          } | null;
+        };
+      };
+    }>;
+  } | null;
+};
 
-export type GetNewProductsQuery = { productsSearch: { limit: number | null, results: Array<{ product: { id: string, masterData: { current: { name: string | null, masterVariant: { sku: string | null, images: Array<{ url: string }>, price: { value:
-                  | { centAmount: unknown }
-                  | { centAmount: unknown }
-                 } | null }, attributesRaw: Array<{ name: string, value: unknown }> } | null } } }> } | null };
+export type GetTrendingProductsQueryVariables = Exact<{ [key: string]: never }>;
 
-export type GetTrendingProductsQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type GetTrendingProductsQuery = { productSelection: { productRefs: { results: Array<{ product: { id: string, masterData: { current: { name: string | null, masterVariant: { sku: string | null, price: { value:
-                    | { centAmount: unknown }
-                    | { centAmount: unknown }
-                   } | null, images: Array<{ url: string }> }, attributesRaw: Array<{ name: string, value: unknown }> } | null } } | null }> } } | null };
+export type GetTrendingProductsQuery = {
+  productSelection: {
+    productRefs: {
+      results: Array<{
+        product: {
+          id: string;
+          masterData: {
+            current: {
+              name: string | null;
+              masterVariant: {
+                sku: string | null;
+                price: {
+                  value: { centAmount: unknown } | { centAmount: unknown };
+                  discounted: {
+                    value: { centAmount: unknown } | { centAmount: unknown };
+                    discount: {
+                      value:
+                        | { __typename: 'RelativeDiscountValue'; permyriad: number }
+                        | Record<PropertyKey, never>;
+                    } | null;
+                  } | null;
+                } | null;
+                images: Array<{ url: string }>;
+                availability: { noChannel: { availableQuantity: unknown } | null } | null;
+              };
+              attributesRaw: Array<{ name: string; value: unknown }>;
+            } | null;
+          };
+        } | null;
+      }>;
+    };
+  } | null;
+};
 
 export type GetProductDetailQueryVariables = Exact<{
   productId: string;
 }>;
 
-
-export type GetProductDetailQuery = { product: { id: string, masterData: { current: { description: string | null, name: string | null, attributesRaw: Array<{ name: string, value: unknown }>, allVariants: Array<{ sku: string | null, images: Array<{ url: string }>, prices: Array<{ value:
-              | { centAmount: unknown }
-              | { centAmount: unknown }
-             }> | null }> } | null } } | null };
+export type GetProductDetailQuery = {
+  product: {
+    id: string;
+    masterData: {
+      current: {
+        description: string | null;
+        name: string | null;
+        attributesRaw: Array<{ name: string; value: unknown }>;
+        masterVariant: {
+          sku: string | null;
+          availability: { noChannel: { availableQuantity: unknown } | null } | null;
+          price: {
+            discounted: {
+              value: { centAmount: unknown } | { centAmount: unknown };
+              discount: {
+                value:
+                  | { __typename: 'RelativeDiscountValue'; permyriad: number }
+                  | Record<PropertyKey, never>;
+              } | null;
+            } | null;
+            value: { centAmount: unknown } | { centAmount: unknown };
+          } | null;
+          images: Array<{ url: string }>;
+        };
+      } | null;
+    };
+  } | null;
+};
 
 export type GetProductsSearchByTextQueryVariables = Exact<{
   searchQuery: unknown;
 }>;
 
-
-export type GetProductsSearchByTextQuery = { productsSearch: { total: unknown, results: Array<{ product: { id: string, masterData: { current: { name: string | null, description: string | null, attributesRaw: Array<{ name: string, value: unknown }>, masterVariant: { price: { value:
-                  | { centAmount: unknown }
-                  | { centAmount: unknown }
-                 } | null, images: Array<{ url: string }> } } | null } } }> } | null };
+export type GetProductsSearchByTextQuery = {
+  productsSearch: {
+    total: unknown;
+    results: Array<{
+      product: {
+        id: string;
+        masterData: {
+          current: {
+            name: string | null;
+            description: string | null;
+            attributesRaw: Array<{ name: string; value: unknown }>;
+            masterVariant: {
+              sku: string | null;
+              price: {
+                value: { centAmount: unknown } | { centAmount: unknown };
+                discounted: {
+                  value: { centAmount: unknown } | { centAmount: unknown };
+                  discount: {
+                    value:
+                      | { __typename: 'RelativeDiscountValue'; permyriad: number }
+                      | Record<PropertyKey, never>;
+                  } | null;
+                } | null;
+              } | null;
+              images: Array<{ url: string }>;
+              availability: { noChannel: { availableQuantity: unknown } | null } | null;
+            };
+          } | null;
+        };
+      };
+    }>;
+  } | null;
+};

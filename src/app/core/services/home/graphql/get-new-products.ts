@@ -17,8 +17,26 @@ export const GET_NEW_PRODUCTS = gql`
                   value {
                     centAmount
                   }
+                  discounted {
+                    value {
+                      centAmount
+                    }
+                    discount {
+                      value {
+                        ... on RelativeDiscountValue {
+                          __typename
+                          permyriad
+                        }
+                      }
+                    }
+                  }
                 }
                 sku
+                availability {
+                  noChannel {
+                    availableQuantity
+                  }
+                }
               }
               attributesRaw {
                 name
