@@ -33,6 +33,7 @@ describe('ProductCardComponent', () => {
     componentRef.setInput('oldPrice', 2500);
     componentRef.setInput('discount', 0);
     componentRef.setInput('count', 15);
+    componentRef.setInput('sku', 'SKU-123');
     componentRef.setInput('detailsLink', 'catalog/1');
 
     await fixture.whenStable();
@@ -88,7 +89,7 @@ describe('ProductCardComponent', () => {
 
   it('should have provided formatted current price', () => {
     const currentPriceEl = componentElement?.querySelector<HTMLParagraphElement>(
-      `[data-testid="${APP_TEST_IDS.productCard.currentPrice}"]`,
+      `[data-testid="${APP_TEST_IDS.price.currentPrice}"]`,
     );
 
     expect(currentPriceEl?.textContent?.trim()).toBe('$25.00');
@@ -96,7 +97,7 @@ describe('ProductCardComponent', () => {
 
   it('should not have old price without discount', () => {
     const oldPriceEl = componentElement?.querySelector<HTMLParagraphElement>(
-      `[data-testid="${APP_TEST_IDS.productCard.oldPrice}"]`,
+      `[data-testid="${APP_TEST_IDS.price.oldPrice}"]`,
     );
 
     expect(oldPriceEl).toBeNull();
@@ -108,7 +109,7 @@ describe('ProductCardComponent', () => {
     fixture.detectChanges();
 
     const oldPriceEl = componentElement?.querySelector<HTMLParagraphElement>(
-      `[data-testid="${APP_TEST_IDS.productCard.oldPrice}"]`,
+      `[data-testid="${APP_TEST_IDS.price.oldPrice}"]`,
     );
 
     expect(oldPriceEl).toBeTruthy();
@@ -125,7 +126,7 @@ describe('ProductCardComponent', () => {
 
   it('should set "aria-label" attribute with current price, if there is no discount', () => {
     const priceEl = componentElement?.querySelector<HTMLDivElement>(
-      `[data-testid="${APP_TEST_IDS.productCard.price}"]`,
+      `[data-testid="${APP_TEST_IDS.price.root}"]`,
     );
 
     expect(priceEl?.getAttribute('aria-label')).toBe('Price is $25.00');
@@ -137,7 +138,7 @@ describe('ProductCardComponent', () => {
     fixture.detectChanges();
 
     const priceEl = componentElement?.querySelector<HTMLDivElement>(
-      `[data-testid="${APP_TEST_IDS.productCard.price}"]`,
+      `[data-testid="${APP_TEST_IDS.price.root}"]`,
     );
 
     expect(priceEl?.getAttribute('aria-label')).toBe('Now is $25.00. Original price is $50.00');
@@ -201,10 +202,10 @@ describe('ProductCardComponent', () => {
     fixture.detectChanges();
 
     const oldPriceEl = componentElement?.querySelector<HTMLDivElement>(
-      `[data-testid="${APP_TEST_IDS.productCard.oldPrice}"]`,
+      `[data-testid="${APP_TEST_IDS.price.oldPrice}"]`,
     );
     const currentPriceEl = componentElement?.querySelector<HTMLDivElement>(
-      `[data-testid="${APP_TEST_IDS.productCard.currentPrice}"]`,
+      `[data-testid="${APP_TEST_IDS.price.currentPrice}"]`,
     );
 
     expect(oldPriceEl?.getAttribute('aria-hidden')).toBe('true');

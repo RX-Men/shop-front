@@ -23,11 +23,17 @@
           {{ product?.subheading || _content.fallbackValue }}
         </p>
 
-        <p class="product-detail__price text-xl">
-          {{
-            product?.currentPrice ? (product?.currentPrice || 0 | price) : _content.fallbackValue
-          }}
-        </p>
+        <div class="product-detail__price">
+          @if (product) {
+            <app-price
+              [currentPrice]="product.currentPrice || 0"
+              [oldPrice]="product.oldPrice || 0"
+              [discount]="product.discount || 0"
+            />
+          } @else {
+            {{ _content.fallbackValue }}
+          }
+        </div>
 
         <p class="product-detail__sku text-sm">
           {{ _content.attributes.sku }} {{ product?.sku || _content.fallbackValue }}
@@ -52,6 +58,7 @@
           <app-quantity-counter
             class="product-detail__quantity-counter"
             [value]="_productDetailService.quantity()"
+            [max]="product?.count"
             (quantityChange)="_productDetailService.changeQuantity($event)"
           />
         </div>
@@ -59,7 +66,7 @@
         <app-button
           class="product-detail__cart-button"
           [size]="'l'"
-          [disabled]="!product?.sku"
+          [disabled]="_isCartButtonDisabled()"
           (click)="_addToCart()"
           >{{ _content.addToCartButton }}</app-button
         >

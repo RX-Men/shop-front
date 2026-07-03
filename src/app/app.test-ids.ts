@@ -51,6 +51,11 @@ export const APP_TEST_IDS = {
   pickerControl: {
     root: 'picker-control',
   },
+  price: {
+    root: 'price',
+    currentPrice: 'current-price',
+    oldPrice: 'old-price',
+  },
   productBadge: {
     root: 'product-badge',
   },
@@ -60,9 +65,6 @@ export const APP_TEST_IDS = {
     heading: 'heading',
     subheading: 'subheading',
     img: 'img',
-    price: 'price',
-    oldPrice: 'old-price',
-    currentPrice: 'current-price',
   },
   productList: {
     root: 'product-list',

@@ -1,7 +1,4 @@
-import {
-  buildProductHeading,
-  getProductAttributes,
-} from '@/app/shared/utils/get-product-attributes';
+import ProductAdapter from '../../adapters/product';
 
 import type { GetProductDetailQuery } from '../../graphql/generated.types';
 import type { ProductDetail } from './product-detail.types';
@@ -22,7 +19,16 @@ class ProductDetailAdapter {
       return null;
     }
 
-    const { name, description, attributesRaw, allVariants } = current;
+    const { name, description, attributesRaw, masterVariant } = current;
+    if (!masterVariant) {
+      return null;
+    }
+
+    const { availability, images, price, sku } = masterVariant;
+    if (!price || typeof price.value.centAmount !== 'number') {
+      return null;
+    }
+
     const {
       coverArtist,
       genre,
@@ -33,26 +39,30 @@ class ProductDetailAdapter {
       releaseDate,
       releaseYear,
       writer,
-    } = getProductAttributes(attributesRaw);
-    const variant = allVariants?.at(0);
-    const price = variant?.prices?.at(0)?.value.centAmount;
+    } = ProductAdapter.getProductAttributes(attributesRaw);
+    const { oldPrice, currentPrice, discount } = ProductAdapter.getProductPrice({
+      price: price.value.centAmount,
+      discountedPrice: price.discounted?.value.centAmount,
+      discount: price.discounted?.discount?.value.permyriad,
+    });
+    const availableQuantity = availability?.noChannel?.availableQuantity;
 
     return {
       id,
-      heading: buildProductHeading(name, releaseYear, issue),
+      heading: ProductAdapter.buildProductHeading(name, releaseYear, issue),
       subheading: publisher,
       genre,
       description,
       writer,
       penciller,
       coverArtist,
-      img: variant?.images.at(0)?.url || '',
-      currentPrice: typeof price === 'number' ? price : null,
-      oldPrice: typeof price === 'number' ? price : null,
-      sku: variant?.sku || null,
+      img: images.at(0)?.url || '',
+      currentPrice,
+      oldPrice,
+      sku,
       pageCount,
-      discount: 0, // mock
-      count: 10, // mock
+      discount,
+      count: typeof availableQuantity === 'number' ? availableQuantity : 0,
       releaseDate,
     };
   }

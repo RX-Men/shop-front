@@ -16,9 +16,27 @@ export const GET_TRENDING_PRODUCTS = gql`
                     value {
                       centAmount
                     }
+                    discounted {
+                      value {
+                        centAmount
+                      }
+                      discount {
+                        value {
+                          ... on RelativeDiscountValue {
+                            __typename
+                            permyriad
+                          }
+                        }
+                      }
+                    }
                   }
                   images {
                     url
+                  }
+                  availability {
+                    noChannel {
+                      availableQuantity
+                    }
                   }
                 }
                 attributesRaw {

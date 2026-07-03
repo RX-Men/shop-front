@@ -1,8 +1,6 @@
 @let badge = _badge();
 @let computedTabIndex = tabIndex();
-@let withDiscount = _withDiscount();
 @let isOut = _isOut();
-@let priceAriaLabel = _priceAriaLabel();
 
 <article
   class="product-card product-card_orientation_{{ orientation() }}"
@@ -45,26 +43,12 @@
     </div>
   </div>
 
-  <div
+  <app-price
     class="product-card__price"
-    [attr.aria-label]="priceAriaLabel"
-    [attr.data-testid]="_testIds.price"
-  >
-    <p
-      class="product-card__current-price text-xl"
-      aria-hidden="true"
-      [class.product-card__current-price_discount]="withDiscount"
-      [attr.data-testid]="_testIds.currentPrice"
-    >
-      {{ currentPrice() | price }}
-    </p>
-
-    @if (withDiscount) {
-      <p class="product-card__old-price" aria-hidden="true" [attr.data-testid]="_testIds.oldPrice">
-        {{ oldPrice() | price }}
-      </p>
-    }
-  </div>
+    [currentPrice]="currentPrice()"
+    [oldPrice]="oldPrice()"
+    [discount]="discount()"
+  />
 
   <footer class="product-card__footer">
     <app-button class="product-card__button" [tabIndex]="computedTabIndex" [disabled]="isOut"

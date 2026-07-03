@@ -1,4 +1,5 @@
 import { inject, Injectable } from '@angular/core';
+import { print } from 'graphql';
 
 import { COMMERCETOOLS_CONFIG } from '../commercetools/commercetools.config';
 import { CommercetoolsService } from '../commercetools';
@@ -19,7 +20,7 @@ export class SearchService {
 
   async fetchProductsByText(query: string): Promise<ProductsSearchResultsByText> {
     const { projectKey } = this._ctpConfig;
-    const queryText = GET_PRODUCTS_SEARCH_BY_TEXT.loc?.source.body || '';
+    const queryText = print(GET_PRODUCTS_SEARCH_BY_TEXT);
 
     try {
       const response = await this._commercetoolsService.apiRoot
@@ -36,8 +37,12 @@ export class SearchService {
         })
         .execute();
 
-      const rawDto = response.body.data as GetProductsSearchByTextQuery;
-      return SearchAdapter.toFrontendSearchResultsByText(rawDto);
+      const rawDto = response.body.data;
+      if (!rawDto) {
+        throw new Error('Commercetools GraphQL response returned empty data');
+      }
+
+      return SearchAdapter.toFrontendSearchResultsByText(rawDto as GetProductsSearchByTextQuery);
     } catch (error) {
       console.error(error);
       return {

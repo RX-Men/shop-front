@@ -1,11 +1,12 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
+import { print } from 'graphql';
 
 import { COMMERCETOOLS_CONFIG } from '../commercetools/commercetools.config';
 import { CommercetoolsService } from '../commercetools';
 
 import ProductDetailAdapter from './product-detail.adapter';
 
-import { GET_PRODUCT_DETAIL } from './graphql/get-product-detail.queries';
+import { GET_PRODUCT_DETAIL } from './graphql/get-product-detail';
 
 import { DEFAULT_TO_CART_QUANTITY } from './product-detail.constants';
 
@@ -57,7 +58,7 @@ export class ProductDetailService {
     const { projectKey } = this._ctpConfig;
 
     try {
-      const queryText = GET_PRODUCT_DETAIL.loc?.source.body || '';
+      const queryText = print(GET_PRODUCT_DETAIL);
       const response = await this._commercetoolsService.apiRoot
         .withProjectKey({ projectKey })
         .graphql()
@@ -72,14 +73,17 @@ export class ProductDetailService {
         })
         .execute();
 
-      const rawDto = response.body.data as GetProductDetailQuery;
+      const rawDto = response.body.data;
+      if (!rawDto) {
+        throw new Error('Commercetools GraphQL response returned empty data');
+      }
 
-      const data = ProductDetailAdapter.toFrontendProductDetail(rawDto);
+      const data = ProductDetailAdapter.toFrontendProductDetail(rawDto as GetProductDetailQuery);
       this._state.update((prevState) => ({
         ...prevState,
         data: {
-          ...prevState.data,
           product: data,
+          quantity: DEFAULT_TO_CART_QUANTITY,
         },
       }));
     } catch (error) {

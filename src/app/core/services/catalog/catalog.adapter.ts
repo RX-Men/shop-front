@@ -1,14 +1,11 @@
-import {
-  buildProductHeading,
-  getProductAttributes,
-} from '@/app/shared/utils/get-product-attributes';
+import ProductAdapter from '../../adapters/product';
 
 import { PRODUCT_ATTRIBUTES_DTO } from '@/app/shared/constants/product';
 import { CATALOG_SORT, DEFAULT_CATALOG_LIMIT, SORT_ORDER } from './catalog.constants';
 
 import type {
   GetCatalogFiltersQuery,
-  GetCatalogQuery,
+  GetCatalogProductsQuery,
   SearchFieldType,
   SearchQueryInput,
   SearchSortingInput,
@@ -47,7 +44,7 @@ class CatalogAdapter {
     };
   }
 
-  static toFrontendCatalog(rawDto: GetCatalogQuery): ToFrontendCatalogTarget {
+  static toFrontendCatalog(rawDto: GetCatalogProductsQuery): ToFrontendCatalogTarget {
     const { productsSearch } = rawDto;
     if (!productsSearch) {
       return {
@@ -57,43 +54,8 @@ class CatalogAdapter {
       };
     }
 
-    const products = productsSearch.results.flatMap(({ product }) => {
-      const { current } = product.masterData;
-      if (!current) {
-        return [];
-      }
-
-      const { allVariants } = current;
-      if (!allVariants) {
-        return [];
-      }
-
-      const meta = allVariants.at(0);
-      if (!meta) {
-        return [];
-      }
-
-      const price = meta.prices?.at(0)?.value;
-      if (typeof price === 'undefined' || typeof price.centAmount !== 'number') {
-        return [];
-      }
-
-      const { publisher, issue, releaseYear } = getProductAttributes(current.attributesRaw);
-
-      return {
-        id: product.id,
-        heading: buildProductHeading(current.name, releaseYear, issue),
-        subheading: publisher || '',
-        img: meta.images.at(0)?.url || '',
-        currentPrice: price.centAmount,
-        oldPrice: price.centAmount,
-        discount: 0, // TODO: mock; need to update Commercetools
-        count: 10, // TODO: mock; need to update Commercetools
-      };
-    });
-
     return {
-      products,
+      products: ProductAdapter.toFrontendProducts(productsSearch.results),
       page: Math.trunc(Number(productsSearch.offset) / (productsSearch.limit || 1)),
       total: typeof productsSearch.total === 'number' ? productsSearch.total : 0,
     };
