@@ -1,4 +1,12 @@
+import type { AuthProvider } from '@/app/core/providers/auth-provider';
+import type { CartProvider } from '@/app/core/providers/cart-provider';
+import { LocalStorageService } from '@/app/core/services/local-storage.service';
 import { inject, Injectable } from '@angular/core';
+import {
+  type ApiRoot,
+  type ByProjectKeyRequestBuilder,
+  createApiBuilderFromCtpClient,
+} from '@commercetools/platform-sdk';
 import {
   type AuthMiddlewareOptions,
   ClientBuilder,
@@ -7,18 +15,12 @@ import {
   type RefreshAuthMiddlewareOptions,
   type TokenCache,
 } from '@commercetools/ts-client';
-import {
-  type ApiRoot,
-  type ByProjectKeyRequestBuilder,
-  createApiBuilderFromCtpClient,
-} from '@commercetools/platform-sdk';
 
 import { delayAndErrorMiddleware } from './middlewares/delay-and-error';
 import { COMMERCETOOLS_CONFIG } from './commercetools.config';
-import { LocalStorageService } from '@/app/core/services/local-storage.service';
 
 @Injectable({ providedIn: 'root' })
-export class CommercetoolsService {
+export class CommercetoolsService implements AuthProvider, CartProvider {
   apiRoot!: ApiRoot;
 
   private readonly _config = inject(COMMERCETOOLS_CONFIG);

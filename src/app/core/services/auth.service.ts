@@ -1,17 +1,17 @@
-import { computed, inject, Injectable, signal } from '@angular/core';
-import { catchError, from, map, Observable, switchMap, tap, throwError } from 'rxjs';
-
-import { CartService } from '@/app/core/services/cart.service';
-import { CommercetoolsService } from '@/app/core/services/commercetools';
-import { LocalStorageService } from '@/app/core/services/local-storage.service';
-
-import type { Customer } from '@commercetools/platform-sdk';
 import type { LoginCredentials, LoginResult } from '@/app/core/auth/sign-in/sign-in.types';
 import type { SignUpPayload } from '@/app/core/auth/sign-up/sign-up.types';
+import { AUTH_PROVIDER } from '@/app/core/providers/auth-provider';
+
+import { CartService } from '@/app/core/services/cart.service';
+import { LocalStorageService } from '@/app/core/services/local-storage.service';
+import { computed, inject, Injectable, signal } from '@angular/core';
+
+import type { Customer } from '@commercetools/platform-sdk';
+import { catchError, from, map, Observable, switchMap, tap, throwError } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private readonly _ctp = inject(CommercetoolsService);
+  private readonly _auth = inject(AUTH_PROVIDER);
   private readonly _cartService = inject(CartService);
   private readonly _storage = inject(LocalStorageService);
 
@@ -24,7 +24,7 @@ export class AuthService {
     const currentCart = this._cartService.cart();
 
     return from(
-      this._ctp
+      this._auth
         .project()
         .me()
         .login()
@@ -51,7 +51,7 @@ export class AuthService {
         }
       }),
       tap(() => {
-        this._ctp.initPasswordClient(credentials.email, credentials.password);
+        this._auth.initPasswordClient(credentials.email, credentials.password);
         this._storage.removeItem('anonymousId');
       }),
       switchMap(() => from(this._cartService.loadCart())),
@@ -70,7 +70,7 @@ export class AuthService {
     const currentCart = this._cartService.cart();
 
     return from(
-      this._ctp
+      this._auth
         .project()
         .me()
         .signup()
@@ -99,7 +99,7 @@ export class AuthService {
         }
       }),
       tap(() => {
-        this._ctp.initPasswordClient(payload.email, payload.password);
+        this._auth.initPasswordClient(payload.email, payload.password);
         this._storage.removeItem('anonymousId');
       }),
       switchMap(() => from(this._cartService.loadCart())),
@@ -132,7 +132,7 @@ export class AuthService {
     const anonymousId = crypto.randomUUID();
     this._storage.setItem('anonymousId', anonymousId);
 
-    this._ctp.initAnonymousClient(anonymousId);
+    this._auth.initAnonymousClient(anonymousId);
     this._cartService.clearLocalCart();
   }
 

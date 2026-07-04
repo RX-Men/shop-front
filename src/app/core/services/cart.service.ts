@@ -1,4 +1,4 @@
-import { CommercetoolsService } from '@/app/core/services/commercetools/commercetools.service';
+import { CART_PROVIDER } from '@/app/core/providers/cart-provider';
 import { LocalStorageService } from '@/app/core/services/local-storage.service';
 import { computed, inject, Injectable, signal } from '@angular/core';
 import type {
@@ -11,7 +11,7 @@ import type {
   providedIn: 'root',
 })
 export class CartService {
-  private readonly _ctp = inject(CommercetoolsService);
+  private readonly _cartProvider = inject(CART_PROVIDER);
   private readonly _storage = inject(LocalStorageService);
   private readonly _cart = signal<Cart | null>(this._storage.getItem<Cart>('cachedCart'));
 
@@ -146,6 +146,6 @@ export class CartService {
   }
 
   private _project(): ByProjectKeyRequestBuilder {
-    return this._ctp.project();
+    return this._cartProvider.project();
   }
 }
