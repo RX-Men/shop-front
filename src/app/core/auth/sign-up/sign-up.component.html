@@ -96,24 +96,14 @@
     </div>
   </fieldset>
 
-  <fieldset class="sign-up__section">
-    @if (serverError()) {
-      <p class="sign-up__server-error">
-        {{ serverError() }}
-      </p>
-    }
-  </fieldset>
+  @if (serverError()) {
+    <app-alert [message]="serverError()" />
+  }
 
   <div class="sign-up__actions">
-    @if (isLoading()) {
-      <div class="sign-up__loading">
-        <app-spin />
-      </div>
-    } @else {
-      <app-button type="submit" [disabled]="isLoading()" [size]="'l'">
-        {{ content.actions.submit }}
-      </app-button>
-    }
+    <app-button type="submit" [disabled]="isLoading()" [size]="'l'">
+      {{ content.actions.submit }}
+    </app-button>
   </div>
 
   @if (submitted()) {

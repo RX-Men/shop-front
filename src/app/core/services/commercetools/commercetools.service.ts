@@ -1,5 +1,9 @@
 import type { AuthProvider } from '@/app/core/providers/auth-provider';
 import type { CartProvider } from '@/app/core/providers/cart-provider';
+import type {
+  FlowOptionsMap,
+  Settings,
+} from '@/app/core/services/commercetools/commercetools.utils';
 import { LocalStorageService } from '@/app/core/services/local-storage.service';
 import { inject, Injectable } from '@angular/core';
 import {
@@ -41,14 +45,14 @@ export class CommercetoolsService implements AuthProvider, CartProvider {
       this.initRefreshTokenClient(refreshToken);
       return;
     }
-    const tokenCache = this._storage.getItem<{
+    const customerTokenData = this._storage.getItem<{
       token: string;
       refreshToken: string;
       expirationTime: number;
     }>('customerToken');
 
-    if (tokenCache?.refreshToken) {
-      this.initRefreshTokenClient(tokenCache.refreshToken);
+    if (customerTokenData?.refreshToken) {
+      this.initRefreshTokenClient(customerTokenData.refreshToken);
       return;
     }
     const anonymousId = this._storage.getItem<string>('anonymousId') ?? crypto.randomUUID();
@@ -114,25 +118,37 @@ export class CommercetoolsService implements AuthProvider, CartProvider {
 
     this._setApiRoot(authOptions, 'refresh');
   }
-
-  private _setApiRoot(
-    authOptions:
-      AuthMiddlewareOptions | PasswordAuthMiddlewareOptions | RefreshAuthMiddlewareOptions,
-    flow: 'anonymous' | 'password' | 'refresh',
+  private _createBuilder<K extends keyof FlowOptionsMap>(
+    flow: K,
+    authOptions: FlowOptionsMap[K],
+  ): ClientBuilder {
+    return this._settings[flow](authOptions);
+  }
+  private _setApiRoot<K extends keyof FlowOptionsMap>(
+    authOptions: FlowOptionsMap[K],
+    flow: K,
   ): void {
     const httpOptions: HttpMiddlewareOptions = {
       host: this._config.apiUrl,
       httpClient: fetch,
     };
 
-    const client = new ClientBuilder()
-      .withProjectKey(projectKey)
-      .withClientCredentialsFlow(authMiddlewareOptions)
+    const client = this._createBuilder(flow, authOptions)
+      .withHttpMiddleware(httpOptions)
       .withMiddleware(delayAndErrorMiddleware())
-      .withHttpMiddleware(httpMiddlewareOptions)
       .withLoggerMiddleware()
       .build();
 
     this.apiRoot = createApiBuilderFromCtpClient(client);
+  }
+  private readonly _settings: Settings = {
+    anonymous: (options) =>
+      new ClientBuilder().withProjectKey(this._config.projectKey).withAnonymousSessionFlow(options),
+
+    password: (options) =>
+      new ClientBuilder().withProjectKey(this._config.projectKey).withPasswordFlow(options),
+
+    refresh: (options) =>
+      new ClientBuilder().withProjectKey(this._config.projectKey).withRefreshTokenFlow(options),
   };
 }

@@ -1,9 +1,10 @@
 import signUpContent from '@/app/content/pages/sign-up/sign-up.json' with { type: 'json' };
 import { AuthService } from '@/app/core/services/auth.service';
+import { AlertComponent } from '@/app/shared/components/alert';
 import { ButtonComponent } from '@/app/shared/components/button';
 import { InputComponent } from '@/app/shared/components/input';
-import { SpinComponent } from '@/app/shared/components/spin';
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, inject, signal } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { finalize } from 'rxjs';
 import { NAME_PATTERN } from './sign-up.constants';
@@ -12,7 +13,7 @@ import { passwordMatchValidator } from './sign-up.utils';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [ButtonComponent, InputComponent, ReactiveFormsModule, SpinComponent],
+  imports: [ButtonComponent, InputComponent, ReactiveFormsModule, AlertComponent],
   selector: 'app-sign-up',
   templateUrl: './sign-up.component.html',
   styleUrl: './sign-up.component.scss',
@@ -20,6 +21,8 @@ import { passwordMatchValidator } from './sign-up.utils';
 export class SignUpComponent {
   readonly content = signUpContent;
   private readonly _authService = inject(AuthService);
+  private readonly _destroyRef = inject(DestroyRef);
+
   readonly isLoading = signal(false);
   readonly serverError = signal('');
 
@@ -40,18 +43,18 @@ export class SignUpComponent {
 
   getEmailErrorText(): string {
     const errors = this.signUpForm.controls.email.errors;
-
-    if (errors?.['required']) {
-      return this.content.errors.email.required;
-    }
-    if (errors?.['email']) {
-      return this.content.errors.email.email;
-    }
-    if (errors?.['duplicate']) {
-      return 'A customer with this email already exists.';
+    if (!errors) {
+      return '';
     }
 
-    return '';
+    const errorMap: Record<string, string> = {
+      required: this.content.errors.email.required,
+      email: this.content.errors.email.email,
+      duplicate: 'A customer with this email already exists.',
+    };
+    return Object.keys(errorMap).find((key) => errors[key])
+      ? errorMap[Object.keys(errorMap).find((key) => errors[key])!]
+      : '';
   }
 
   getPasswordErrorText(): string {
@@ -125,14 +128,15 @@ export class SignUpComponent {
 
     this._authService
       .register(payload)
-      .pipe(finalize(() => this.isLoading.set(false)))
+      .pipe(
+        finalize(() => this.isLoading.set(false)),
+        takeUntilDestroyed(this._destroyRef),
+      )
       .subscribe({
         next: () => {
           this.submitted.set(true);
-          this.isLoading.set(false);
         },
         error: (error: Error) => {
-          this.isLoading.set(false);
           if (error.message === 'EMAIL_ALREADY_EXISTS') {
             this.signUpForm.controls.email.setErrors({
               duplicate: true,
