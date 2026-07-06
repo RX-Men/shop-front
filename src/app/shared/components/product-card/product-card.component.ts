@@ -1,5 +1,5 @@
-import { ChangeDetectionStrategy, Component, computed, input, model, output } from '@angular/core';
 import { NgOptimizedImage } from '@angular/common';
+import { ChangeDetectionStrategy, Component, computed, input, output } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 import { ButtonComponent } from '../button';

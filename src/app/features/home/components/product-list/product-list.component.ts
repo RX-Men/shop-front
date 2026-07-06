@@ -1,4 +1,13 @@
+import { APP_TEST_IDS } from '@/app/app.test-ids';
+import { ROUTES } from '@/app/core/constants/routes';
 import { CartService } from '@/app/core/services/cart.service';
+
+import { CarouselComponent } from '@/app/shared/components/carousel';
+import { IconButtonComponent } from '@/app/shared/components/icon-button';
+import type { ProductCard } from '@/app/shared/components/product-card';
+import { ProductCardComponent } from '@/app/shared/components/product-card';
+import { RouterLinkComponent } from '@/app/shared/components/router-link';
+import { BreakpointObserver } from '@angular/cdk/layout';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -6,26 +15,14 @@ import {
   input,
   OnDestroy,
   OnInit,
-  output,
   signal,
   viewChild,
 } from '@angular/core';
-import { BreakpointObserver } from '@angular/cdk/layout';
 import { Subscription } from 'rxjs';
-
-import { CarouselComponent } from '@/app/shared/components/carousel';
-import { IconButtonComponent } from '@/app/shared/components/icon-button';
-import { ProductCardComponent } from '@/app/shared/components/product-card';
-import { RouterLinkComponent } from '@/app/shared/components/router-link';
 
 import { getCardsCountByScreenSize, SCREEN_SIZE_ORDER_ASC } from './product-list.utils';
 
 import productListContent from '@/app/content/shared/product-list/product-list.json' with { type: 'json' };
-
-import { APP_TEST_IDS } from '@/app/app.test-ids';
-import { ROUTES } from '@/app/core/constants/routes';
-
-import type { ProductCard } from '@/app/shared/components/product-card';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
