@@ -1,3 +1,4 @@
+import { CartService } from '@/app/core/services/cart.service';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -37,6 +38,7 @@ import { ROUTES } from '@/app/core/constants/routes';
   styleUrl: './product-detail.component.scss',
 })
 export class ProductDetailComponent implements OnDestroy {
+  protected readonly _cartService = inject(CartService);
   readonly productId = input.required<string>();
 
   protected readonly _routes = ROUTES;
@@ -61,22 +63,27 @@ export class ProductDetailComponent implements OnDestroy {
 
   protected readonly _isCartButtonDisabled = computed((): boolean => {
     const product = this._productDetailService.product();
-    if (!product) {
+    if (!product?.sku) {
       return true;
     }
 
-    return !product.sku || product.count <= 0;
+    return product.count <= 0 || this._cartService.isInCart(product.sku);
   });
 
-  protected readonly _addToCart = (): void => {
-    const sku = this._productDetailService.product()?.sku;
+  protected readonly _addToCart = async (): Promise<void> => {
+    const product = this._productDetailService.product();
 
-    if (!sku) {
+    if (!product?.sku || this._cartService.isInCart(product.sku)) {
       return;
     }
 
-    this._productDetailService.addToCart(sku);
+    await this._cartService.addLineItem(product.sku, this._productDetailService.quantity());
   };
+  protected readonly _isInCart = computed(() => {
+    const sku = this._productDetailService.product()?.sku;
+
+    return sku ? this._cartService.isInCart(sku) : false;
+  });
 
   ngOnDestroy(): void {
     this._productDetailService.resetData();

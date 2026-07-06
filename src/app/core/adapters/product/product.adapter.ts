@@ -25,7 +25,12 @@ class ProductAdapter {
       const masterVariant = current?.masterVariant;
       const price = masterVariant?.price;
 
-      if (!current || !masterVariant || typeof price?.value?.centAmount !== 'number') {
+      if (
+        !current ||
+        !masterVariant ||
+        !masterVariant.sku ||
+        typeof price?.value?.centAmount !== 'number'
+      ) {
         return [];
       }
 

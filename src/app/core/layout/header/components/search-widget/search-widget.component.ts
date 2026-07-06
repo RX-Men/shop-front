@@ -1,9 +1,11 @@
+import { CartService } from '@/app/core/services/cart.service';
 import {
   ChangeDetectionStrategy,
   Component,
   computed,
   effect,
   inject,
+  output,
   signal,
 } from '@angular/core';
 import { debounce, form, FormField } from '@angular/forms/signals';
@@ -37,6 +39,7 @@ const SEARCH_RESULT_SKELETON_COUNT = 3;
 })
 export class SearchWidgetComponent {
   private readonly _searchService = inject(SearchService);
+  readonly cartService = inject(CartService);
 
   protected readonly _resultList = signal<ProductCard[] | null>(null);
   protected readonly _totalCount = signal<number>(0);
@@ -104,4 +107,10 @@ export class SearchWidgetComponent {
       this._isSearching.set(false);
     }
   };
+
+  handleAddToCart(sku: string): void {
+    this.cartService.addLineItem(sku);
+  }
+
+  readonly addToCart = output<string>();
 }

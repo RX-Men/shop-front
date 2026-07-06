@@ -65,7 +65,6 @@ export class ProductListComponent implements OnInit, OnDestroy {
   }
 
   handleAddToCart(sku: string): void {
-    console.log(sku);
     this.cartService.addLineItem(sku);
   }
 }

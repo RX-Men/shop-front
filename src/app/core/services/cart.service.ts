@@ -26,6 +26,31 @@ export class CartService {
     this.loadCart();
   }
 
+  readonly itemsBySku = computed(() => {
+    const map = new Map<string, { lineItemId: string; quantity: number }>();
+
+    for (const item of this.items()) {
+      const sku = item.variant.sku;
+
+      if (sku) {
+        map.set(sku, {
+          lineItemId: item.id,
+          quantity: item.quantity,
+        });
+      }
+    }
+
+    return map;
+  });
+
+  isInCart(sku: string): boolean {
+    return this.itemsBySku().has(sku);
+  }
+
+  getQuantityBySku(sku: string): number {
+    return this.itemsBySku().get(sku)?.quantity ?? 0;
+  }
+
   private _saveCart(body: Cart): void {
     this._cart.set(body);
     this._storage.setItem('cachedCart', body);

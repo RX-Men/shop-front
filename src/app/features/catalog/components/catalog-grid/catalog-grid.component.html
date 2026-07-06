@@ -16,8 +16,9 @@
           [sku]="product.sku"
           [detailsLink]="product.id"
           [sku]="product.sku"
+          [inCart]="cartService.isInCart(product.sku)"
           [loading]="loading()"
-          (addToCart)="addToCart.emit($event)"
+          (addToCart)="handleAddToCart($event)"
         />
       </li>
     }

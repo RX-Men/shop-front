@@ -80,10 +80,11 @@
       <app-button
         class="product-card__button"
         [tabIndex]="computedTabIndex"
-        [disabled]="isOut"
+        [disabled]="isOut || inCart()"
+        [icon]="inCart() ? 'check' : undefined"
         (click)="addToCart.emit(sku())"
       >
-        {{ _content.actions.addToCart }}
+        {{ inCart() ? 'In cart' : _content.actions.addToCart }}
       </app-button>
     </app-skeleton>
   </footer>
