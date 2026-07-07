@@ -18,6 +18,8 @@ import { RouterLinkComponent } from '@/app/shared/components/router-link';
 
 import { getCardsCountByScreenSize, SCREEN_SIZE_ORDER_ASC } from './product-list.utils';
 
+import productListContent from '@/app/content/shared/product-list/product-list.json' with { type: 'json' };
+
 import { APP_TEST_IDS } from '@/app/app.test-ids';
 import { ROUTES } from '@/app/core/constants/routes';
 
@@ -33,12 +35,14 @@ import type { ProductCard } from '@/app/shared/components/product-card';
 export class ProductListComponent implements OnInit, OnDestroy {
   readonly title = input.required<string>();
   readonly products = input.required<ProductCard[]>();
+  readonly loading = input<boolean>();
 
   protected readonly _carouselEl = viewChild.required(CarouselComponent);
   protected readonly _perViewCardsCount = signal<number>(5);
 
   protected readonly _testIds = APP_TEST_IDS.productList;
   protected readonly _routes = ROUTES;
+  protected readonly _content = productListContent;
 
   private readonly _breakpointObserver = inject(BreakpointObserver);
   private _breakpointSubscription: Subscription | null = null;

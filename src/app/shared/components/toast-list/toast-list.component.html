@@ -1,0 +1,15 @@
+@let list = items();
+
+<ul class="toast-list">
+  @for (item of list; track item.id) {
+    <li animate.enter="toast-list_enter" animate.leave="toast-list_leave">
+      <app-toast
+        [id]="item.id"
+        [heading]="item.heading"
+        [description]="item.description"
+        [status]="item.status"
+        (closeChange)="closeChange.emit($event)"
+      />
+    </li>
+  }
+</ul>

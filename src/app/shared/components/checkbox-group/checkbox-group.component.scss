@@ -12,5 +12,13 @@
 
   &__list-item {
     display: flex;
+
+    &_loading {
+      ::ng-deep {
+        .checkbox {
+          display: flex;
+        }
+      }
+    }
   }
 }

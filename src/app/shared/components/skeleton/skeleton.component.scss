@@ -1,0 +1,50 @@
+@use 'assets/styles/placeholders';
+
+@keyframes wave {
+  0% {
+    background-position: 100%;
+  }
+
+  100% {
+    background-position: 0;
+  }
+}
+
+:host {
+  display: block;
+}
+
+.skeleton {
+  height: 100%;
+
+  &_theme {
+    &_dark {
+      --loading-color: var(--neutral-900-rgb);
+    }
+
+    &_light {
+      --loading-color: var(--neutral-100-rgb);
+    }
+  }
+
+  &_loading {
+    background: linear-gradient(
+      90deg,
+      rgb(var(--loading-color), 0.06) 25%,
+      rgb(var(--loading-color), 0.15) 37%,
+      rgb(var(--loading-color), 0.06) 63%
+    );
+    background-size: 400% 100%;
+    animation: wave 1.4s ease infinite;
+  }
+
+  &__wrapper {
+    height: 100%;
+
+    &_loading {
+      @extend %hidden;
+
+      display: flex;
+    }
+  }
+}

@@ -1,4 +1,4 @@
-@let resultList = _resultList();
+@let resultList = _displayedResultList();
 
 <div class="search-widget">
   <div class="search-widget__header">
@@ -20,9 +20,7 @@
   </div>
 
   <div class="search-widget__body">
-    @if (_isSearching()) {
-      <app-spin class="search-widget__spin" [size]="'l'" [withDescription]="true" />
-    } @else if (resultList !== null && resultList.length > 0) {
+    @if (resultList !== null && resultList.length > 0) {
       <ul class="search-widget__product-list">
         @for (product of resultList; track product.id) {
           <li>
@@ -38,6 +36,8 @@
               [count]="product.count"
               [sku]="product.sku"
               [detailsLink]="`${_routes.catalog}/${product.id}`"
+              [skeletonTheme]="'light'"
+              [loading]="_isSearching()"
             />
           </li>
         }

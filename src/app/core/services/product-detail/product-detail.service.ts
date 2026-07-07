@@ -25,10 +25,19 @@ export class ProductDetailService {
       product: null,
       quantity: DEFAULT_TO_CART_QUANTITY,
     },
+    loading: {
+      main: false,
+    },
+    error: {
+      notFound: false,
+    },
   });
 
   readonly product = computed(() => this._state().data.product);
   readonly quantity = computed(() => this._state().data.quantity);
+
+  readonly loading = computed(() => this._state().loading);
+  readonly error = computed(() => this._state().error);
 
   changeQuantity(quantity: number): void {
     this._state.update((prevState) => ({
@@ -51,10 +60,28 @@ export class ProductDetailService {
         product: null,
         quantity: DEFAULT_TO_CART_QUANTITY,
       },
+      error: {
+        notFound: false,
+      },
     }));
   }
 
   async fetchProduct(productId: string): Promise<void> {
+    this._state.update((prevState) => ({
+      ...prevState,
+      data: {
+        product: null,
+        quantity: DEFAULT_TO_CART_QUANTITY,
+      },
+      loading: {
+        ...prevState.loading,
+        main: true,
+      },
+      error: {
+        notFound: false,
+      },
+    }));
+
     const { projectKey } = this._ctpConfig;
 
     try {
@@ -85,9 +112,18 @@ export class ProductDetailService {
           product: data,
           quantity: DEFAULT_TO_CART_QUANTITY,
         },
+        error: {
+          notFound: data === null,
+        },
       }));
-    } catch (error) {
-      console.error(error);
+    } finally {
+      this._state.update((prevState) => ({
+        ...prevState,
+        loading: {
+          ...prevState.loading,
+          main: false,
+        },
+      }));
     }
   }
 }

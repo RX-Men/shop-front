@@ -10,8 +10,10 @@ import { debounce, form, FormField } from '@angular/forms/signals';
 
 import { EmptyComponent } from '@/app/shared/components/empty';
 import { InputComponent } from '@/app/shared/components/input';
-import { ProductCardComponent } from '@/app/shared/components/product-card';
-import { SpinComponent } from '@/app/shared/components/spin';
+import {
+  generateProductCardSkeleton,
+  ProductCardComponent,
+} from '@/app/shared/components/product-card';
 
 import { SearchService } from '@/app/core/services/search';
 
@@ -21,10 +23,12 @@ import { ROUTES } from '@/app/core/constants/routes';
 
 import type { ProductCard } from '@/app/shared/components/product-card';
 
+const SEARCH_RESULT_SKELETON_COUNT = 3;
+
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-search-widget',
-  imports: [EmptyComponent, FormField, InputComponent, ProductCardComponent, SpinComponent],
+  imports: [EmptyComponent, FormField, InputComponent, ProductCardComponent],
   templateUrl: './search-widget.component.html',
   styleUrl: './search-widget.component.scss',
   host: {
@@ -36,6 +40,12 @@ export class SearchWidgetComponent {
 
   protected readonly _resultList = signal<ProductCard[] | null>(null);
   protected readonly _totalCount = signal<number>(0);
+  protected readonly _productsSkeleton = computed(() =>
+    generateProductCardSkeleton(SEARCH_RESULT_SKELETON_COUNT),
+  );
+  protected readonly _displayedResultList = computed(() =>
+    this._isSearching() ? this._productsSkeleton() : this._resultList(),
+  );
 
   protected readonly _totalCountLabel = computed(() => {
     const totalCount = this._totalCount();
@@ -49,6 +59,7 @@ export class SearchWidgetComponent {
 
   constructor() {
     effect(() => {
+      this._isSearching.set(true);
       this._totalCount.set(0);
       const query = this._searchForm.query().value().trim();
 
@@ -58,17 +69,7 @@ export class SearchWidgetComponent {
         return;
       }
 
-      this._isSearching.set(true);
-
-      this._searchService
-        .fetchProductsByText(query)
-        .then((data) => {
-          this._resultList.set(data.results);
-          this._totalCount.set(data.total);
-        })
-        .finally(() => {
-          this._isSearching.set(false);
-        });
+      this._searchData(query);
     });
   }
 
@@ -89,5 +90,18 @@ export class SearchWidgetComponent {
     }
 
     this._shouldAutofocus.update((prevState) => !prevState);
+  };
+
+  private readonly _searchData = async (query: string): Promise<void> => {
+    this._isSearching.set(true);
+
+    try {
+      const data = await this._searchService.fetchProductsByText(query);
+
+      this._resultList.set(data.results);
+      this._totalCount.set(data.total);
+    } finally {
+      this._isSearching.set(false);
+    }
   };
 }

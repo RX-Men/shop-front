@@ -8,7 +8,7 @@
 <div class="carousel" [attr.data-testid]="_testIds.root" (focusin)="_stopAutoplayOnFocus()">
   <div
     class="carousel__tracks"
-    aria-roledescription="carousel"
+    [attr.aria-roledescription]="_content.aria.carouselRoleDescription"
     [attr.aria-live]="_ariaLive()"
     [attr.data-testid]="_testIds.tracks"
     (mouseenter)="_handleMouseEnter()"
@@ -34,7 +34,7 @@
         <app-icon-button
           [icon]="'keyboard-arrow-left'"
           [size]="'xl'"
-          [label]="'Previous slide'"
+          [label]="_content.controls.previousSlideLabel"
           [tooltipColor]="'light'"
           (click)="switchPreviousSlide()"
         />
@@ -44,7 +44,7 @@
         <app-icon-button
           [icon]="'keyboard-arrow-right'"
           [size]="'xl'"
-          [label]="'Next slide'"
+          [label]="_content.controls.nextSlideLabel"
           [tooltipColor]="'light'"
           (click)="switchNextSlide()"
         />
@@ -57,8 +57,8 @@
       <div
         class="carousel__track"
         role="group"
-        aria-roledescription="slide"
-        [aria-label]="`${$index + 1} of ${tracksCount}`"
+        [attr.aria-roledescription]="_content.aria.slideRoleDescription"
+        [aria-label]="_getSlideLabel($index + 1, tracksCount)"
         [aria-hidden]="isTrackHidden"
         [style.transform]="trackTransform"
         [attr.data-testid]="_testIds.track"
@@ -83,10 +83,10 @@
     }
   </div>
 
-  <div class="carousel__picker-controls" role="group" aria-label="Choose slide to display">
+  <div class="carousel__picker-controls" role="group" [aria-label]="_content.aria.pickerGroupLabel">
     @for (_ of tracks; track $index) {
       <app-picker-control
-        [ariaLabel]="`Slide ${$index + 1}`"
+        [ariaLabel]="_getPickerControlLabel($index + 1)"
         [active]="computedCurrentIndex === $index"
         (click)="_handlePickerControl($index)"
       />

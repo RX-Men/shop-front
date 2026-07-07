@@ -14,6 +14,10 @@ interface CatalogState {
     page: number;
     total: number;
   };
+  loading: {
+    products: boolean;
+    filters: boolean;
+  };
 }
 
 export type { CatalogState, CatalogPageState };

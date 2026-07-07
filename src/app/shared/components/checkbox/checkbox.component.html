@@ -1,17 +1,29 @@
-<label class="checkbox checkbox_size_{{ size() }}" [class.checkbox_disabled]="disabled()"
-  ><input
-    class="checkbox__input"
-    type="checkbox"
-    [name]="name()"
-    [value]="value()"
-    [checked]="checked()"
-    [disabled]="disabled()"
-    [required]="required()"
-    (change)="onInputChange($event)"
-  />
+@let isLoading = loading();
 
-  <ng-content />
-  @if (required()) {
-    <span class="checkbox__required" aria-hidden="true">*</span>
-  }
+<label
+  class="checkbox checkbox_size_{{ size() }}"
+  [class.checkbox_width_full]="isWidthFull()"
+  [class.checkbox_loading]="isLoading"
+  [class.checkbox_disabled]="disabled()"
+>
+  <app-skeleton class="checkbox__skeleton-input" [loading]="isLoading">
+    <input
+      class="checkbox__input"
+      type="checkbox"
+      [name]="name()"
+      [value]="value()"
+      [checked]="checked()"
+      [disabled]="disabled()"
+      [required]="required()"
+      (change)="onInputChange($event)"
+    />
+  </app-skeleton>
+
+  <app-skeleton class="checkbox__skeleton-label" [loading]="isLoading">
+    <ng-content />
+
+    @if (required()) {
+      <span class="checkbox__required" aria-hidden="true">*</span>
+    }
+  </app-skeleton>
 </label>

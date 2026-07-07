@@ -16,5 +16,9 @@
     "label": "Quantity:"
   },
   "addToCartButton": "Add to cart",
+  "notFound": {
+    "title": "Product not found",
+    "description": "We couldn't find a product matching this URL. It may have been removed or the link is incorrect"
+  },
   "fallbackValue": "—"
 }

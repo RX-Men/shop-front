@@ -56,8 +56,7 @@ export class HomeService {
       }
 
       return HomeAdapter.toFrontendNewProducts(rawDto as GetNewProductsQuery);
-    } catch (error) {
-      console.error(error);
+    } catch {
       return [];
     }
   }
@@ -84,8 +83,7 @@ export class HomeService {
       }
 
       return HomeAdapter.toFrontendTrendingProducts(rawDto as GetTrendingProductsQuery);
-    } catch (error) {
-      console.error(error);
+    } catch {
       return [];
     }
   }

@@ -1,0 +1,13 @@
+{
+  "image": {
+    "alt": "Cover"
+  },
+  "actions": {
+    "addToCart": "Add to cart"
+  },
+  "badge": {
+    "soldOut": "Sold out",
+    "left": "{count} left",
+    "discount": "{discount}% off"
+  }
+}

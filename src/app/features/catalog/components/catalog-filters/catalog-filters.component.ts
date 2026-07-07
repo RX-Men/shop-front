@@ -17,6 +17,7 @@ import type { GroupFilters } from './catalog-filters.types';
 export class CatalogFiltersComponent {
   readonly groups = input.required<GroupFilters[] | null>();
   readonly checkedByGroup = input.required<Record<string, Set<string>>>();
+  readonly loading = input<boolean>();
 
   readonly checkedChange = output<{ groupName: string; value: string }>();
   readonly resetClick = output<void>();

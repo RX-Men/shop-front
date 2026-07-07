@@ -34,6 +34,10 @@ export class CatalogService {
       page: 0,
       total: 0,
     },
+    loading: {
+      products: false,
+      filters: false,
+    },
   });
 
   readonly products = computed(() => this._state().data.products);
@@ -43,6 +47,9 @@ export class CatalogService {
   readonly limit = computed(() => this._state().data.limit || DEFAULT_CATALOG_LIMIT);
   readonly page = computed(() => this._state().data.page);
   readonly total = computed(() => this._state().data.total);
+  readonly totalPageCount = computed(() => Math.ceil(this.total() / Number(this.limit() || 1)));
+
+  readonly loading = computed(() => this._state().loading);
 
   changeFilters({ groupName, value }: { groupName: string; value: string }): void {
     const next = new Set(this.selectedFilters()[groupName]);
@@ -119,8 +126,15 @@ export class CatalogService {
   }
 
   async fetchProducts(): Promise<void> {
-    const { projectKey } = this._ctpConfig;
+    this._state.update((prevState) => ({
+      ...prevState,
+      loading: {
+        ...prevState.loading,
+        products: true,
+      },
+    }));
 
+    const { projectKey } = this._ctpConfig;
     const queryText = print(GET_CATALOG_PRODUCTS);
     const { filter, sort, limit, offset } = CatalogAdapter.toBackendCatalog({
       filter: this.selectedFilters(),
@@ -159,16 +173,30 @@ export class CatalogService {
         ...prevState,
         data: { ...prevState.data, products, page, total },
       }));
-    } catch (error) {
-      console.error(error);
+    } finally {
+      this._state.update((prevState) => ({
+        ...prevState,
+        loading: {
+          ...prevState.loading,
+          products: false,
+        },
+      }));
     }
   }
 
   async fetchFilters(): Promise<void> {
+    this._state.update((prevState) => ({
+      ...prevState,
+      loading: {
+        ...prevState.loading,
+        filters: true,
+      },
+    }));
+
     const { projectKey } = this._ctpConfig;
+    const queryText = print(GET_CATALOG_FILTERS);
 
     try {
-      const queryText = print(GET_CATALOG_FILTERS);
       const response = await this._commercetoolsService.apiRoot
         .withProjectKey({ projectKey })
         .graphql()
@@ -190,8 +218,14 @@ export class CatalogService {
         ...prevState,
         data: { ...prevState.data, filters: data },
       }));
-    } catch (error) {
-      console.error(error);
+    } finally {
+      this._state.update((prevState) => ({
+        ...prevState,
+        loading: {
+          ...prevState.loading,
+          filters: false,
+        },
+      }));
     }
   }
 }
