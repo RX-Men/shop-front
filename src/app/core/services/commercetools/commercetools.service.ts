@@ -1,9 +1,11 @@
 import type { AuthProvider } from '@/app/core/providers/auth-provider';
 import type { CartProvider } from '@/app/core/providers/cart-provider';
 import type {
+  BootstrapStrategy,
+  CustomerTokenData,
   FlowOptionsMap,
   Settings,
-} from '@/app/core/services/commercetools/commercetools.utils';
+} from './commercetools.types';
 import { LocalStorageService } from '@/app/core/services/local-storage.service';
 import { inject, Injectable } from '@angular/core';
 import {
@@ -38,26 +40,39 @@ export class CommercetoolsService implements AuthProvider, CartProvider {
     get: async () => this._storage.getItem('anonymousId') ?? undefined,
     set: async (cache) => this._storage.setItem('anonymousId', cache),
   };
+
+  private _bootstrapClient(): void {
+    const strategies: BootstrapStrategy[] = [
+      {
+        matches: (): boolean => {
+          const customerToken = this._storage.getItem<CustomerTokenData>('customerToken');
+
+          return !!customerToken?.refreshToken;
+        },
+
+        bootstrap: (): void => {
+          const customerToken = this._storage.getItem<CustomerTokenData>('customerToken')!;
+
+          this.initRefreshTokenClient(customerToken.refreshToken);
+        },
+      },
+      {
+        matches: (): boolean => true,
+
+        bootstrap: (): void => {
+          const anonymousId = this._storage.getItem<string>('anonymousId') ?? crypto.randomUUID();
+
+          this._storage.setItem('anonymousId', anonymousId);
+
+          this.initAnonymousClient(anonymousId);
+        },
+      },
+    ];
+
+    strategies.find((strategy) => strategy.matches())?.bootstrap();
+  }
   constructor() {
-    const refreshToken = this._storage.getItem<string>('refreshToken');
-
-    if (refreshToken) {
-      this.initRefreshTokenClient(refreshToken);
-      return;
-    }
-    const customerTokenData = this._storage.getItem<{
-      token: string;
-      refreshToken: string;
-      expirationTime: number;
-    }>('customerToken');
-
-    if (customerTokenData?.refreshToken) {
-      this.initRefreshTokenClient(customerTokenData.refreshToken);
-      return;
-    }
-    const anonymousId = this._storage.getItem<string>('anonymousId') ?? crypto.randomUUID();
-    this._storage.setItem('anonymousId', anonymousId);
-    this.initAnonymousClient(anonymousId);
+    this._bootstrapClient();
   }
 
   project(): ByProjectKeyRequestBuilder {
@@ -118,12 +133,7 @@ export class CommercetoolsService implements AuthProvider, CartProvider {
 
     this._setApiRoot(authOptions, 'refresh');
   }
-  private _createBuilder<K extends keyof FlowOptionsMap>(
-    flow: K,
-    authOptions: FlowOptionsMap[K],
-  ): ClientBuilder {
-    return this._settings[flow](authOptions);
-  }
+
   private _setApiRoot<K extends keyof FlowOptionsMap>(
     authOptions: FlowOptionsMap[K],
     flow: K,
@@ -133,7 +143,7 @@ export class CommercetoolsService implements AuthProvider, CartProvider {
       httpClient: fetch,
     };
 
-    const client = this._createBuilder(flow, authOptions)
+    const client = this._settings[flow](authOptions)
       .withHttpMiddleware(httpOptions)
       .withMiddleware(delayAndErrorMiddleware())
       .withLoggerMiddleware()

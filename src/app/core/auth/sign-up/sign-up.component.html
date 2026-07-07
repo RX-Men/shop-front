@@ -92,7 +92,6 @@
           (blurred)="signUpForm.controls.lastName.markAsTouched()"
         />
       </div>
-      <div class="sign-up__date-field"></div>
     </div>
   </fieldset>
 
@@ -100,11 +99,9 @@
     <app-alert [message]="serverError()" />
   }
 
-  <div class="sign-up__actions">
-    <app-button type="submit" [disabled]="isLoading()" [size]="'l'">
-      {{ content.actions.submit }}
-    </app-button>
-  </div>
+  <app-button type="submit" [size]="'l'" [loading]="isLoading()">{{
+    content.actions.submit
+  }}</app-button>
 
   @if (submitted()) {
     <div class="sign-up__success" role="status">{{ content.messages.success }}</div>

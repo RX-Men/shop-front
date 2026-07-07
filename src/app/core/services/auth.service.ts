@@ -6,7 +6,7 @@ import { CartService } from '@/app/core/services/cart.service';
 import { LocalStorageService } from '@/app/core/services/local-storage.service';
 import { computed, inject, Injectable, signal } from '@angular/core';
 
-import type { Customer } from '@commercetools/platform-sdk';
+import type { Cart, Customer } from '@commercetools/platform-sdk';
 import { catchError, from, map, Observable, switchMap, tap, throwError } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
@@ -20,28 +20,12 @@ export class AuthService {
   readonly customer = this._customer.asReadonly();
   readonly isAuthenticated = computed(() => this._customer() !== null);
 
-  login(credentials: LoginCredentials): Observable<LoginResult> {
-    const currentCart = this._cartService.cart();
-
-    return from(
-      this._auth
-        .project()
-        .me()
-        .login()
-        .post({
-          body: {
-            email: credentials.email,
-            password: credentials.password,
-            ...(currentCart
-              ? {
-                  anonymousCartId: currentCart.id,
-                  anonymousCartSignInMode: 'MergeWithExistingCustomerCart' as const,
-                }
-              : {}),
-          },
-        })
-        .execute(),
-    ).pipe(
+  private _completeAuthSession(
+    request$: Promise<{ body: { customer: Customer; cart?: Cart } }>,
+    email: string,
+    password: string,
+  ): Observable<LoginResult> {
+    return from(request$).pipe(
       tap(({ body }) => {
         this._customer.set(body.customer);
         this._storage.setItem('customer', body.customer);
@@ -51,11 +35,47 @@ export class AuthService {
         }
       }),
       tap(() => {
-        this._auth.initPasswordClient(credentials.email, credentials.password);
+        this._auth.initPasswordClient(email, password);
         this._storage.removeItem('anonymousId');
       }),
       switchMap(() => from(this._cartService.loadCart())),
-      map(() => ({ email: credentials.email })),
+      map(() => ({ email })),
+    );
+  }
+
+  private _getAnonymousCartData(): {
+    anonymousCartId?: string;
+    anonymousCartSignInMode?: 'MergeWithExistingCustomerCart';
+  } {
+    const currentCart = this._cartService.cart();
+
+    if (!currentCart) {
+      return {};
+    }
+
+    return {
+      anonymousCartId: currentCart.id,
+      anonymousCartSignInMode: 'MergeWithExistingCustomerCart',
+    };
+  }
+
+  login(credentials: LoginCredentials): Observable<LoginResult> {
+    return this._completeAuthSession(
+      this._auth
+        .project()
+        .me()
+        .login()
+        .post({
+          body: {
+            email: credentials.email,
+            password: credentials.password,
+            ...this._getAnonymousCartData(),
+          },
+        })
+        .execute(),
+      credentials.email,
+      credentials.password,
+    ).pipe(
       catchError((error) => {
         if (this._isInvalidCredentialsError(error)) {
           return throwError(() => new Error('INVALID_CREDENTIALS'));
@@ -67,9 +87,7 @@ export class AuthService {
   }
 
   register(payload: SignUpPayload): Observable<LoginResult> {
-    const currentCart = this._cartService.cart();
-
-    return from(
+    return this._completeAuthSession(
       this._auth
         .project()
         .me()
@@ -80,30 +98,13 @@ export class AuthService {
             password: payload.password,
             firstName: payload.firstName,
             lastName: payload.lastName,
-            ...(currentCart
-              ? {
-                  anonymousCartId: currentCart.id,
-                  anonymousCartSignInMode: 'MergeWithExistingCustomerCart' as const,
-                }
-              : {}),
+            ...this._getAnonymousCartData(),
           },
         })
         .execute(),
+      payload.email,
+      payload.password,
     ).pipe(
-      tap(({ body }) => {
-        this._customer.set(body.customer);
-        this._storage.setItem('customer', body.customer);
-
-        if (body.cart) {
-          this._cartService.setCart(body.cart);
-        }
-      }),
-      tap(() => {
-        this._auth.initPasswordClient(payload.email, payload.password);
-        this._storage.removeItem('anonymousId');
-      }),
-      switchMap(() => from(this._cartService.loadCart())),
-      map(() => ({ email: payload.email })),
       catchError((error) => {
         if (this._isDuplicateCustomerError(error)) {
           return throwError(() => new Error('EMAIL_ALREADY_EXISTS'));

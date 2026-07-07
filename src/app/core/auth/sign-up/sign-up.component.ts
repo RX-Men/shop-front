@@ -20,6 +20,11 @@ import { passwordMatchValidator } from './sign-up.utils';
 })
 export class SignUpComponent {
   readonly content = signUpContent;
+  private readonly _emailErrorMap: Record<string, string> = {
+    required: this.content.errors.email.required,
+    email: this.content.errors.email.email,
+    duplicate: 'A customer with this email already exists.',
+  };
   private readonly _authService = inject(AuthService);
   private readonly _destroyRef = inject(DestroyRef);
 
@@ -43,18 +48,14 @@ export class SignUpComponent {
 
   getEmailErrorText(): string {
     const errors = this.signUpForm.controls.email.errors;
+
     if (!errors) {
       return '';
     }
 
-    const errorMap: Record<string, string> = {
-      required: this.content.errors.email.required,
-      email: this.content.errors.email.email,
-      duplicate: 'A customer with this email already exists.',
-    };
-    return Object.keys(errorMap).find((key) => errors[key])
-      ? errorMap[Object.keys(errorMap).find((key) => errors[key])!]
-      : '';
+    const error = Object.keys(this._emailErrorMap).find((key) => errors[key]);
+
+    return error ? this._emailErrorMap[error] : '';
   }
 
   getPasswordErrorText(): string {
