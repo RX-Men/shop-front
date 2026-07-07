@@ -22,6 +22,12 @@ interface ProductDetailState {
     product: ProductDetail | null;
     quantity: number;
   };
+  loading: {
+    main: boolean;
+  };
+  error: {
+    notFound: boolean;
+  };
 }
 
 export type { ProductDetail, ProductDetailState };

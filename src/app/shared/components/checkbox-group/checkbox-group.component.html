@@ -1,16 +1,21 @@
 @let computedItems = items();
 @let computedName = name();
 @let computedChecked = checked();
+@let isLoading = loading();
 
 <div class="checkbox-group">
-  <span class="checkbox-group__label">{{ label() }}</span>
+  <app-skeleton [loading]="isLoading">
+    <span class="checkbox-group__label">{{ label() }}</span>
+  </app-skeleton>
 
   <ul class="checkbox-group__list">
     @for (item of computedItems; track item.value) {
-      <li class="checkbox-group__list-item">
+      <li class="checkbox-group__list-item" [class.checkbox-group__list-item_loading]="isLoading">
         <app-checkbox
           [name]="computedName"
           [value]="item.value"
+          [isWidthFull]="isLoading"
+          [loading]="isLoading"
           [checked]="computedChecked.has(item.value)"
           (checkedChange)="onInputChange(item.value)"
         >

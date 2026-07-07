@@ -8,15 +8,15 @@
       </h2>
 
       <div class="product-list__nav">
-        <app-router-link [routerLink]="`/${_routes.catalog}`" [variant]="'text'" [color]="'dark'"
-          >View all</app-router-link
-        >
+        <app-router-link [routerLink]="`/${_routes.catalog}`" [variant]="'text'" [color]="'dark'">{{
+          _content.viewAllLink
+        }}</app-router-link>
 
         <div class="product-list__carousel-buttons">
           <app-icon-button
             [icon]="'keyboard-arrow-left'"
             [size]="'l'"
-            [label]="'Previous slide'"
+            [label]="_content.carousel.previousButtonLabel"
             [disabled]="carouselEl.isFirstSlide()"
             (click)="carouselEl.switchPreviousSlide()"
           />
@@ -24,7 +24,7 @@
           <app-icon-button
             [icon]="'keyboard-arrow-right'"
             [size]="'l'"
-            [label]="'Next slide'"
+            [label]="_content.carousel.nextButtonLabel"
             [disabled]="carouselEl.isLastSlide()"
             (click)="carouselEl.switchNextSlide()"
           />
@@ -50,6 +50,7 @@
           [sku]="slide.sku"
           [detailsLink]="`${_routes.catalog}/${slide.id}`"
           [tabIndex]="hidden ? -1 : undefined"
+          [loading]="loading()"
         />
       </ng-template>
     </app-carousel>

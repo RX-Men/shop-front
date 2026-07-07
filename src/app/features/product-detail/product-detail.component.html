@@ -1,78 +1,104 @@
 @let product = _productDetailService.product();
+@let isPageLoading = _productDetailService.loading().main;
+@let isProductNotFound = _productDetailService.error().notFound && !isPageLoading;
 
 <div class="product-detail container">
-  <div class="product-detail__inner">
-    <div class="product-detail__img-wrapper">
-      @if (product?.img) {
-        <img
-          class="product-detail__img"
-          fill
-          [alt]="_content.image.alt"
-          [ngSrc]="product?.img || ''"
-        />
-      }
-    </div>
-
-    <div class="product-detail__content">
-      <div class="product-detail__header">
-        <h1 class="product-detail__heading text-4xl">
-          {{ product?.heading || _content.fallbackValue }}
-        </h1>
-
-        <p class="product-detail__subheading">
-          {{ product?.subheading || _content.fallbackValue }}
-        </p>
-
-        <div class="product-detail__price">
-          @if (product) {
-            <app-price
-              [currentPrice]="product.currentPrice || 0"
-              [oldPrice]="product.oldPrice || 0"
-              [discount]="product.discount || 0"
-            />
-          } @else {
-            {{ _content.fallbackValue }}
-          }
-        </div>
-
-        <p class="product-detail__sku text-sm">
-          {{ _content.attributes.sku }} {{ product?.sku || _content.fallbackValue }}
-        </p>
-      </div>
-
-      <div class="product-detail__body">
-        <p>{{ product?.description || _content.fallbackValue }}</p>
-
-        <ul class="product-detail__list">
-          @for (attribute of _attributes; track attribute) {
-            <li>
-              <strong class="product-detail__strong">{{ _content.attributes[attribute] }} </strong>
-              {{ product?.[attribute] || _content.fallbackValue }}
-            </li>
-          }
-        </ul>
-
-        <div class="product-detail__quantity">
-          {{ _content.quantity.label }}
-
-          <app-quantity-counter
-            class="product-detail__quantity-counter"
-            [value]="_productDetailService.quantity()"
-            [max]="product?.count"
-            (quantityChange)="_productDetailService.changeQuantity($event)"
+  @if (isProductNotFound) {
+    <app-empty
+      class="product-detail__empty"
+      [title]="_content.notFound.title"
+      [description]="_content.notFound.description"
+    />
+  } @else {
+    <div class="product-detail__inner">
+      <app-skeleton class="product-detail__img-wrapper" [loading]="isPageLoading">
+        @if (product?.img) {
+          <img
+            class="product-detail__img"
+            fill
+            [alt]="_content.image.alt"
+            [ngSrc]="product?.img || ''"
           />
+        }
+      </app-skeleton>
+
+      <div class="product-detail__content">
+        <div class="product-detail__header">
+          <h1 class="product-detail__heading text-4xl">
+            <app-skeleton [loading]="isPageLoading">
+              {{ product?.heading || _content.fallbackValue }}
+            </app-skeleton>
+          </h1>
+
+          <p class="product-detail__subheading">
+            <app-skeleton [loading]="isPageLoading">
+              {{ product?.subheading || _content.fallbackValue }}
+            </app-skeleton>
+          </p>
+
+          <div class="product-detail__price">
+            <app-skeleton [width]="'100px'" [loading]="isPageLoading">
+              @if (product) {
+                <app-price
+                  [currentPrice]="product.currentPrice || 0"
+                  [oldPrice]="product.oldPrice || 0"
+                  [discount]="product.discount || 0"
+                />
+              } @else {
+                {{ _content.fallbackValue }}
+              }
+            </app-skeleton>
+          </div>
+
+          <p class="product-detail__sku text-sm">
+            <app-skeleton [loading]="isPageLoading">
+              {{ _content.attributes.sku }} {{ product?.sku || _content.fallbackValue }}
+            </app-skeleton>
+          </p>
         </div>
 
-        <app-button
-          class="product-detail__cart-button"
-          [size]="'l'"
-          [disabled]="_isCartButtonDisabled()"
-          (click)="_addToCart()"
-          >{{ _content.addToCartButton }}</app-button
-        >
+        <div class="product-detail__body">
+          <p>
+            <app-skeleton [loading]="isPageLoading">
+              {{ product?.description || _content.fallbackValue }}
+            </app-skeleton>
+          </p>
+
+          <ul class="product-detail__list">
+            @for (attribute of _attributes; track attribute) {
+              <li>
+                <app-skeleton [loading]="isPageLoading">
+                  <strong class="product-detail__strong"
+                    >{{ _content.attributes[attribute] }}
+                  </strong>
+                  {{ product?.[attribute] || _content.fallbackValue }}
+                </app-skeleton>
+              </li>
+            }
+          </ul>
+
+          <div class="product-detail__quantity">
+            {{ _content.quantity.label }}
+
+            <app-quantity-counter
+              class="product-detail__quantity-counter"
+              [value]="_productDetailService.quantity()"
+              [max]="product?.count"
+              (quantityChange)="_productDetailService.changeQuantity($event)"
+            />
+          </div>
+
+          <app-button
+            class="product-detail__cart-button"
+            [size]="'l'"
+            [disabled]="_isCartButtonDisabled()"
+            (click)="_addToCart()"
+            >{{ _content.addToCartButton }}</app-button
+          >
+        </div>
       </div>
     </div>
-  </div>
+  }
 
   <app-router-link
     class="product-detail__back-button"

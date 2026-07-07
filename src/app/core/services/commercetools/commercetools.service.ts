@@ -6,6 +6,7 @@ import {
 } from '@commercetools/ts-client';
 import { type ApiRoot, createApiBuilderFromCtpClient } from '@commercetools/platform-sdk';
 
+import { delayAndErrorMiddleware } from './middlewares/delay-and-error';
 import { COMMERCETOOLS_CONFIG } from './commercetools.config';
 
 @Injectable({
@@ -42,6 +43,7 @@ export class CommercetoolsService {
     const client = new ClientBuilder()
       .withProjectKey(projectKey)
       .withClientCredentialsFlow(authMiddlewareOptions)
+      .withMiddleware(delayAndErrorMiddleware())
       .withHttpMiddleware(httpMiddlewareOptions)
       .withLoggerMiddleware()
       .build();

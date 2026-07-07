@@ -21,6 +21,7 @@
 
   &__img-wrapper {
     position: relative;
+    width: 100%;
     height: 100%;
     aspect-ratio: 2 / 3;
   }
@@ -31,6 +32,11 @@
 
   &__back-button {
     order: 1;
+  }
+
+  &__empty {
+    order: 2;
+    margin: auto;
   }
 
   &__header {

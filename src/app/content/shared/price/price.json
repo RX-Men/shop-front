@@ -1,0 +1,7 @@
+{
+  "aria": {
+    "discount": "Now is {currentPrice}. Original price is {oldPrice}",
+    "default": "Price is {currentPrice}",
+    "unavailable": "Product is unavailable at the moment"
+  }
+}

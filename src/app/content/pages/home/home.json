@@ -64,6 +64,14 @@
       ]
     }
   ],
+  "productLists": {
+    "new": {
+      "title": "New this week"
+    },
+    "trending": {
+      "title": "Trending now"
+    }
+  },
   "promo": {
     "title": "New on Marvel Unlimited",
     "subtitle": "Available Now",

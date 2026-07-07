@@ -1,58 +1,84 @@
 @let badge = _badge();
 @let computedTabIndex = tabIndex();
+@let skeletonThemeComputed = skeletonTheme();
 @let isOut = _isOut();
+@let isLoading = loading();
 
 <article
   class="product-card product-card_orientation_{{ orientation() }}"
   [attr.data-testid]="_testIds.root"
 >
   <header class="product-card__header">
-    <a
-      class="product-card__heading-link"
-      [routerLink]="detailsLink()"
-      [attr.tabindex]="computedTabIndex"
-      [attr.data-testid]="_testIds.headingLink"
+    <app-skeleton
+      class="product-card__heading-link-skeleton"
+      [theme]="skeletonThemeComputed"
+      [loading]="isLoading"
     >
-      <h3 class="product-card__heading text-2xl" [attr.data-testid]="_testIds.heading">
-        {{ heading() }}
-      </h3>
-    </a>
+      <a
+        class="product-card__heading-link"
+        [routerLink]="detailsLink()"
+        [attr.tabindex]="computedTabIndex"
+        [attr.data-testid]="_testIds.headingLink"
+      >
+        <h3 class="product-card__heading text-2xl" [attr.data-testid]="_testIds.heading">
+          {{ heading() }}
+        </h3>
+      </a>
+    </app-skeleton>
 
-    <p class="product-card__subheading" [attr.data-testid]="_testIds.subheading">
-      {{ subheading() }}
-    </p>
+    <app-skeleton
+      class="product-card__subheading"
+      [width]="'50%'"
+      [theme]="skeletonThemeComputed"
+      [loading]="isLoading"
+    >
+      <p [attr.data-testid]="_testIds.subheading">
+        {{ subheading() }}
+      </p>
+    </app-skeleton>
   </header>
 
-  <div class="product-card__img-wrapper">
-    @if (badge) {
-      <app-product-badge
-        class="product-card__badge"
-        [status]="`${isOut ? 'disabled' : 'active'}`"
-        >{{ badge }}</app-product-badge
-      >
-    }
+  <app-skeleton
+    class="product-card__img-wrapper-skeleton"
+    [height]="'100%'"
+    [theme]="skeletonThemeComputed"
+    [loading]="isLoading"
+  >
+    <div class="product-card__img-wrapper">
+      @if (badge) {
+        <app-product-badge
+          class="product-card__badge"
+          [status]="`${isOut ? 'disabled' : 'active'}`"
+          >{{ badge }}</app-product-badge
+        >
+      }
 
-    <div class="product-card__img-inner">
-      <img
-        class="product-card__img"
-        alt="Cover"
-        fill
-        [ngSrc]="img()"
-        [attr.data-testid]="_testIds.img"
-      />
+      <div class="product-card__img-inner">
+        <img
+          class="product-card__img"
+          fill
+          [alt]="_content.image.alt"
+          [ngSrc]="img()"
+          [attr.data-testid]="_testIds.img"
+        />
+      </div>
     </div>
-  </div>
+  </app-skeleton>
 
-  <app-price
+  <app-skeleton
     class="product-card__price"
-    [currentPrice]="currentPrice()"
-    [oldPrice]="oldPrice()"
-    [discount]="discount()"
-  />
+    [width]="'60px'"
+    [theme]="skeletonThemeComputed"
+    [loading]="isLoading"
+  >
+    <app-price [currentPrice]="currentPrice()" [oldPrice]="oldPrice()" [discount]="discount()" />
+  </app-skeleton>
 
   <footer class="product-card__footer">
-    <app-button class="product-card__button" [tabIndex]="computedTabIndex" [disabled]="isOut"
-      >Add to cart</app-button
-    >
+    <app-skeleton [theme]="skeletonThemeComputed" [loading]="isLoading">
+      <app-button class="product-card__button" [tabIndex]="computedTabIndex" [disabled]="isOut">{{
+        _content.actions.addToCart
+      }}</app-button>
+    </app-skeleton>
   </footer>
 </article>

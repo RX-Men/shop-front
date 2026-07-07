@@ -1,5 +1,10 @@
 import { ApplicationConfig, provideBrowserGlobalErrorListeners } from '@angular/core';
-import { provideRouter, withComponentInputBinding, withHashLocation } from '@angular/router';
+import {
+  provideRouter,
+  withComponentInputBinding,
+  withHashLocation,
+  withInMemoryScrolling,
+} from '@angular/router';
 
 import {
   COMMERCETOOLS_CONFIG,
@@ -10,7 +15,14 @@ import { routes } from './app.routes';
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
-    provideRouter(routes, withComponentInputBinding(), withHashLocation()),
+    provideRouter(
+      routes,
+      withComponentInputBinding(),
+      withHashLocation(),
+      withInMemoryScrolling({
+        scrollPositionRestoration: 'top',
+      }),
+    ),
     { provide: COMMERCETOOLS_CONFIG, useFactory: commercetoolsConfigFactory },
   ],
 };

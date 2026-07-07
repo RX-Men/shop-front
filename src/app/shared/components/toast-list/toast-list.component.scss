@@ -1,0 +1,46 @@
+@keyframes enter {
+  from {
+    opacity: 0;
+    transform: translateX(var(--spacing-x4));
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes leave {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  to {
+    opacity: 0;
+    transform: translateX(var(--spacing-x4));
+  }
+}
+
+.toast-list {
+  position: fixed;
+  inset-block: var(--spacing-x4);
+  inset-inline-end: var(--spacing-x4);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  gap: var(--spacing-x4);
+  max-width: 384px;
+  width: 100%;
+  height: calc(100% - var(--spacing-x4) * 2);
+  pointer-events: none;
+
+  &_enter {
+    animation: enter var(--transition-duration-basic) var(--transition-easing-func);
+  }
+
+  &_leave {
+    animation: leave var(--transition-duration-basic) var(--transition-easing-func);
+  }
+}

@@ -1,0 +1,14 @@
+@let isLoading = loading();
+
+<div
+  class="skeleton skeleton_theme_{{ theme() }}"
+  [class.skeleton_loading]="isLoading"
+  [ariaHidden]="isLoading"
+  [inert]="isLoading"
+  [style.width]="width()"
+  [style.height]="height()"
+>
+  <div class="skeleton__wrapper" [class.skeleton__wrapper_loading]="isLoading">
+    <ng-content />
+  </div>
+</div>

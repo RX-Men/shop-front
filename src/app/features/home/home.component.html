@@ -1,6 +1,13 @@
+@let productsSkeleton = _productsSkeleton();
+@let isPageLoading = _isPageLoading();
+
 <app-hero [carouselBanners]="_hero" />
 
-<app-product-list [title]="'New this week'" [products]="_newProducts()" />
+<app-product-list
+  [title]="_content.productLists.new.title"
+  [products]="isPageLoading ? productsSkeleton : _newProducts()"
+  [loading]="isPageLoading"
+/>
 
 <app-promo-section
   [title]="_promo.title"
@@ -10,4 +17,8 @@
   [link]="_promo.link"
 />
 
-<app-product-list [title]="'Trending now'" [products]="_trendingProducts()" />
+<app-product-list
+  [title]="_content.productLists.trending.title"
+  [products]="isPageLoading ? productsSkeleton : _trendingProducts()"
+  [loading]="isPageLoading"
+/>

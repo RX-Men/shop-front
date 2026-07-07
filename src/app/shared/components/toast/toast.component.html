@@ -1,0 +1,18 @@
+<div class="toast" role="alert">
+  <app-icon class="toast__icon toast__icon_{{ status() }}" [name]="_icon()" />
+
+  <div>
+    <div class="toast__header text-base">
+      {{ heading() }}
+
+      <app-icon-button
+        class="toast__close-button"
+        [icon]="'close'"
+        [label]="_content.closeButton.label"
+        (click)="closeChange.emit(id())"
+      />
+    </div>
+
+    <p class="toast__description text-sm">{{ description() }}</p>
+  </div>
+</div>

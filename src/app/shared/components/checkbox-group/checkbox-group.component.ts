@@ -1,13 +1,14 @@
 import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 
-import { CheckboxComponent } from '@/app/shared/components/checkbox';
+import { CheckboxComponent } from '../checkbox/checkbox.component';
+import { SkeletonComponent } from '../skeleton';
 
 import type { CheckboxGroupItem } from './checkbox-group.types';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-checkbox-group',
-  imports: [CheckboxComponent],
+  imports: [CheckboxComponent, SkeletonComponent],
   templateUrl: './checkbox-group.component.html',
   styleUrl: './checkbox-group.component.scss',
 })
@@ -16,6 +17,7 @@ export class CheckboxGroupComponent {
   readonly name = input.required<ReturnType<CheckboxComponent['name']>>();
   readonly items = input.required<CheckboxGroupItem[]>();
   readonly checked = input<Set<string>>(new Set());
+  readonly loading = input<boolean>();
 
   readonly checkedChange = output<NonNullable<ReturnType<CheckboxComponent['value']>>>();
 

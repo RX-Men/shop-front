@@ -1,15 +1,19 @@
+import priceContent from '@/app/content/shared/price/price.json' with { type: 'json' };
+
 export const getPriceAriaLabel = (
   currentPrice: string | null,
   oldPrice: string | null,
   withDiscount: boolean,
 ): string => {
   if (withDiscount && currentPrice && oldPrice) {
-    return `Now is ${currentPrice}. Original price is ${oldPrice}`;
+    return priceContent.aria.discount
+      .replace('{currentPrice}', currentPrice)
+      .replace('{oldPrice}', oldPrice);
   }
 
   if (currentPrice) {
-    return `Price is ${currentPrice}`;
+    return priceContent.aria.default.replace('{currentPrice}', currentPrice);
   }
 
-  return 'Product is unavailable at the moment';
+  return priceContent.aria.unavailable;
 };

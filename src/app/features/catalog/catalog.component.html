@@ -1,5 +1,7 @@
 @let sort = _catalogService.sort();
 @let limit = _catalogService.limit();
+@let isCatalogLoading = _isCatalogLoading();
+@let areProductsLoading = _catalogService.loading().products;
 
 <ng-template #toolbar>
   <app-catalog-toolbar
@@ -13,8 +15,9 @@
 <ng-template #filters>
   <app-catalog-filters
     class="catalog__filters"
-    [groups]="_catalogService.filters()"
+    [groups]="isCatalogLoading ? _filtersSkeleton() : _catalogService.filters()"
     [checkedByGroup]="_catalogService.selectedFilters()"
+    [loading]="isCatalogLoading || _catalogService.loading().filters"
     (checkedChange)="_catalogService.changeFilters($event)"
     (resetClick)="_catalogService.resetFilters()"
   />
@@ -27,7 +30,9 @@
 
   <div>
     <div class="catalog__grid-header">
-      <p>{{ _totalCountLabel() }}</p>
+      <app-skeleton [loading]="isCatalogLoading || areProductsLoading">
+        <p>{{ _totalCountLabel() }}</p>
+      </app-skeleton>
 
       <div class="catalog__toolbar-wrapper">
         <ng-container [ngTemplateOutlet]="toolbar" />
@@ -46,15 +51,22 @@
       </app-button>
     </div>
 
-    <app-catalog-grid class="catalog__grid" [products]="_catalogService.products()" />
-
-    <app-pagination
-      class="catalog__pagination"
-      [current]="_catalogService.page()"
-      [pageSize]="_pageSize()"
-      [total]="_catalogService.total()"
-      (pageChange)="_catalogService.changePage($event)"
+    <app-catalog-grid
+      class="catalog__grid"
+      [products]="isCatalogLoading ? _productsSkeleton() : _catalogService.products()"
+      [loading]="isCatalogLoading || areProductsLoading"
     />
+
+    <app-skeleton class="catalog__pagination" [loading]="isCatalogLoading || areProductsLoading">
+      @if (_catalogService.totalPageCount() > 1) {
+        <app-pagination
+          [current]="_catalogService.page()"
+          [pageSize]="_pageSize()"
+          [total]="_catalogService.total()"
+          (pageChange)="_changePage($event)"
+        />
+      }
+    </app-skeleton>
   </div>
 </div>
 

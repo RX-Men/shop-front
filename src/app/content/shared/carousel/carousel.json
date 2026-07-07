@@ -1,0 +1,15 @@
+{
+  "aria": {
+    "carouselRoleDescription": "carousel",
+    "slideRoleDescription": "slide",
+    "slideLabel": "{index} of {total}",
+    "pickerGroupLabel": "Choose slide to display",
+    "pickerControlLabel": "Slide {index}"
+  },
+  "controls": {
+    "previousSlideLabel": "Previous slide",
+    "nextSlideLabel": "Next slide",
+    "startAutoplayLabel": "Start slide show",
+    "stopAutoplayLabel": "Stop slide show"
+  }
+}

@@ -15,6 +15,8 @@ import { BehaviorSubject, interval, switchMap } from 'rxjs';
 
 import { PickerControlComponent } from './components/picker-control';
 
+import carouselContent from '@/app/content/shared/carousel/carousel.json' with { type: 'json' };
+
 import { APP_TEST_IDS } from '@/app/app.test-ids';
 import { CAROUSEL_TYPE, MIN_SWIPE_SIZE, SWIPE_DIRECTION } from './carousel.constants';
 
@@ -54,7 +56,9 @@ export class CarouselComponent<T extends object> implements OnInit, OnDestroy {
     const isStopped = this._isAutoplayingManuallyStopped();
     return {
       icon: isStopped ? 'play-circle' : 'pause-circle',
-      label: isStopped ? 'Start slide show' : 'Stop slide show',
+      label: isStopped
+        ? carouselContent.controls.startAutoplayLabel
+        : carouselContent.controls.stopAutoplayLabel,
     };
   });
 
@@ -86,6 +90,7 @@ export class CarouselComponent<T extends object> implements OnInit, OnDestroy {
   protected readonly _currentIndex = signal<number>(0);
 
   protected readonly _testIds = APP_TEST_IDS.carousel;
+  protected readonly _content = carouselContent;
 
   private _clientX = {
     start: 0,
@@ -192,6 +197,14 @@ export class CarouselComponent<T extends object> implements OnInit, OnDestroy {
   protected readonly _handlePickerControl = (index: number): void => {
     this._currentIndex.set(index);
   };
+
+  protected readonly _getSlideLabel = (index: number, total: number): string =>
+    this._content.aria.slideLabel
+      .replace('{index}', String(index))
+      .replace('{total}', String(total));
+
+  protected readonly _getPickerControlLabel = (index: number): string =>
+    this._content.aria.pickerControlLabel.replace('{index}', String(index));
 
   protected readonly _toggleAutoplayButton = (): void => {
     this._isAutoplayingManuallyStopped.update((isPlaying) => !isPlaying);

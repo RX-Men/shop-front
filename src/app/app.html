@@ -5,3 +5,8 @@
 </main>
 
 <app-footer />
+
+<app-toast-list
+  [items]="_notificationService.notifications()"
+  (closeChange)="_notificationService.remove($event)"
+/>

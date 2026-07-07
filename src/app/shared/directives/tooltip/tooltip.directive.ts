@@ -1,4 +1,12 @@
-import { ComponentRef, Directive, effect, ElementRef, inject, input } from '@angular/core';
+import {
+  ComponentRef,
+  Directive,
+  effect,
+  ElementRef,
+  inject,
+  input,
+  type OnDestroy,
+} from '@angular/core';
 import { ConnectionPositionPair, Overlay, OverlayRef } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
 
@@ -15,7 +23,7 @@ const STEP = 16;
     '(blur)': '_hide()',
   },
 })
-export class TooltipDirective {
+export class TooltipDirective implements OnDestroy {
   readonly tooltipText = input.required<ReturnType<TooltipComponent['text']>>();
   readonly tooltipPosition = input<ReturnType<TooltipComponent['position']>>('block-start');
   readonly tooltipColor = input<ReturnType<TooltipComponent['color']>>('dark');
@@ -31,6 +39,10 @@ export class TooltipDirective {
       const text = this.tooltipText();
       this._componentRef?.instance.text.set(text);
     });
+  }
+
+  ngOnDestroy(): void {
+    this._hide();
   }
 
   protected readonly _show = (): void => {

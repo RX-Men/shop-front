@@ -1,0 +1,26 @@
+{
+  "headings": {
+    "ecommerce": "E-commerce Error",
+    "graphql": "Commercetools GraphQL Error",
+    "network": "Network Error"
+  },
+  "network": {
+    "description": "Network disconnection. Please check your internet connection."
+  },
+  "http": {
+    "statusDescriptions": {
+      "401": "Your commercetools session has expired. Re-authenticating...",
+      "403": "Access denied. You do not have permission for this resource",
+      "404": "The requested product or category was not found",
+      "409": "Concurrent modification error. Please refresh the page",
+      "500": "Commercetools servers are temporarily unavailable. Try again later",
+      "503": "Commercetools servers are temporarily unavailable. Try again later"
+    },
+    "defaultDescription": "E-commerce Error ({status}): {message}"
+  },
+  "fallbacks": {
+    "fetchStatus": "Fetch",
+    "graphqlMessage": "GraphQL processing error",
+    "responseMessage": "Unknown commercetools error"
+  }
+}

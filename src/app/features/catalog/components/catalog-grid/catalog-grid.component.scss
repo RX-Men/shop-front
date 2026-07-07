@@ -22,4 +22,8 @@
   &__item {
     min-height: 450px;
   }
+
+  &__empty {
+    margin-block: calc(var(--spacing-x20) * 2);
+  }
 }

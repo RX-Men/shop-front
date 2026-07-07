@@ -18,8 +18,8 @@
       column-gap: var(--spacing-x3);
 
       #{$this}__img-wrapper {
-        grid-row: 1 / 4;
         height: 100%;
+        aspect-ratio: auto;
       }
 
       #{$this}__header,
@@ -54,11 +54,13 @@
     margin-block: var(--spacing-x3);
   }
 
-  &__heading-link {
+  &__heading-link-skeleton {
     order: 2;
-    min-height: 48px;
+    min-height: 64px;
     margin-block-start: var(--spacing-x1);
+  }
 
+  &__heading-link {
     @include mix.transition(color);
 
     @include mix.hover {
@@ -79,10 +81,14 @@
     color: var(--neutral-600);
   }
 
+  &__img-wrapper-skeleton {
+    order: 1;
+    grid-row: 1 / -1;
+  }
+
   &__img-wrapper {
     position: relative;
     overflow: hidden;
-    order: 1;
     width: 100%;
     aspect-ratio: 8 / 9;
   }

@@ -43,8 +43,7 @@ export class SearchService {
       }
 
       return SearchAdapter.toFrontendSearchResultsByText(rawDto as GetProductsSearchByTextQuery);
-    } catch (error) {
-      console.error(error);
+    } catch {
       return {
         results: null,
         total: 0,

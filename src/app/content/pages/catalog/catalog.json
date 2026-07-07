@@ -7,6 +7,12 @@
     "title": "Filters",
     "reset": "Reset all"
   },
+  "grid": {
+    "emptyState": {
+      "title": "No results found",
+      "description": "We couldn’t find anything matching your filters. Try adjusting your search criteria or clearing filters"
+    }
+  },
   "toolbar": {
     "productCountLabelSingular": "product",
     "productCountLabelPlural": "products",
