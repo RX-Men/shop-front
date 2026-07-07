@@ -8,6 +8,12 @@ When the world's best stories meet modern web technology, you get **RX-Men**. We
 
 Visit the deployed frontend here: [ShopFront Demo](https://rx-men.github.io/shop-front/)
 
+## Sprint 4 Video Proof 🎬
+
+Short demo of the Sprint 4 requirements: 404 page, loading states, and API error handling.
+
+[Watch the video](https://youtu.be/OGsbVlev3HA)
+
 ## Project Resources 🧭
 
 - **Prototype:** [Miro Board](https://miro.com/app/board/uXjVHVIz4eA=/?track=true&utm_source=notification&utm_medium=email&utm_campaign=approve-request&utm_content=go-to-miro&lid=tnjl56fagmrc)
