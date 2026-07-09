@@ -1,3 +1,4 @@
+import { AuthService } from '@/app/core/services/auth.service';
 import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
 
 import headerContent from '@/app/content/layout/header/header.json' with { type: 'json' };
@@ -45,6 +46,8 @@ export class HeaderComponent {
   protected readonly _testIds = APP_TEST_IDS.header;
   protected readonly _routes = ROUTES;
 
+  protected readonly _authService = inject(AuthService);
+
   protected readonly searchWidgetToggleButton = computed(() =>
     getSearchWidgetData(
       this._uiService.isDrawerOpen(DRAWER_KEY.search),
@@ -63,4 +66,7 @@ export class HeaderComponent {
       this._uiService.openDrawer(DRAWER_KEY.search);
     }
   };
+  protected _logout(): void {
+    this._authService.logout();
+  }
 }

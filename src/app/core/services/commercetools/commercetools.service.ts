@@ -1,5 +1,6 @@
 import type { AuthProvider } from '@/app/core/providers/auth-provider';
 import type { CartProvider } from '@/app/core/providers/cart-provider';
+import { NotificationService } from '@/app/core/services/notification';
 import type {
   BootstrapStrategy,
   CustomerTokenData,
@@ -31,6 +32,7 @@ export class CommercetoolsService implements AuthProvider, CartProvider {
 
   private readonly _config = inject(COMMERCETOOLS_CONFIG);
   private readonly _storage = inject(LocalStorageService);
+  private readonly _notification = inject(NotificationService);
 
   private readonly _tokenCache: TokenCache = {
     get: async () => this._storage.getItem('customerToken') ?? undefined,
@@ -145,7 +147,7 @@ export class CommercetoolsService implements AuthProvider, CartProvider {
 
     const client = this._settings[flow](authOptions)
       .withHttpMiddleware(httpOptions)
-      .withMiddleware(delayAndErrorMiddleware())
+      .withMiddleware(delayAndErrorMiddleware(this._notification))
       .withLoggerMiddleware()
       .build();
 

@@ -6,6 +6,7 @@ import { InputComponent } from '@/app/shared/components/input';
 import { ChangeDetectionStrategy, Component, DestroyRef, inject, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { finalize } from 'rxjs';
 import { NAME_PATTERN } from './sign-up.constants';
 import { SignUpPayload } from './sign-up.types';
@@ -30,6 +31,7 @@ export class SignUpComponent {
 
   readonly isLoading = signal(false);
   readonly serverError = signal('');
+  private readonly _router = inject(Router);
 
   readonly signUpForm = new FormGroup(
     {
@@ -136,6 +138,7 @@ export class SignUpComponent {
       .subscribe({
         next: () => {
           this.submitted.set(true);
+          this._router.navigate(['/']);
         },
         error: (error: Error) => {
           if (error.message === 'EMAIL_ALREADY_EXISTS') {
