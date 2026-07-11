@@ -19,13 +19,23 @@
             <h2 class="text-2xl">{{ _data.profilePopover.title }}</h2>
 
             <div class="header__popover-header-links">
-              <app-router-link [routerLink]="_routes.signIn" [size]="'s'">
-                {{ _data.profilePopover.signIn }}
-              </app-router-link>
+              @if (_authService.isAuthenticated()) {
+                <app-router-link
+                  [routerLink]="_routes.home"
+                  [size]="'s'"
+                  [color]="'dark'"
+                  (click)="_logout()"
+                  >{{ _data.profilePopover.logout }}
+                </app-router-link>
+              } @else {
+                <app-router-link [routerLink]="_routes.signIn" [size]="'s'">
+                  {{ _data.profilePopover.signIn }}
+                </app-router-link>
 
-              <app-router-link [routerLink]="_routes.signUp" [size]="'s'" [color]="'dark'">{{
-                _data.profilePopover.signUp
-              }}</app-router-link>
+                <app-router-link [routerLink]="_routes.signUp" [size]="'s'" [color]="'dark'"
+                  >{{ _data.profilePopover.signUp }}
+                </app-router-link>
+              }
             </div>
           </div>
 
@@ -37,8 +47,8 @@
               [iconPlacement]="'start'"
               [variant]="'text'"
               [color]="'dark'"
-              >{{ _data.profilePopover.profile }}</app-router-link
-            >
+              >{{ _data.profilePopover.profile }}
+            </app-router-link>
           </div>
         </app-popover>
       </div>
@@ -74,8 +84,8 @@
               [variant]="'text'"
               [size]="'l'"
               [color]="'light'"
-              >{{ navLink.name }}</app-router-link
-            >
+              >{{ navLink.name }}
+            </app-router-link>
           </li>
         }
       </ul>

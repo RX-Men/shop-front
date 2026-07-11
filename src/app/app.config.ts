@@ -1,3 +1,6 @@
+import { AUTH_PROVIDER } from '@/app/core/providers/auth-provider';
+import { CART_PROVIDER } from '@/app/core/providers/cart-provider';
+import { CommercetoolsService } from '@/app/core/services/commercetools';
 import { ApplicationConfig, provideBrowserGlobalErrorListeners } from '@angular/core';
 import {
   provideRouter,
@@ -24,5 +27,13 @@ export const appConfig: ApplicationConfig = {
       }),
     ),
     { provide: COMMERCETOOLS_CONFIG, useFactory: commercetoolsConfigFactory },
+    {
+      provide: AUTH_PROVIDER,
+      useExisting: CommercetoolsService,
+    },
+    {
+      provide: CART_PROVIDER,
+      useExisting: CommercetoolsService,
+    },
   ],
 };

@@ -1,7 +1,5 @@
-import { inject } from '@angular/core';
-import type { MiddlewareRequest, MiddlewareResponse, Next } from '@commercetools/ts-client';
-
 import errorContent from '@/app/content/services/commercetools/errors.json' with { type: 'json' };
+import type { MiddlewareRequest, MiddlewareResponse, Next } from '@commercetools/ts-client';
 
 import { NotificationService } from '../../../notification';
 
@@ -9,8 +7,7 @@ const RESPONSE_DELAY_MS = 700;
 const NETWORK_ERROR_NOTIFICATION_COOLDOWN_MS = 3000;
 const HTTP_STATUS_DESCRIPTIONS: Record<string, string> = errorContent.http.statusDescriptions;
 
-export const delayAndErrorMiddleware = () => {
-  const notificationService = inject(NotificationService);
+export const delayAndErrorMiddleware = (notification: NotificationService) => {
   let lastNetworkErrorNotificationAt = 0;
 
   return (next: Next) =>
@@ -22,7 +19,7 @@ export const delayAndErrorMiddleware = () => {
       } catch (error) {
         lastNetworkErrorNotificationAt = handleRequestError(
           error,
-          notificationService,
+          notification,
           lastNetworkErrorNotificationAt,
         );
         throw error;
@@ -30,7 +27,7 @@ export const delayAndErrorMiddleware = () => {
 
       await new Promise((resolve) => setTimeout(resolve, RESPONSE_DELAY_MS));
 
-      handleResponseErrors(response, notificationService);
+      handleResponseErrors(response, notification);
 
       return response;
     };

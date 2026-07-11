@@ -1,29 +1,37 @@
-import { ButtonComponent } from '@/app/shared/components/button';
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
-import { DatePickerComponent } from '@/app/shared/components/date-picker';
-import { InputComponent } from '@/app/shared/components/input';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import signUpContent from '@/app/content/pages/sign-up/sign-up.json' with { type: 'json' };
 import { AuthService } from '@/app/core/services/auth.service';
-import { MAX_AGE, MIN_AGE, NAME_PATTERN, POSTAL_CODE_PATTERNS } from './sign-up.constants';
+import { AlertComponent } from '@/app/shared/components/alert';
+import { ButtonComponent } from '@/app/shared/components/button';
+import { InputComponent } from '@/app/shared/components/input';
+import { ChangeDetectionStrategy, Component, DestroyRef, inject, signal } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { finalize } from 'rxjs';
+import { NAME_PATTERN } from './sign-up.constants';
 import { SignUpPayload } from './sign-up.types';
-import {
-  maxAgeValidator,
-  minAgeValidator,
-  passwordMatchValidator,
-  postalCodeValidator,
-} from './sign-up.utils';
+import { passwordMatchValidator } from './sign-up.utils';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [ButtonComponent, DatePickerComponent, InputComponent, ReactiveFormsModule],
+  imports: [ButtonComponent, InputComponent, ReactiveFormsModule, AlertComponent],
   selector: 'app-sign-up',
   templateUrl: './sign-up.component.html',
   styleUrl: './sign-up.component.scss',
 })
 export class SignUpComponent {
   readonly content = signUpContent;
+  private readonly _emailErrorMap: Record<string, string> = {
+    required: this.content.errors.email.required,
+    email: this.content.errors.email.email,
+    duplicate: 'A customer with this email already exists.',
+  };
   private readonly _authService = inject(AuthService);
+  private readonly _destroyRef = inject(DestroyRef);
+
+  readonly isLoading = signal(false);
+  readonly serverError = signal('');
+  private readonly _router = inject(Router);
 
   readonly signUpForm = new FormGroup(
     {
@@ -32,14 +40,6 @@ export class SignUpComponent {
       confirmPassword: new FormControl('', [Validators.required]),
       firstName: new FormControl('', [Validators.required, Validators.pattern(NAME_PATTERN)]),
       lastName: new FormControl('', [Validators.required, Validators.pattern(NAME_PATTERN)]),
-      dateOfBirth: new FormControl('', [
-        Validators.required,
-        minAgeValidator(MIN_AGE),
-        maxAgeValidator(MAX_AGE),
-      ]),
-      address: new FormControl('', [Validators.required]),
-      country: new FormControl('', [Validators.required]),
-      postalCode: new FormControl('', [Validators.required, postalCodeValidator]),
     },
     {
       validators: [passwordMatchValidator],
@@ -51,14 +51,13 @@ export class SignUpComponent {
   getEmailErrorText(): string {
     const errors = this.signUpForm.controls.email.errors;
 
-    if (errors?.['required']) {
-      return this.content.errors.email.required;
-    }
-    if (errors?.['email']) {
-      return this.content.errors.email.email;
+    if (!errors) {
+      return '';
     }
 
-    return '';
+    const error = Object.keys(this._emailErrorMap).find((key) => errors[key]);
+
+    return error ? this._emailErrorMap[error] : '';
   }
 
   getPasswordErrorText(): string {
@@ -113,87 +112,45 @@ export class SignUpComponent {
     return '';
   }
 
-  getDateOfBirthErrorText(): string {
-    const errors = this.signUpForm.controls.dateOfBirth.errors;
-
-    if (errors?.['required']) {
-      return this.content.errors.dateOfBirth.required;
-    }
-    if (errors?.['minAge']) {
-      return this.content.errors.dateOfBirth.minAge.replace('{minAge}', errors['minAge'].required);
-    }
-    if (errors?.['maxAge']) {
-      return this.content.errors.dateOfBirth.maxAge;
-    }
-
-    return '';
-  }
-
-  getAddressErrorText(): string {
-    const errors = this.signUpForm.controls.address.errors;
-
-    if (errors?.['required']) {
-      return this.content.errors.address.required;
-    }
-
-    return '';
-  }
-
-  getCountryErrorText(): string {
-    const errors = this.signUpForm.controls.country.errors;
-
-    if (errors?.['required']) {
-      return this.content.errors.country.required;
-    }
-
-    return '';
-  }
-
-  getPostalCodeErrorText(): string {
-    const errors = this.signUpForm.controls.postalCode.errors;
-
-    if (errors?.['required']) {
-      return this.content.errors.postalCode.required;
-    }
-
-    if (errors?.['postalCode']) {
-      const country: string = errors['postalCode'].country;
-      const example = POSTAL_CODE_PATTERNS[country]?.example;
-      return this.content.errors.postalCode.format.replace('{example}', example ?? '');
-    }
-
-    return '';
-  }
-
-  onCountryChange(event: Event): void {
-    const value = (event.target as HTMLSelectElement).value;
-    this.signUpForm.controls.country.setValue(value);
-    this.signUpForm.controls.country.markAsDirty();
-    this.signUpForm.controls.postalCode.updateValueAndValidity();
-  }
-
   onSubmit(): void {
     if (this.signUpForm.invalid) {
       this.signUpForm.markAllAsTouched();
       return;
     }
 
-    const { email, password, firstName, lastName, dateOfBirth, address, country, postalCode } =
-      this.signUpForm.getRawValue();
+    const { email, password, firstName, lastName } = this.signUpForm.getRawValue();
 
     const payload: SignUpPayload = {
       email: email!,
       password: password!,
       firstName: firstName!,
       lastName: lastName!,
-      dateOfBirth: dateOfBirth!,
-      addresses: [{ streetName: address!, country: country!, postalCode: postalCode! }],
-      defaultShippingAddress: 0,
-      defaultBillingAddress: 0,
     };
+    this.isLoading.set(true);
+    this.serverError.set('');
 
-    this._authService.register(payload);
-    this.submitted.set(true);
+    this._authService
+      .register(payload)
+      .pipe(
+        finalize(() => this.isLoading.set(false)),
+        takeUntilDestroyed(this._destroyRef),
+      )
+      .subscribe({
+        next: () => {
+          this.submitted.set(true);
+          this._router.navigate(['/']);
+        },
+        error: (error: Error) => {
+          if (error.message === 'EMAIL_ALREADY_EXISTS') {
+            this.signUpForm.controls.email.setErrors({
+              duplicate: true,
+            });
+            this.signUpForm.controls.email.markAsTouched();
+          } else {
+            this.serverError.set('Something went wrong. Please try again.');
+          }
+        },
+      });
   }
 
   canDeactivate(): boolean {

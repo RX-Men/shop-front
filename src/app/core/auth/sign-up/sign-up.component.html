@@ -92,96 +92,16 @@
           (blurred)="signUpForm.controls.lastName.markAsTouched()"
         />
       </div>
-      <div class="sign-up__date-field">
-        <app-date-picker
-          min="1900-01-01"
-          [value]="signUpForm.controls.dateOfBirth.value ?? ''"
-          [required]="true"
-          (valueChange)="
-            signUpForm.controls.dateOfBirth.setValue($event);
-            signUpForm.controls.dateOfBirth.markAsDirty();
-            signUpForm.controls.dateOfBirth.markAsTouched()
-          "
-          >{{ content.sections.personalInfo.fields.dateOfBirth.label }}</app-date-picker
-        >
-        @if (
-          signUpForm.controls.dateOfBirth.invalid &&
-          (signUpForm.controls.dateOfBirth.touched || signUpForm.controls.dateOfBirth.dirty)
-        ) {
-          <span class="sign-up__date-error">{{ getDateOfBirthErrorText() }}</span>
-        }
-      </div>
     </div>
   </fieldset>
 
-  <fieldset class="sign-up__section">
-    <legend class="sign-up__section-title">{{ content.sections.address.title }}</legend>
-    <div class="sign-up__fields">
-      <app-input
-        [label]="content.sections.address.fields.address.label"
-        [placeholder]="content.sections.address.fields.address.placeholder"
-        [required]="true"
-        [value]="signUpForm.controls.address.value ?? ''"
-        [error]="
-          signUpForm.controls.address.invalid &&
-          (signUpForm.controls.address.touched || signUpForm.controls.address.dirty)
-        "
-        [errorText]="getAddressErrorText()"
-        (valueChange)="
-          signUpForm.controls.address.setValue($event); signUpForm.controls.address.markAsDirty()
-        "
-        (blurred)="signUpForm.controls.address.markAsTouched()"
-      />
-      <div class="sign-up__select">
-        <label class="sign-up__select-label" for="country">
-          {{ content.sections.address.fields.country.label }}
-          <span class="sign-up__select-required" aria-hidden="true">*</span>
-        </label>
-        <select
-          class="sign-up__select-native"
-          id="country"
-          [class.sign-up__select-native_error]="
-            signUpForm.controls.country.invalid &&
-            (signUpForm.controls.country.touched || signUpForm.controls.country.dirty)
-          "
-          (change)="onCountryChange($event)"
-          (blur)="signUpForm.controls.country.markAsTouched()"
-        >
-          <option value="" disabled selected>
-            {{ content.sections.address.fields.country.placeholder }}
-          </option>
-          @for (option of content.sections.address.fields.country.options; track option.value) {
-            <option [value]="option.value">{{ option.label }}</option>
-          }
-        </select>
-        @if (
-          signUpForm.controls.country.invalid &&
-          (signUpForm.controls.country.touched || signUpForm.controls.country.dirty)
-        ) {
-          <span class="sign-up__field-error">{{ getCountryErrorText() }}</span>
-        }
-      </div>
-      <app-input
-        [label]="content.sections.address.fields.postalCode.label"
-        [required]="true"
-        [value]="signUpForm.controls.postalCode.value ?? ''"
-        [error]="
-          signUpForm.controls.postalCode.invalid &&
-          (signUpForm.controls.postalCode.touched || signUpForm.controls.postalCode.dirty)
-        "
-        [errorText]="getPostalCodeErrorText()"
-        (valueChange)="
-          signUpForm.controls.postalCode.setValue($event);
-          signUpForm.controls.postalCode.markAsDirty()
-        "
-        (blurred)="signUpForm.controls.postalCode.markAsTouched()"
-      />
-    </div>
-  </fieldset>
+  @if (serverError()) {
+    <app-alert [message]="serverError()" />
+  }
 
-  <div class="sign-up__actions">
-    <app-button type="submit" [size]="'l'">{{ content.actions.submit }}</app-button>
-  </div>
+  <app-button type="submit" [size]="'l'" [loading]="isLoading()">{{
+    content.actions.submit
+  }}</app-button>
 
   @if (submitted()) {
     <div class="sign-up__success" role="status">{{ content.messages.success }}</div>
