@@ -1,18 +1,18 @@
 import type { AuthProvider } from '@/app/core/providers/auth-provider';
 import type { CartProvider } from '@/app/core/providers/cart-provider';
 import { NotificationService } from '@/app/core/services/notification';
-import type {
-  BootstrapStrategy,
-  CustomerTokenData,
-  FlowOptionsMap,
-  Settings,
-} from './commercetools.types';
-import { LocalStorageService } from '@/app/core/services/local-storage.service';
+import type { CustomerTokenData, FlowOptionsMap, Settings } from './commercetools.types';
+import { LocalStorageService, type StorageKey } from '@/app/core/services/local-storage.service';
 import { inject, Injectable } from '@angular/core';
 import {
   type ApiRoot,
   type ByProjectKeyRequestBuilder,
+  type Cart,
   createApiBuilderFromCtpClient,
+  type Customer,
+  type MyCartUpdateAction,
+  type MyCustomerDraft,
+  type MyCustomerSignin,
 } from '@commercetools/platform-sdk';
 import {
   type AuthMiddlewareOptions,
@@ -33,45 +33,29 @@ export class CommercetoolsService implements AuthProvider, CartProvider {
   private readonly _config = inject(COMMERCETOOLS_CONFIG);
   private readonly _storage = inject(LocalStorageService);
   private readonly _notification = inject(NotificationService);
+  private readonly _httpClient = fetch;
 
-  private readonly _tokenCache: TokenCache = {
-    get: async () => this._storage.getItem('customerToken') ?? undefined,
-    set: async (cache) => this._storage.setItem('customerToken', cache),
-  };
-  private readonly _anonymousTokenCache: TokenCache = {
-    get: async () => this._storage.getItem('anonymousId') ?? undefined,
-    set: async (cache) => this._storage.setItem('anonymousId', cache),
-  };
+  private readonly _tokenCache = this._createTokenCache('customerToken');
+  private readonly _anonymousTokenCache = this._createTokenCache('anonymousId');
+
+  private _createTokenCache(key: StorageKey): TokenCache {
+    return {
+      get: async () => this._storage.getItem(key) ?? undefined,
+      set: async (cache) => this._storage.setItem(key, cache),
+    };
+  }
 
   private _bootstrapClient(): void {
-    const strategies: BootstrapStrategy[] = [
-      {
-        matches: (): boolean => {
-          const customerToken = this._storage.getItem<CustomerTokenData>('customerToken');
+    const customerToken = this._storage.getItem<CustomerTokenData>('customerToken');
 
-          return !!customerToken?.refreshToken;
-        },
+    if (customerToken?.refreshToken) {
+      this.initRefreshTokenClient(customerToken.refreshToken);
+      return;
+    }
 
-        bootstrap: (): void => {
-          const customerToken = this._storage.getItem<CustomerTokenData>('customerToken')!;
-
-          this.initRefreshTokenClient(customerToken.refreshToken);
-        },
-      },
-      {
-        matches: (): boolean => true,
-
-        bootstrap: (): void => {
-          const anonymousId = this._storage.getItem<string>('anonymousId') ?? crypto.randomUUID();
-
-          this._storage.setItem('anonymousId', anonymousId);
-
-          this.initAnonymousClient(anonymousId);
-        },
-      },
-    ];
-
-    strategies.find((strategy) => strategy.matches())?.bootstrap();
+    const anonymousId = this._storage.getItem<string>('anonymousId') ?? crypto.randomUUID();
+    this._storage.setItem('anonymousId', anonymousId);
+    this.initAnonymousClient(anonymousId);
   }
   constructor() {
     this._bootstrapClient();
@@ -94,7 +78,7 @@ export class CommercetoolsService implements AuthProvider, CartProvider {
         anonymousId,
       },
       scopes: this._config.scopes,
-      httpClient: fetch,
+      httpClient: this._httpClient,
     };
 
     this._setApiRoot(authOptions, 'anonymous');
@@ -114,10 +98,35 @@ export class CommercetoolsService implements AuthProvider, CartProvider {
       },
       scopes: this._config.scopes,
       tokenCache: this._tokenCache,
-      httpClient: fetch,
+      httpClient: this._httpClient,
     };
 
     this._setApiRoot(authOptions, 'password');
+  }
+
+  async getActiveCart(): Promise<{ body: Cart }> {
+    return this.project().me().activeCart().get().execute();
+  }
+
+  async createCart(lineItems: { sku: string; quantity: number }[]): Promise<{ body: Cart }> {
+    return this.project()
+      .me()
+      .carts()
+      .post({ body: { currency: 'USD', lineItems } })
+      .execute();
+  }
+
+  async updateCart(
+    cartId: string,
+    version: number,
+    actions: MyCartUpdateAction[],
+  ): Promise<{ body: Cart }> {
+    return this.project()
+      .me()
+      .carts()
+      .withId({ ID: cartId })
+      .post({ body: { version, actions } })
+      .execute();
   }
 
   initRefreshTokenClient(refreshToken: string): void {
@@ -130,7 +139,7 @@ export class CommercetoolsService implements AuthProvider, CartProvider {
       },
       refreshToken,
       tokenCache: this._tokenCache,
-      httpClient: fetch,
+      httpClient: this._httpClient,
     };
 
     this._setApiRoot(authOptions, 'refresh');
@@ -142,7 +151,7 @@ export class CommercetoolsService implements AuthProvider, CartProvider {
   ): void {
     const httpOptions: HttpMiddlewareOptions = {
       host: this._config.apiUrl,
-      httpClient: fetch,
+      httpClient: this._httpClient,
     };
 
     const client = this._settings[flow](authOptions)
@@ -153,6 +162,50 @@ export class CommercetoolsService implements AuthProvider, CartProvider {
 
     this.apiRoot = createApiBuilderFromCtpClient(client);
   }
+  login(
+    email: string,
+    password: string,
+    anonymousCartId?: string,
+    anonymousCartSignInMode?: 'MergeWithExistingCustomerCart',
+  ): Promise<{ body: { customer: Customer; cart?: Cart } }> {
+    return this.project()
+      .me()
+      .login()
+      .post({
+        body: {
+          email,
+          password,
+          anonymousCartId,
+          anonymousCartSignInMode,
+        } as MyCustomerSignin,
+      })
+      .execute();
+  }
+
+  signup(
+    email: string,
+    password: string,
+    firstName: string,
+    lastName: string,
+    anonymousCartId?: string,
+    anonymousCartSignInMode?: 'MergeWithExistingCustomerCart',
+  ): Promise<{ body: { customer: Customer; cart?: Cart } }> {
+    return this.project()
+      .me()
+      .signup()
+      .post({
+        body: {
+          email,
+          password,
+          firstName,
+          lastName,
+          anonymousCartId,
+          anonymousCartSignInMode,
+        } as MyCustomerDraft,
+      })
+      .execute();
+  }
+
   private readonly _settings: Settings = {
     anonymous: (options) =>
       new ClientBuilder().withProjectKey(this._config.projectKey).withAnonymousSessionFlow(options),

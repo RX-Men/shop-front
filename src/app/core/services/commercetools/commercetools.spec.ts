@@ -12,7 +12,7 @@ const mockConfig: CommercetoolsConfig = {
   scopes: ['manage_project:test-project'],
 };
 
-describe.skip('CommercetoolsService', () => {
+describe('CommercetoolsService', () => {
   let service: CommercetoolsService;
 
   beforeEach(() => {

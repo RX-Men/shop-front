@@ -33,8 +33,7 @@ export class AuthService {
         if (body.cart) {
           this._cartService.setCart(body.cart);
         }
-      }),
-      tap(() => {
+
         this._auth.initPasswordClient(email, password);
         this._storage.removeItem('anonymousId');
       }),
@@ -55,24 +54,20 @@ export class AuthService {
 
     return {
       anonymousCartId: currentCart.id,
-      anonymousCartSignInMode: 'MergeWithExistingCustomerCart',
+      anonymousCartSignInMode: 'MergeWithExistingCustomerCart' as const,
     };
   }
 
   login(credentials: LoginCredentials): Observable<LoginResult> {
+    const { anonymousCartId, anonymousCartSignInMode } = this._getAnonymousCartData();
+
     return this._completeAuthSession(
-      this._auth
-        .project()
-        .me()
-        .login()
-        .post({
-          body: {
-            email: credentials.email,
-            password: credentials.password,
-            ...this._getAnonymousCartData(),
-          },
-        })
-        .execute(),
+      this._auth.login(
+        credentials.email,
+        credentials.password,
+        anonymousCartId,
+        anonymousCartSignInMode,
+      ),
       credentials.email,
       credentials.password,
     ).pipe(
@@ -87,21 +82,17 @@ export class AuthService {
   }
 
   register(payload: SignUpPayload): Observable<LoginResult> {
+    const { anonymousCartId, anonymousCartSignInMode } = this._getAnonymousCartData();
+
     return this._completeAuthSession(
-      this._auth
-        .project()
-        .me()
-        .signup()
-        .post({
-          body: {
-            email: payload.email,
-            password: payload.password,
-            firstName: payload.firstName,
-            lastName: payload.lastName,
-            ...this._getAnonymousCartData(),
-          },
-        })
-        .execute(),
+      this._auth.signup(
+        payload.email,
+        payload.password,
+        payload.firstName,
+        payload.lastName,
+        anonymousCartId,
+        anonymousCartSignInMode,
+      ),
       payload.email,
       payload.password,
     ).pipe(
@@ -114,6 +105,7 @@ export class AuthService {
       }),
     );
   }
+
   private _isDuplicateCustomerError(error: unknown): boolean {
     return (
       typeof error === 'object' &&
@@ -122,6 +114,7 @@ export class AuthService {
       (error as { code: string }).code === 'DuplicateField'
     );
   }
+
   logout(): void {
     this._customer.set(null);
 
