@@ -2,6 +2,8 @@ import { ComponentRef } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 
+import { COMMERCE_TOOLS_MOCK_PROVIDERS } from '@/app/core/services/commercetools/commercetools.service.mock';
+
 import { ProductDetailComponent } from './product-detail.component';
 
 describe('ProductDetailComponent', () => {
@@ -12,7 +14,7 @@ describe('ProductDetailComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [ProductDetailComponent],
-      providers: [provideRouter([])],
+      providers: [provideRouter([]), ...COMMERCE_TOOLS_MOCK_PROVIDERS],
     }).compileComponents();
 
     fixture = TestBed.createComponent(ProductDetailComponent);

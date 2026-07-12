@@ -1,5 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
+import { COMMERCE_TOOLS_MOCK_PROVIDERS } from '@/app/core/services/commercetools/commercetools.service.mock';
+
 import { SearchWidgetComponent } from './search-widget.component';
 
 describe('SearchWidgetComponent', () => {
@@ -9,6 +11,7 @@ describe('SearchWidgetComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [SearchWidgetComponent],
+      providers: [...COMMERCE_TOOLS_MOCK_PROVIDERS],
     }).compileComponents();
 
     fixture = TestBed.createComponent(SearchWidgetComponent);

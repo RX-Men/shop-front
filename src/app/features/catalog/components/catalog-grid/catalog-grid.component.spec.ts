@@ -1,6 +1,8 @@
 import { ComponentRef } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
+import { COMMERCE_TOOLS_MOCK_PROVIDERS } from '@/app/core/services/commercetools/commercetools.service.mock';
+
 import { CatalogGridComponent } from './catalog-grid.component';
 
 describe('CatalogGridComponent', () => {
@@ -11,6 +13,7 @@ describe('CatalogGridComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [CatalogGridComponent],
+      providers: [...COMMERCE_TOOLS_MOCK_PROVIDERS],
     }).compileComponents();
 
     fixture = TestBed.createComponent(CatalogGridComponent);
