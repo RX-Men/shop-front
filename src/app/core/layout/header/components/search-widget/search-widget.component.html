@@ -34,10 +34,12 @@
               [oldPrice]="product.oldPrice"
               [discount]="product.discount"
               [count]="product.count"
-              [sku]="product.sku"
               [detailsLink]="`${_routes.catalog}/${product.id}`"
               [skeletonTheme]="'light'"
+              [sku]="product.sku"
+              [inCart]="cartService.isInCart(product.sku)"
               [loading]="_isSearching()"
+              (addToCart)="handleAddToCart($event)"
             />
           </li>
         }

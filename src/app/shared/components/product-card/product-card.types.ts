@@ -9,7 +9,7 @@ interface ProductCard {
   oldPrice: number;
   discount: number;
   count: number;
-  sku: string | null;
+  sku: string;
 }
 
 type ProductCardOrientation =

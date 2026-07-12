@@ -91,10 +91,12 @@
           <app-button
             class="product-detail__cart-button"
             [size]="'l'"
+            [icon]="_isInCart() ? 'check' : undefined"
             [disabled]="_isCartButtonDisabled()"
             (click)="_addToCart()"
-            >{{ _content.addToCartButton }}</app-button
           >
+            {{ _isInCart() ? 'In cart' : _content.addToCartButton }}
+          </app-button>
         </div>
       </div>
     </div>

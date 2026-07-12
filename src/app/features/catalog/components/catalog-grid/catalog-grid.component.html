@@ -15,7 +15,9 @@
           [count]="product.count"
           [sku]="product.sku"
           [detailsLink]="product.id"
+          [inCart]="cartService.isInCart(product.sku)"
           [loading]="loading()"
+          (addToCart)="handleAddToCart($event)"
         />
       </li>
     }

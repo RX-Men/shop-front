@@ -1,5 +1,5 @@
-import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
 import { NgOptimizedImage } from '@angular/common';
+import { ChangeDetectionStrategy, Component, computed, input, output } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 import { ButtonComponent } from '../button';
@@ -44,6 +44,7 @@ export class ProductCardComponent {
   readonly detailsLink = input.required<string>();
   readonly sku = input.required<ProductCard['sku']>();
   readonly tabIndex = input<number>();
+  readonly inCart = input<boolean>(false);
 
   readonly loading = input<boolean>();
   readonly skeletonTheme = input<SkeletonTheme>('dark');
@@ -53,4 +54,5 @@ export class ProductCardComponent {
 
   protected readonly _badge = computed(() => getBadgeLabel(this.count(), this.discount()));
   protected readonly _isOut = computed(() => this.count() <= 0);
+  readonly addToCart = output<string>();
 }

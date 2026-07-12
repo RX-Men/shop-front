@@ -23,9 +23,9 @@
                 {{ _data.profilePopover.signIn }}
               </app-router-link>
 
-              <app-router-link [routerLink]="_routes.signUp" [size]="'s'" [color]="'dark'">{{
-                _data.profilePopover.signUp
-              }}</app-router-link>
+              <app-router-link [routerLink]="_routes.signUp" [size]="'s'" [color]="'dark'"
+                >{{ _data.profilePopover.signUp }}
+              </app-router-link>
             </div>
           </div>
 
@@ -37,8 +37,8 @@
               [iconPlacement]="'start'"
               [variant]="'text'"
               [color]="'dark'"
-              >{{ _data.profilePopover.profile }}</app-router-link
-            >
+              >{{ _data.profilePopover.profile }}
+            </app-router-link>
           </div>
         </app-popover>
       </div>
@@ -59,7 +59,7 @@
         </div>
 
         <div class="header__action">
-          <app-cart-button [productsCount]="_productsCount" />
+          <app-cart-button [productsCount]="_productsCount()" />
         </div>
       </div>
     </div>
@@ -74,8 +74,8 @@
               [variant]="'text'"
               [size]="'l'"
               [color]="'light'"
-              >{{ navLink.name }}</app-router-link
-            >
+              >{{ navLink.name }}
+            </app-router-link>
           </li>
         }
       </ul>

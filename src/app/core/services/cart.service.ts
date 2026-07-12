@@ -1,3 +1,4 @@
+import { COMMERCETOOLS_CONFIG } from '@/app/core/services/commercetools/commercetools.config';
 import { CommercetoolsService } from '@/app/core/services/commercetools/commercetools.service';
 import { LocalStorageService } from '@/app/core/services/local-storage.service';
 import { computed, inject, Injectable, signal } from '@angular/core';
@@ -12,6 +13,7 @@ import type {
 })
 export class CartService {
   private readonly _ctp = inject(CommercetoolsService);
+  private readonly _ctpConfig = inject(COMMERCETOOLS_CONFIG);
   private readonly _storage = inject(LocalStorageService);
   private readonly _cart = signal<Cart | null>(this._storage.getItem<Cart>('cachedCart'));
 
@@ -22,6 +24,31 @@ export class CartService {
 
   constructor() {
     this.loadCart();
+  }
+
+  readonly itemsBySku = computed(() => {
+    const map = new Map<string, { lineItemId: string; quantity: number }>();
+
+    for (const item of this.items()) {
+      const sku = item.variant.sku;
+
+      if (sku) {
+        map.set(sku, {
+          lineItemId: item.id,
+          quantity: item.quantity,
+        });
+      }
+    }
+
+    return map;
+  });
+
+  isInCart(sku: string): boolean {
+    return this.itemsBySku().has(sku);
+  }
+
+  getQuantityBySku(sku: string): number {
+    return this.itemsBySku().get(sku)?.quantity ?? 0;
   }
 
   private _saveCart(body: Cart): void {
@@ -97,7 +124,9 @@ export class CartService {
         });
       }
     }
-    return itemsToCreate;
+    return itemsToCreate.filter((item): item is { sku: string; quantity: number } =>
+      Boolean(item.sku),
+    );
   }
 
   private async _createCart(
@@ -138,7 +167,7 @@ export class CartService {
 
   private _project(): ByProjectKeyRequestBuilder {
     return this._ctp.apiRoot.withProjectKey({
-      projectKey: import.meta.env['VITE_CTP_PROJECT_KEY'],
+      projectKey: this._ctpConfig.projectKey,
     });
   }
 }
